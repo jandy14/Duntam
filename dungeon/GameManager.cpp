@@ -1,11 +1,5 @@
 #include "GameManager.h"
 
-class Room
-{
-	bool isDoor[4];
-	list<Object> objcetList;
-};
-
 void setcursortype(CURSOR_TYPE c)
 {
 	CONSOLE_CURSOR_INFO CurInfo;

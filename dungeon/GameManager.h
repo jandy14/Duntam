@@ -7,6 +7,7 @@
 #include<iostream>
 #include<list>
 #include"mapinfo.h"
+#include "Object.h"
 
 using namespace std;
 
@@ -35,6 +36,12 @@ class massageview
 
 };
 
+class Room
+{
+	bool isDoor[4];
+	list<Object> objcetList;
+};
+
 void setcursortype(CURSOR_TYPE c);		//커서 모양 지정함수
 void gotoxy(int x, int y);				//(옆으로,아래로)
 void SetColor(int color, int bgcolor);	//색 지정함수
@@ -42,9 +49,3 @@ void SetColor(int color, int bgcolor);	//색 지정함수
 
 //==========================================던탐 관련
 void DrawFrame();			//프레임그리기
-
-
-
-
-//==========================================클래스 접근
-#include "Object.h"
