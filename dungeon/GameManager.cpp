@@ -34,7 +34,7 @@ void SetColor(int color, int bgcolor)
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color | (bgcolor << 4));
 }
 
-void DrawFrame()		//프레임그리기
+void GameManager::DrawFrame()		//프레임그리기
 {
 	gotoxy(0, 0);
 	for (int i = 0; i < 52; i++)
