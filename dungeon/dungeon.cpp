@@ -29,12 +29,12 @@ int main()
 		if (gameManager->gameState == STARTMENU/*게임 시작화면*/)
 		{
 			//시작화면 출력 함수
-			
+			gameManager->DrawStartPage();
 			//스페이스바 누르면 게임 시작
-			if (GetAsyncKeyState(VK_SPACE) & 0x0001)
+			if (GetAsyncKeyState(VK_SPACE) & 0x0001)	//게임 세팅(맵생성) 게임상태(게임중)
 			{
-				//맵생성알고리즘 실행
-				//게임 진행중을 true
+				gameManager->GameSetting();
+				gameManager->SetGameState(GAMEOVER);
 			}
 		}
 
@@ -44,14 +44,15 @@ int main()
 			gameManager->ObjectUpdate();	//오브젝트 업데이트
 
 			//키보드 이벤트
-			if (GetAsyncKeyState(0x57))//w
+			if (GetAsyncKeyState(0x57) & 0x8000)//W(위)
 			{
 				printf("%d\n", GetTickCount());
 			}
+			if (GetAsyncKeyState(0x50) & 0x0001)//P(일시정지)
+				gameManager->SetGameState(PAUSE);
 
 			gameManager->ObjectDraw();	//오브젝트 그리기
 
-			//맵이 변하면
 			if (false/*맵 변환*/)
 			{
 				DIRECTION_TYPE dir;			//방향값
@@ -64,27 +65,22 @@ int main()
 		if (gameManager->gameState == PAUSE/*일시 정지*/)
 		{
 			//일시 정시 화면 출력
-			//맵 상태표시도 같이 해줄까
-
+			gameManager->DrawPausePage();
 			//키 이벤트 확인 하고 있으면 다시 게임으로 아니면 계속 루프
 			if (GetAsyncKeyState(0x50) & 0x0001)
-			{
-				//다시 게임중 true
-			}
+				gameManager->SetGameState(GAMING);
 
 		}
 
 
 		if (gameManager->gameState == GAMEOVER/*게임 오버*/)
 		{
-			
 			//게임오버 화면 출력
+			gameManager->DrawGameOverPage();
 
 			//그리고 다시 게임 시작화면 true
 			if (GetAsyncKeyState(VK_SPACE) & 0x0001)
-			{
-				// 게임 시작화면 true
-			}
+				gameManager->SetGameState(STARTMENU);
 		}
 
 
@@ -94,7 +90,8 @@ int main()
 		count++;
 		if (timer != time(NULL))
 		{
-			//cout << count << endl;
+			gotoxy(0, 0);
+			cout << "FPS : " << count;
 			count = 0;
 			timer = time(NULL);
 		}

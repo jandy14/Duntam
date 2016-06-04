@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Object.h"
+#include "GameFunc.h"
 
 class Player : public Object
 {
@@ -9,6 +11,7 @@ public:
 	virtual void Draw();
 	virtual void Damage(int p);
 	virtual void Heal(int p);
+	void Move(DIRECTION_TYPE dir);
 	virtual ~Player();
 };
 

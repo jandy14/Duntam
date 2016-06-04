@@ -1,37 +1,5 @@
 #include "GameManager.h"
 
-void setcursortype(CURSOR_TYPE c)
-{
-	CONSOLE_CURSOR_INFO CurInfo;
-	switch (c) {
-	case NOCURSOR:
-		CurInfo.dwSize = 1;
-		CurInfo.bVisible = FALSE;
-		break;
-	case SOLIDCURSOR:
-		CurInfo.dwSize = 100;
-		CurInfo.bVisible = TRUE;
-		break;
-	case NORMALCURSOR:
-		CurInfo.dwSize = 20;
-		CurInfo.bVisible = TRUE;
-		break;
-	}
-	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &CurInfo);
-}
-void gotoxy(int x, int y)//(옆으로,아래로)가로는 0부터 79까지한줄이다
-{
-	COORD Pos = { x,y };
-	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), Pos);
-}
-void SetColor(int color, int bgcolor)
-{
-	bgcolor &= 0xf;
-	color &= 0xf;
-
-	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color | (bgcolor << 4));
-}
-
 Room::Room(bool isDoor[4], list<Object*>& objectList)
 {
 	for (int i = 0; i < 4; i++)	//방의 통로 채워줌
@@ -139,7 +107,7 @@ void GameManager::DrawStartPage()
 	static int count = 0;	//화면 출력카운드 (0에서 50까지)
 	static bool isPrint = true;	//화면 출력 여부(press ..)
 	
-	int titleX = 40, titleY = 20;	//제목 위치
+	int titleX = 49, titleY = 15;	//제목 위치
 	int explanX = 40, explanY = 22;	//설명문 위치
 	//시작화면 출력
 	gotoxy(titleX,titleY);		//제목
@@ -150,13 +118,13 @@ void GameManager::DrawStartPage()
 		if (isPrint)
 		{
 			gotoxy(explanX, explanY);
-			cout << "                       ";
+			cout << "                        ";
 			isPrint = false;
 		}
 		else
 		{
 			gotoxy(explanX, explanY);
-			cout << "Press spacebar to start";
+			cout << "Press spacebar to start!";
 			isPrint = true;
 		}
 		count = 0;
@@ -198,8 +166,8 @@ void GameManager::DrawGameOverPage()
 	static int count = 0;	//화면 출력카운드 (0에서 50까지)
 	static bool isPrint = true;	//화면 출력 여부(press ..)
 
-	int titleX = 40, titleY = 20;	//제목 위치
-	int explanX = 40, explanY = 22;	//설명문 위치
+	int titleX = 47, titleY = 15;	//제목 위치
+	int explanX = 37, explanY = 22;	//설명문 위치
 									//시작화면 출력
 	gotoxy(titleX, titleY);		//제목
 	cout << "Game Over!";
@@ -209,7 +177,7 @@ void GameManager::DrawGameOverPage()
 		if (isPrint)
 		{
 			gotoxy(explanX, explanY);
-			cout << "                       ";
+			cout << "                              ";
 			isPrint = false;
 		}
 		else
@@ -234,7 +202,7 @@ void GameManager::GameSetting()
 			this->collisionTable[i][j] = NULL;
 
 	list<Object*>::iterator iter = this->nowObjectList->begin();	//콜리젼 테이블 세팅
-	for (; iter != this->nowObjectList->end; iter++)
+	for (; iter != this->nowObjectList->end(); iter++)
 		(*iter)->SetCollision();
 }
 void GameManager::ObjectUpdate()		//오브젝트리스트 돌면서 Update()실행
@@ -253,13 +221,13 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 {
 	
 	if (dir == UP)				//현재 맵좌표 변경
-		this->nowMapY - 1;
+		this->nowMapY -= 1;
 	else if (dir == DOWN)
-		this->nowMapY + 1;
+		this->nowMapY += 1;
 	else if (dir == LEFT)
-		this->nowMapX - 1;
+		this->nowMapX -= 1;
 	else if (dir == RIGHT)
-		this->nowMapX + 1;
+		this->nowMapX += 1;
 
 	if ((nowMapX <= 0 || nowMapX >= 9) || (nowMapY <= 0 || nowMapY >= 9))	//맵범위 벋어 날까봐 해둔거
 		for (;;)
@@ -272,6 +240,21 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 			this->collisionTable[i][j] = NULL;
 
 	list<Object*>::iterator iter = this->nowObjectList->begin();	//콜리젼 테이블 세팅
-	for (; iter != this->nowObjectList->end; iter++)
+	for (; iter != this->nowObjectList->end(); iter++)
 		(*iter)->SetCollision();
 }
+void GameManager::SetGameState(GAMESTATE_TYPE state)
+{
+	system("cls");
+	this->gameState = state;
+}
+GameManager* GameManager::singleton;
+
+//드로우 방식 이대로 괜찮은가
+//update하면서 이전 좌표를 기록해두고 draw때 참고해서 그리는건?
+//버퍼를 두고 버퍼에 그리고 버퍼를 출력
+
+//맵생성
+//각 행동양식	이건 정말 알아서 해라고해야한다
+//드로우
+//상호 참조(파일)	아무래도 상속받은 놈들의 파일에 포함시켜주는걸로
