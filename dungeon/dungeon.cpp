@@ -8,22 +8,13 @@
 
 using namespace std;
 
-//맵에대한 정보, 오브젝트리스트
-
 int main()
 {
 	//==================================================================================시작 전 작업
 	setcursortype(NOCURSOR);				//커서 안보이기
 	system("mode con: lines=39 cols=104");	//콘솔창 조절
 	
-	/*for (int i = 0; i < 30; i++)
-	{
-		for (int j = 0; j < 50; j++)
-			cout << map[i][j];
-		cout << endl;
-	}*/
-
-	DrawFrame();
+	GameManager *gameManager = GameManager::GetInstance();	//게임매니저 생성
 
 	//===================================================================================프레임워크
 
@@ -35,24 +26,22 @@ int main()
 		int start = GetTickCount();
 
 
-		if (true/*게임 시작화면*/)
+		if (gameManager->gameState == STARTMENU/*게임 시작화면*/)
 		{
-			//게임시작 버튼을 누르면
-			//맵 생성을 true
-		
-			if (false/*맵 생성*/)
+			//시작화면 출력 함수
+			
+			//스페이스바 누르면 게임 시작
+			if (GetAsyncKeyState(VK_SPACE) & 0x0001)
 			{
 				//맵생성알고리즘 실행
 				//게임 진행중을 true
 			}
 		}
 
-		if(false/*게임 진행중*/)
+		if(gameManager->gameState == GAMING/*게임 진행중*/)
 		{
 
-			//UPDATE();
-
-			//display();
+			gameManager->ObjectUpdate();	//오브젝트 업데이트
 
 			//키보드 이벤트
 			if (GetAsyncKeyState(0x57))//w
@@ -60,35 +49,42 @@ int main()
 				printf("%d\n", GetTickCount());
 			}
 
+			gameManager->ObjectDraw();	//오브젝트 그리기
+
+			//맵이 변하면
 			if (false/*맵 변환*/)
 			{
-				//현재 맵의 상태 저장(오브젝트 리스트에서 가져오고 비우기)
+				DIRECTION_TYPE dir;			//방향값
 
-				//가게 되는 맵의 정보 로드
-
-				//잠시 뜸들임 (0.5초)
-
-				//새로운 맵 게임에 적용(오브젝트 리스트에 집어 넣기)
+				gameManager->ChangeMap(dir);//맵변환
+				Sleep(300);					//잠시 뜸들임 (0.5초)
 			}
 		}
 
-		if (false/*일시 정지*/)
+		if (gameManager->gameState == PAUSE/*일시 정지*/)
 		{
-
+			//일시 정시 화면 출력
 			//맵 상태표시도 같이 해줄까
 
 			//키 이벤트 확인 하고 있으면 다시 게임으로 아니면 계속 루프
+			if (GetAsyncKeyState(0x50) & 0x0001)
+			{
+				//다시 게임중 true
+			}
 
 		}
 
 
-		if (false/*게임 오버*/)
+		if (gameManager->gameState == GAMEOVER/*게임 오버*/)
 		{
 			
 			//게임오버 화면 출력
 
 			//그리고 다시 게임 시작화면 true
-
+			if (GetAsyncKeyState(VK_SPACE) & 0x0001)
+			{
+				// 게임 시작화면 true
+			}
 		}
 
 
