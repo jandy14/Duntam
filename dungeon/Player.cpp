@@ -35,4 +35,14 @@ void Player::Heal(int p)
 void Player::Move(DIRECTION_TYPE dir)
 {
 	//이동 물론 그전에 충돌 확인하고
+	//이동처리 콜리젼 테이블까지(충돌테이블까지)
+}
+Object* Player::CheckCollision()
+{
+	return NULL;
+}
+
+void Player::SetCollision()
+{
+
 }

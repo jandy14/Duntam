@@ -67,6 +67,11 @@ void GameManager::PrintMap(int mapX, int mapY)
 void GameManager::CreateMap()		//아직 미완성
 {
 	//여긴 우째야 할지...
+	for (int y = 0; y < 9; y++) 
+		for (int x = 0; x < 9; x++)
+			map[y][x] = new Room();
+
+	map[4][4]->isDoor[UP] = true;
 }
 GameManager* GameManager::GetInstance()
 {

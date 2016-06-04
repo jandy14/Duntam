@@ -9,9 +9,11 @@ public:
 	Player(int posX, int posY);
 	virtual void Update();
 	virtual void Draw();
+	virtual void Move(DIRECTION_TYPE dir);
+	virtual Object* CheckCollision();
+	virtual void SetCollision();
 	virtual void Damage(int p);
 	virtual void Heal(int p);
-	void Move(DIRECTION_TYPE dir);
 	virtual ~Player();
 };
 
