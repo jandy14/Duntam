@@ -12,7 +12,7 @@
 #define FPS 60		//실제 돌아가느 프레임수 (실험값)
 
 typedef enum { NOCURSOR, SOLIDCURSOR, NORMALCURSOR } CURSOR_TYPE;	//커서타입정의
-typedef enum { UP, DOWN, LEFT, RIGHT } DIRECTION_TYPE;				//방향타입
+typedef enum { UP, DOWN, LEFT, RIGHT, NONE } DIRECTION_TYPE;		//방향타입
 typedef enum { STARTMENU, GAMING, PAUSE, GAMEOVER } GAMESTATE_TYPE;	//게임상태타입
 
 void setcursortype(CURSOR_TYPE c);		//커서 모양 지정함수

@@ -33,7 +33,7 @@ int main()
 			if (GetAsyncKeyState(VK_SPACE) & 0x0001)	//게임 세팅(맵생성) 게임상태(게임중)
 			{
 				gameManager->GameSetting();
-				gameManager->SetGameState(GAMEOVER);
+				gameManager->SetGameState(GAMING);
 			}
 		}
 
@@ -51,6 +51,7 @@ int main()
 				gameManager->SetGameState(PAUSE);
 
 			gameManager->ObjectDraw();	//오브젝트 그리기
+			//상태 정보 그리기
 
 			if (false/*맵 변환*/)
 			{

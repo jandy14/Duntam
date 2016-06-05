@@ -143,9 +143,8 @@ void GameManager::DrawPausePage()
 
 	int mapX = 16, mapY = 1;		//맵의 시작 위치
 	//일시정지 화면 출력
-	
 	//맵출력
-	this->PrintMap(mapX,mapY);
+	this->PrintMap(mapX, mapY);
 	//현재 위치 표시(깜박임)
 	if (count == 50)
 	{
@@ -201,6 +200,8 @@ void GameManager::GameSetting()
 	this->CreateMap();
 	//오브젝트 리스트 포인터값 설정
 	this->nowObjectList = &(map[4][4]->objcetList);
+	this->nowMapX = 4;
+	this->nowMapY = 4;
 	//콜리젼 테이블 설정
 	for (int i = 0; i < 30; i++)	//콜리젼 테이블 값 초기화
 		for (int j = 0; j < 50; j++)
@@ -251,6 +252,10 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 void GameManager::SetGameState(GAMESTATE_TYPE state)
 {
 	system("cls");
+	if (state == GAMING)
+		this->DrawFrame();
+	else if(state == PAUSE)
+		this->PrintMap(16, 1);	//맵의 시작위치
 	this->gameState = state;
 }
 GameManager* GameManager::singleton;
