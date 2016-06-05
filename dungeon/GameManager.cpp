@@ -1,5 +1,6 @@
 #include "GameManager.h"
-
+#include "Player.h"
+//인클루드를 더 해줘야할듯
 Room::Room(bool isDoor[4], list<Object*>& objectList)
 {
 	for (int i = 0; i < 4; i++)	//방의 통로 채워줌
@@ -198,6 +199,8 @@ void GameManager::GameSetting()
 {
 	//맵생성
 	this->CreateMap();
+	//플레이어 생성
+	player = new Player(24,14);
 	//오브젝트 리스트 포인터값 설정
 	this->nowObjectList = &(map[4][4]->objcetList);
 	this->nowMapX = 4;
@@ -209,19 +212,22 @@ void GameManager::GameSetting()
 
 	list<Object*>::iterator iter = this->nowObjectList->begin();	//콜리젼 테이블 세팅
 	for (; iter != this->nowObjectList->end(); iter++)
-		(*iter)->SetCollision();
+		(*iter)->SetCollision(NONE);
+	player->SetCollision(NONE);
 }
 void GameManager::ObjectUpdate()		//오브젝트리스트 돌면서 Update()실행
 {
 	list<Object*>::iterator iter = this->nowObjectList->begin();
 	for (; iter != this->nowObjectList->end(); iter++)
 		(*iter)->Update();
+	player->Update();
 }
 void GameManager::ObjectDraw()		//오브젝트리스트 돌면서 Draw()실행
 {
 	list<Object*>::iterator iter = this->nowObjectList->begin();
 	for (; iter != this->nowObjectList->end(); iter++)
 		(*iter)->Draw();
+	player->Draw();
 }
 void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 {
@@ -247,7 +253,7 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 
 	list<Object*>::iterator iter = this->nowObjectList->begin();	//콜리젼 테이블 세팅
 	for (; iter != this->nowObjectList->end(); iter++)
-		(*iter)->SetCollision();
+		(*iter)->SetCollision(NONE);
 }
 void GameManager::SetGameState(GAMESTATE_TYPE state)
 {

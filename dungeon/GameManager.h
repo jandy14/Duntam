@@ -50,6 +50,7 @@ public:
 	Object* collisionTable[30][50];	//현재 방 충돌 테이블
 	int nowMapX, nowMapY;			//현재 방 좌표
 	GAMESTATE_TYPE gameState;		//현재 게임 상태
+	Object * player;				//플레이어
 
 	static GameManager * GetInstance();	//게임매니저 객체얻기
 	void DrawFrame();			//전체 프레임그리기
