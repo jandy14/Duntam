@@ -74,13 +74,15 @@ void GameManager::CreateMap()		//아직 미완성
 			map[y][x] = new Room();
 
 	map[4][4]->isDoor[UP] = true;
-	map[4][4]->objectList.push_front(new EnemyA(0, 0));
+	for (int i = 0; i < 20; i++)
+		map[4][4]->objectList.push_front(new EnemyB(i, 28));
+	
 	map[4][4]->objectList.push_back(new EnemyB(2, 2));
-	map[4][4]->objectList.push_back(new EnemyB(3, 2));
+	map[4][4]->objectList.push_back(new EnemyB(44, 2));
 	map[4][4]->objectList.push_back(new EnemyB(4, 2));
-	map[4][4]->objectList.push_back(new EnemyB(5, 2));
-	map[4][4]->objectList.push_back(new EnemyB(6, 2));
-	map[4][4]->objectList.push_back(new EnemyB(7, 2));
+	map[4][4]->objectList.push_back(new EnemyB(40, 2));
+	map[4][4]->objectList.push_back(new EnemyB(6, 23));
+	map[4][4]->objectList.push_back(new EnemyB(40, 23));
 }
 GameManager* GameManager::GetInstance()
 {
@@ -248,12 +250,23 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 		this->nowMapX -= 1;
 	else if (dir == RIGHT)
 		this->nowMapX += 1;
+	
+	if (dir == UP)				//플레이어 위치 변경
+		this->player->SetPosition(24,29);
+	else if (dir == DOWN)
+		this->player->SetPosition(24, 0);
+	else if (dir == LEFT)
+		this->player->SetPosition(0, 14);
+	else if (dir == RIGHT)
+		this->player->SetPosition(49, 14);
+
 
 	if ((nowMapX <= 0 || nowMapX >= 9) || (nowMapY <= 0 || nowMapY >= 9))	//맵범위 벋어 날까봐 해둔거
 		for (;;)
 			cout << "map range_out";
 
 	this->nowObjectList = &(map[nowMapY][nowMapX]->objectList);	//오브젝트리스트의 포인터값 변경
+
 
 	for (int i = 0; i < 30; i++)		//콜리젼 테이블 값 초기화
 		for (int j = 0; j < 50; j++)
@@ -262,6 +275,7 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 	list<Object*>::iterator iter = this->nowObjectList->begin();	//콜리젼 테이블 세팅
 	for (; iter != this->nowObjectList->end(); iter++)
 		(*iter)->SetCollision(NONE);
+	this->player->SetCollision(NONE);
 }
 void GameManager::SetGameState(GAMESTATE_TYPE state)
 {

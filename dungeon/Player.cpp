@@ -5,9 +5,9 @@ Player::Player(int posX,int posY) : Object(posX,posY)
 {
 	this->sizeX = 2;
 	this->sizeY = 4;
-	this->moveDelayMax = 10;
+	this->moveDelayMax = 5;
 	this->health = 10;
-	this->frozing = 200;
+	this->frozing = 0;
 }
 
 Player::~Player()

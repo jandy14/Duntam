@@ -27,6 +27,7 @@ public:
 	virtual void Heal(int p) = 0;	//치료 받음
 	virtual int GetPositionX();	//오브젝트 X좌표
 	virtual int GetPositionY();	//오브젝트 Y좌표
+	virtual void SetPosition(int posX, int posY);	//오브젝트 좌표 설정
 	virtual ~Object();
 };
 

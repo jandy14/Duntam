@@ -21,7 +21,7 @@ EnemyA::EnemyA(int posX, int posY) : Enemy(posX, posY)
 }
 EnemyA::~EnemyA()
 {
-
+	 
 }
 void EnemyA::Update()
 {
@@ -75,7 +75,7 @@ EnemyB::EnemyB(int posX, int posY) : Enemy(posX, posY)
 {
 	this->sizeX = 1;
 	this->sizeY = 2;
-	this->moveDelayMax = 5;
+	this->moveDelayMax = 10;
 	this->health = 10;
 	this->frozing = 300;
 }
@@ -138,15 +138,23 @@ list<DIRECTION_TYPE>* EnemyB::BehaviorPattern()
 	else if ((this->positionY - pY) < 0)
 		flag[1] = true;
 
-	while (true)
+	if (random(2))
 	{
-		int i = random(4);
-		if (flag[i])
-		{
-			movingQueue->push_front((DIRECTION_TYPE)i);
-			break;
-		}
+		if(flag[0] == true)
+			movingQueue->push_front(UP);
+		else if(flag[1] == true)
+			movingQueue->push_front(DOWN);
 	}
+	else
+	{
+		if (flag[2] == true)
+			movingQueue->push_front(LEFT);
+		else if(flag[3] == true)
+			movingQueue->push_front(RIGHT);
+	}
+
+	if(movingQueue->size() == 0)
+		movingQueue->push_front((DIRECTION_TYPE)random(4));
 
 	return movingQueue;
 }

@@ -201,3 +201,19 @@ int Object::GetPositionY()
 {
 	return this->positionY;
 }
+void Object::SetPosition(int posX, int posY)
+{
+	if (posX + sizeX - 1 < 50 && posX >= 0)
+		this->positionX = posX;
+	else if (posX < 0)
+		this->positionX = 0;
+	else
+		this->positionX = 49 - sizeX + 1;
+	
+	if (posY + sizeY - 1 < 30 && posY >= 0)
+		this->positionY = posY;
+	else if (posY < 0)
+		this->positionY = 0;
+	else
+		this->positionY = 29 - sizeY + 1;
+}
