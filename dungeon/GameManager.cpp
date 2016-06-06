@@ -1,5 +1,6 @@
 #include "GameManager.h"
 #include "Player.h"
+#include "Enemy.h"
 //인클루드를 더 해줘야할듯
 Room::Room(bool isDoor[4], list<Object*>& objectList)
 {
@@ -73,6 +74,7 @@ void GameManager::CreateMap()		//아직 미완성
 			map[y][x] = new Room();
 
 	map[4][4]->isDoor[UP] = true;
+	map[4][4]->objcetList.push_front(new EnemyA(0, 0));
 }
 GameManager* GameManager::GetInstance()
 {
@@ -265,10 +267,6 @@ void GameManager::SetGameState(GAMESTATE_TYPE state)
 	this->gameState = state;
 }
 GameManager* GameManager::singleton;
-
-//드로우 방식 이대로 괜찮은가
-//update하면서 이전 좌표를 기록해두고 draw때 참고해서 그리는건?
-//버퍼를 두고 버퍼에 그리고 버퍼를 출력
 
 //맵생성
 //각 행동양식	이건 정말 알아서 해라고해야한다

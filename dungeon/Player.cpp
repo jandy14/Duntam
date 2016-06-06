@@ -5,9 +5,9 @@ Player::Player(int posX,int posY) : Object(posX,posY)
 {
 	this->sizeX = 2;
 	this->sizeY = 4;
-	this->moveDelay = 0;
 	this->moveDelayMax = 10;
 	this->health = 10;
+	this->frozing = 200;
 }
 
 Player::~Player()
@@ -19,6 +19,8 @@ void Player::Update()
 {
 	if (moveDelay)
 		moveDelay--;
+	if (frozing)
+		frozing--;
 }
 void Player::Draw()		//시작 좌표를 기록하는게 좋을 듯 하다
 {
@@ -26,6 +28,8 @@ void Player::Draw()		//시작 좌표를 기록하는게 좋을 듯 하다
 	//이전에 남은 그림 지우기(따로 나눠야 할듯)
 	RemoveAfterimage();
 	//이미지 출력
+	if(frozing)
+		SetColor(11, 16);
 	if (count < 10)
 	{
 		gotoxy(2 + (positionX * 2), 1 + positionY);
@@ -48,6 +52,7 @@ void Player::Draw()		//시작 좌표를 기록하는게 좋을 듯 하다
 		gotoxy(2 + (positionX * 2), 1 + positionY + 3);
 		cout << " ㅅ ";
 	}
+	SetColor(7, 16);
 	count++;
 	if (count >= 20)
 		count = 0;

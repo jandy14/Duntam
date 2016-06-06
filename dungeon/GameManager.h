@@ -30,7 +30,6 @@ class Room
 private:
 	bool isDoor[4];
 	list<Object*> objcetList;
-
 public:
 	Room(bool isDoor[4], list<Object*>& objectList);
 	Room();

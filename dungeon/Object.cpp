@@ -5,6 +5,8 @@ Object::Object(int posX, int posY)
 {
 	this->positionX = posX;
 	this->positionY = posY;
+	this->moveDelay = 0;
+	this->frozing = 0;
 }
 
 Object::~Object()
@@ -36,7 +38,10 @@ void Object::Move(DIRECTION_TYPE dir)
 		else if (dir == RIGHT)
 			positionX += 1;
 
-		moveDelay = moveDelayMax;	//딜레이 리셋
+		if (frozing)		//딜레이 리셋
+			moveDelay = moveDelayMax * 3; //frozing 상태일땐 2배 느려짐
+		else
+			moveDelay = moveDelayMax;
 	}
 }
 Object* Object::CheckCollision(DIRECTION_TYPE dir)
