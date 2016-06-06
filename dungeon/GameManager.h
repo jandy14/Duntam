@@ -29,7 +29,7 @@ class Room
 	friend class GameManager;
 private:
 	bool isDoor[4];
-	list<Object*> objcetList;
+	list<Object*> objectList;
 public:
 	Room(bool isDoor[4], list<Object*>& objectList);
 	Room();

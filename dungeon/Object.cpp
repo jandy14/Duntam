@@ -193,3 +193,11 @@ void Object::RemoveAfterimage()
 		prevMove = NONE;
 	}
 }
+int Object::GetPositionX()
+{
+	return this->positionX;
+}
+int Object::GetPositionY()
+{
+	return this->positionY;
+}

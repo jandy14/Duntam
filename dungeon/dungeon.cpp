@@ -112,12 +112,6 @@ int main()
 	return 0;
 }
 
-//player의 update()
-	//각 상태이상의 카운터를 세어 준다
-//enemy의 update()
-	//각 상태이상의 카운터를 세어 준다
-	//이동이 가능하면 이동해준다
-	//AI의 알고리즘을 통해 이동 리스트를 넣어준다
 //bullet의 update()
 	//이동이 가능하면 이동해준다
 //block의 update()

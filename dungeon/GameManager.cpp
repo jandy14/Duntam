@@ -6,13 +6,13 @@ Room::Room(bool isDoor[4], list<Object*>& objectList)
 {
 	for (int i = 0; i < 4; i++)	//방의 통로 채워줌
 		this->isDoor[i] = isDoor[i];
-	this->objcetList.assign(objcetList.begin(), objectList.end());	//리스트값 복사
+	this->objectList.assign(objectList.begin(), objectList.end());	//리스트값 복사
 }
 Room::Room()
 {
 	for (int i = 0; i < 4; i++)	//방의 통로 막음
 		this->isDoor[i] = false;
-	this->objcetList.clear();	//리스트 비워줌
+	this->objectList.clear();	//리스트 비워줌
 }
 
 GameManager::GameManager()
@@ -74,7 +74,13 @@ void GameManager::CreateMap()		//아직 미완성
 			map[y][x] = new Room();
 
 	map[4][4]->isDoor[UP] = true;
-	map[4][4]->objcetList.push_front(new EnemyA(0, 0));
+	map[4][4]->objectList.push_front(new EnemyA(0, 0));
+	map[4][4]->objectList.push_back(new EnemyB(2, 2));
+	map[4][4]->objectList.push_back(new EnemyB(3, 2));
+	map[4][4]->objectList.push_back(new EnemyB(4, 2));
+	map[4][4]->objectList.push_back(new EnemyB(5, 2));
+	map[4][4]->objectList.push_back(new EnemyB(6, 2));
+	map[4][4]->objectList.push_back(new EnemyB(7, 2));
 }
 GameManager* GameManager::GetInstance()
 {
@@ -204,7 +210,7 @@ void GameManager::GameSetting()
 	//플레이어 생성
 	player = new Player(24,14);
 	//오브젝트 리스트 포인터값 설정
-	this->nowObjectList = &(map[4][4]->objcetList);
+	this->nowObjectList = &(map[4][4]->objectList);
 	this->nowMapX = 4;
 	this->nowMapY = 4;
 	//콜리젼 테이블 설정
@@ -247,7 +253,7 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 		for (;;)
 			cout << "map range_out";
 
-	this->nowObjectList = &(map[nowMapY][nowMapX]->objcetList);	//오브젝트리스트의 포인터값 변경
+	this->nowObjectList = &(map[nowMapY][nowMapX]->objectList);	//오브젝트리스트의 포인터값 변경
 
 	for (int i = 0; i < 30; i++)		//콜리젼 테이블 값 초기화
 		for (int j = 0; j < 50; j++)

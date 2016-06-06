@@ -25,6 +25,8 @@ public:
 	virtual void RemoveAfterimage();	//잔상 제거
 	virtual void Damage(int p) = 0;	//데미지 받음
 	virtual void Heal(int p) = 0;	//치료 받음
+	virtual int GetPositionX();	//오브젝트 X좌표
+	virtual int GetPositionY();	//오브젝트 Y좌표
 	virtual ~Object();
 };
 

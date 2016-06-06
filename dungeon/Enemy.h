@@ -33,5 +33,13 @@ public:
 
 class EnemyB : public Enemy
 {
-
+protected:
+	virtual list<DIRECTION_TYPE>* BehaviorPattern();
+public:
+	EnemyB(int posX, int posY);
+	virtual void Update();
+	virtual void Draw();
+	virtual void Damage(int p);
+	virtual void Heal(int p);
+	virtual ~EnemyB();
 };
