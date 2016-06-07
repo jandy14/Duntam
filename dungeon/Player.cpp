@@ -10,6 +10,7 @@ Player::Player(int posX,int posY) : Object(posX,posY)
 	this->health = 10;
 	this->frozing = 0;
 	this->lookingDir = DOWN;
+	this->isDie = false;
 }
 
 Player::~Player()
@@ -55,9 +56,16 @@ void Player::Attack()
 	if (target == NULL)
 	{
 		GameManager::GetInstance()->nowObjectList->push_back(new Bullet(positionX, positionY, lookingDir));
+		GameManager::GetInstance()->nowObjectList->back()->SetCollision(NONE);
 	}
 	else
 	{
 		target->Damage(1);
 	}
+}
+void Player::Damage(int p)
+{
+	this->health -= p;
+	if (this->health <= 0)
+		this->isDie = true;
 }

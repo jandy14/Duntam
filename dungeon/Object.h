@@ -20,6 +20,8 @@ public:
 	virtual void Update() = 0;		//매프레임 처리할 일
 	virtual void Draw() = 0;		//그려지는 부분 처리
 	virtual void Move(DIRECTION_TYPE dir);	//이동 부분
+	virtual void ClearImage();				//이미지 정리
+	virtual void ClearCollision();			//테이블 정리
 	virtual void SetCollision(DIRECTION_TYPE dir);	//충돌 테이블 적용
 	virtual Object* CheckCollision(DIRECTION_TYPE dir);	//충돌 확인
 	virtual bool IsWall(DIRECTION_TYPE dir);	//게임밖으로 나가는지 체크

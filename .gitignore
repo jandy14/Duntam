@@ -3,3 +3,4 @@
 *.filters
 dungeon/Release/*
 *.opensdf
+*.enc

@@ -48,6 +48,13 @@ int main()
 			gameManager->KeyEvent();
 			//상태 정보 그리기
 
+			//플레이어 사망시
+			if (gameManager->player->isDie)
+			{
+				delete gameManager->player;
+				gameManager->SetGameState(GAMEOVER);
+			}
+
 			if (false/*맵 변환*/)
 			{
 				DIRECTION_TYPE dir;			//방향값

@@ -6,13 +6,20 @@ Object::Object(int posX, int posY)
 	this->positionX = posX;
 	this->positionY = posY;
 	this->lookingDir = NONE;
+	this->prevMove = NONE;
 	this->moveDelay = 0;
 	this->frozing = 0;
 }
 
 Object::~Object()
 {
-
+	//리스트에서도 지우고
+	GameManager::GetInstance()->nowObjectList->remove(this);
+	//콜리전테이블에서 지우고
+	this->ClearCollision();
+	//화면에 그려진것도 지운다
+	this->ClearImage();
+	this->RemoveAfterimage();
 }
 void Object::Move(DIRECTION_TYPE dir)
 {
@@ -88,6 +95,21 @@ Object* Object::CheckCollision(DIRECTION_TYPE dir)
 		}
 	}
 	return target;
+}
+void Object::ClearImage()
+{
+	for (int y = 0; y < sizeY; y++)
+	{
+		gotoxy((positionX * 2) + 2, positionY + y + 1);
+		for (int x = 0; x < sizeX; x++)
+			cout << "  ";
+	}
+}
+void Object::ClearCollision()
+{
+	for (int y = 0; y < sizeY; y++)
+		for (int x = 0; x < sizeX; x++)
+			GameManager::GetInstance()->collisionTable[positionY + y][positionX + x] = NULL;
 }
 void Object::SetCollision(DIRECTION_TYPE dir)
 {
@@ -223,7 +245,7 @@ void Object::SetPosition(int posX, int posY)
 void Object::Damage(int p)
 {
 	this->health -= p;
-	if (health <= 0)
+	if (this->health <= 0)
 		this->Die();
 }
 void Object::Heal(int p)

@@ -8,7 +8,7 @@ Enemy::Enemy(int posX,int posY) : Object(posX,posY)
 }
 Enemy::~Enemy()
 {
-	delete movingQueue;
+   	delete movingQueue;
 }
 
 EnemyA::EnemyA(int posX, int posY) : Enemy(posX, posY)
@@ -34,6 +34,8 @@ void EnemyA::Update()
 	if (frozing)
 		frozing--;
 	
+	DIRECTION_TYPE nowMove = NONE;
+
 	if (moveDelay == 0)
 	{
 		if (movingQueue->size() == 0)	//움직임큐가 비면 다시 채워준다
@@ -43,7 +45,8 @@ void EnemyA::Update()
 		}
 		if (movingQueue->size() != 0)
 		{
-			Move(movingQueue->front());
+			nowMove = movingQueue->front();
+			Move(nowMove);
 			movingQueue->pop_front();
 		}
 	}
@@ -86,6 +89,8 @@ void EnemyB::Update()
 	if (frozing)
 		frozing--;
 
+	DIRECTION_TYPE nowMove = NONE;
+	 
 	if (moveDelay == 0)
 	{
 		if (movingQueue->size() == 0)	//움직임큐가 비면 다시 채워준다
@@ -95,8 +100,18 @@ void EnemyB::Update()
 		}
 		if (movingQueue->size() != 0)
 		{
-			Move(movingQueue->front());
+			nowMove = movingQueue->front();
+			Move(nowMove);
 			movingQueue->pop_front();
+		}
+	}
+	if (moveDelay == 0)
+	{
+		if (!IsWall(nowMove))
+		{
+			Object* target = CheckCollision(nowMove);
+			if (target == (Object*)GameManager::GetInstance()->player)
+				target->Damage(1);
 		}
 	}
 }

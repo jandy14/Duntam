@@ -1,4 +1,5 @@
 #include "Bullet.h"
+#include "GameManager.h"
 
 using namespace std;
 
@@ -7,9 +8,19 @@ Bullet::Bullet(int posX, int posY, DIRECTION_TYPE lookingDir) : Object(posX, pos
 	this->sizeX = 1;
 	this->sizeY = 1;
 	this->moveDelayMax = 3;
+	this->moveDelay = 3;
 	this->health = 1;
 	this->frozing = 0;
 	this->lookingDir = lookingDir;
+	//위치 재설정
+	if (lookingDir == UP)
+		this->positionY -= 1;
+	else if (lookingDir == DOWN)
+		this->positionY += 1;
+	else if (lookingDir == LEFT)
+		this->positionX -= 1;
+	else if (lookingDir == RIGHT)
+		this->positionX += 1;
 }
 
 
@@ -27,6 +38,16 @@ void Bullet::Update()
 	if (moveDelay == 0)
 	{
 		Move(lookingDir);
+	}
+	if (moveDelay == 0)
+	{
+		if (!IsWall(lookingDir))
+		{
+			Object* target = CheckCollision(lookingDir);
+			if (target != NULL)
+				target->Damage(1);
+		}
+		this->Die();
 	}
 }
 void Bullet::Draw()

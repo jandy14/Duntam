@@ -264,8 +264,13 @@ void GameManager::GameSetting()
 void GameManager::ObjectUpdate()		//오브젝트리스트 돌면서 Update()실행
 {
 	list<Object*>::iterator iter = this->nowObjectList->begin();
-	for (; iter != this->nowObjectList->end(); iter++)
+	list<Object*>::iterator nextiter = iter;
+	for (;iter != this->nowObjectList->end();)
+	{
+		nextiter++;
 		(*iter)->Update();
+		iter = nextiter;
+	}
 	player->Update();
 }
 void GameManager::ObjectDraw()		//오브젝트리스트 돌면서 Draw()실행
