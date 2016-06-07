@@ -90,6 +90,42 @@ GameManager* GameManager::GetInstance()
 		singleton = new GameManager();
 	return singleton;
 }
+void GameManager::KeyEvent()
+{
+	if (GetAsyncKeyState(VK_UP) & 0x8000)//(위)
+	{
+		this->player->Move(UP);
+	}
+	if (GetAsyncKeyState(VK_DOWN) & 0x8000)//(아래)
+	{
+		this->player->Move(DOWN);
+	}
+	if (GetAsyncKeyState(VK_LEFT) & 0x8000)//(왼)
+	{
+		this->player->Move(LEFT);
+	}
+	if (GetAsyncKeyState(VK_RIGHT) & 0x8000)//(오른)
+	{
+		this->player->Move(RIGHT);
+	}
+
+	if (GetAsyncKeyState(0x57) == (short)0x8001)
+		this->player->SetLookingDir(UP);
+	if (GetAsyncKeyState(0x53) == (short)0x8001)
+		this->player->SetLookingDir(DOWN);
+	if (GetAsyncKeyState(0x41) == (short)0x8001)
+		this->player->SetLookingDir(LEFT);
+	if (GetAsyncKeyState(0x44) == (short)0x8001)
+		this->player->SetLookingDir(RIGHT);
+
+	if (GetAsyncKeyState(VK_SPACE) & 0x8000)//(스페이스)공격
+	{
+		this->player->Attack();
+	}
+
+	if (GetAsyncKeyState(0x50) & 0x0001)//(P)일시정지
+		this->SetGameState(PAUSE);
+}
 void GameManager::DrawFrame()		//프레임그리기
 {
 	gotoxy(0, 0);

@@ -8,7 +8,7 @@ Enemy::Enemy(int posX,int posY) : Object(posX,posY)
 }
 Enemy::~Enemy()
 {
-
+	delete movingQueue;
 }
 
 EnemyA::EnemyA(int posX, int posY) : Enemy(posX, posY)
@@ -22,6 +22,10 @@ EnemyA::EnemyA(int posX, int posY) : Enemy(posX, posY)
 EnemyA::~EnemyA()
 {
 	 
+}
+void EnemyA::Attack()
+{
+
 }
 void EnemyA::Update()
 {
@@ -56,14 +60,6 @@ void EnemyA::Draw()
 
 	SetColor(7, 16);
 }
-void EnemyA::Damage(int p)
-{
-
-}
-void EnemyA::Heal(int p)
-{
-
-}
 list<DIRECTION_TYPE>* EnemyA::BehaviorPattern()
 {
 	list<DIRECTION_TYPE>* movingQueue = new list<DIRECTION_TYPE>();
@@ -78,6 +74,10 @@ EnemyB::EnemyB(int posX, int posY) : Enemy(posX, posY)
 	this->moveDelayMax = 10;
 	this->health = 10;
 	this->frozing = 300;
+}
+void EnemyB::Attack()
+{
+
 }
 void EnemyB::Update()
 {
@@ -113,14 +113,6 @@ void EnemyB::Draw()
 	cout << "¾ï";
 
 	SetColor(7, 16);
-}
-void EnemyB::Damage(int p)
-{
-
-}
-void EnemyB::Heal(int p)
-{
-
 }
 list<DIRECTION_TYPE>* EnemyB::BehaviorPattern()
 {

@@ -5,6 +5,7 @@ Object::Object(int posX, int posY)
 {
 	this->positionX = posX;
 	this->positionY = posY;
+	this->lookingDir = NONE;
 	this->moveDelay = 0;
 	this->frozing = 0;
 }
@@ -37,6 +38,8 @@ void Object::Move(DIRECTION_TYPE dir)
 			positionX -= 1;
 		else if (dir == RIGHT)
 			positionX += 1;
+
+		lookingDir = dir;
 
 		if (frozing)		//µô·¹ÀÌ ¸®¼Â
 			moveDelay = moveDelayMax * 3; //frozing »óÅÂÀÏ¶© 2¹è ´À·ÁÁü
@@ -216,4 +219,23 @@ void Object::SetPosition(int posX, int posY)
 		this->positionY = 0;
 	else
 		this->positionY = 29 - sizeY + 1;
+}
+void Object::Damage(int p)
+{
+	this->health -= p;
+	if (health <= 0)
+		this->Die();
+}
+void Object::Heal(int p)
+{
+	this->health += p;
+}
+void Object::SetLookingDir(DIRECTION_TYPE dir)
+{
+	if (dir != NONE)
+		lookingDir = dir;
+}
+void Object::Die()
+{
+	delete this;
 }

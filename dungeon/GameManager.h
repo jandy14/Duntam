@@ -1,7 +1,7 @@
 #pragma once
 
 #include"GameFunc.h"
-#include"Object.h"
+#include"Player.h"
 
 using namespace std;
 
@@ -49,9 +49,10 @@ public:
 	Object* collisionTable[30][50];	//현재 방 충돌 테이블
 	int nowMapX, nowMapY;			//현재 방 좌표
 	GAMESTATE_TYPE gameState;		//현재 게임 상태
-	Object * player;				//플레이어
+	Player * player;				//플레이어
 
 	static GameManager * GetInstance();	//게임매니저 객체얻기
+	void KeyEvent();			//키입력
 	void DrawFrame();			//전체 프레임그리기
 	void DrawPausePage();		//일시정지 화면 출력
 	void DrawStartPage();		//게임 시작 화면 출력

@@ -10,7 +10,8 @@ protected:
 	int moveDelay, moveDelayMax;//움직임 딜레이와 최댓값
 	int frozing;				//상태이상(얼음)
 	int health;					//체력
-	DIRECTION_TYPE prevMove;	//이전 이동 방향(Draw용) 
+	DIRECTION_TYPE prevMove;	//이전 이동 방향(Draw용)
+	DIRECTION_TYPE lookingDir;	//보는 방향
 	//char image;				//그려질 이미지
 
 	void Die();
@@ -23,11 +24,12 @@ public:
 	virtual Object* CheckCollision(DIRECTION_TYPE dir);	//충돌 확인
 	virtual bool IsWall(DIRECTION_TYPE dir);	//게임밖으로 나가는지 체크
 	virtual void RemoveAfterimage();	//잔상 제거
-	virtual void Damage(int p) = 0;	//데미지 받음
-	virtual void Heal(int p) = 0;	//치료 받음
+	virtual void Damage(int p);	//데미지 받음
+	virtual void Heal(int p);	//치료 받음
 	virtual int GetPositionX();	//오브젝트 X좌표
 	virtual int GetPositionY();	//오브젝트 Y좌표
 	virtual void SetPosition(int posX, int posY);	//오브젝트 좌표 설정
+	virtual void SetLookingDir(DIRECTION_TYPE dir);	//보는 방향 설정
 	virtual ~Object();
 };
 

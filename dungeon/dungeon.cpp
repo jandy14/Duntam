@@ -45,24 +45,7 @@ int main()
 			gameManager->ObjectDraw();	//오브젝트 그리기
 
 			//키보드 이벤트
-			if (GetAsyncKeyState(VK_UP) & 0x8000)//(위)
-			{
-				gameManager->player->Move(UP);
-			}
-			if (GetAsyncKeyState(VK_DOWN) & 0x8000)//(아래)
-			{
-				gameManager->player->Move(DOWN);
-			}
-			if (GetAsyncKeyState(VK_LEFT) & 0x8000)//(왼)
-			{
-				gameManager->player->Move(LEFT);
-			}
-			if (GetAsyncKeyState(VK_RIGHT) & 0x8000)//(오른)
-			{
-				gameManager->player->Move(RIGHT);
-			}
-			if (GetAsyncKeyState(0x50) & 0x0001)//P(일시정지)
-				gameManager->SetGameState(PAUSE);
+			gameManager->KeyEvent();
 			//상태 정보 그리기
 
 			if (false/*맵 변환*/)
