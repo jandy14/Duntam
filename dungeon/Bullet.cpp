@@ -34,6 +34,7 @@ void Bullet::Draw()
 	//이전에 남은 그림 지우기
 	RemoveAfterimage();
 
+	SetColor(14, 16);
 	if (lookingDir == UP || lookingDir == DOWN)
 	{
 		gotoxy(2 + (positionX * 2), 1 + positionY);
@@ -44,6 +45,7 @@ void Bullet::Draw()
 		gotoxy(2 + (positionX * 2), 1 + positionY);
 		cout << "＝";
 	}
+	SetColor(7, 16);
 }
 void Bullet::Damage(int p){}
 void Bullet::Heal(int p){}
