@@ -14,6 +14,10 @@ Room::Room()
 		this->isDoor[i] = false;
 	this->objectList.clear();	//리스트 비워줌
 }
+bool Room::IsDoor(DIRECTION_TYPE dir)
+{
+	return this->isDoor[dir];
+}
 
 GameManager::GameManager()
 {
@@ -74,6 +78,7 @@ void GameManager::CreateMap()		//아직 미완성
 			map[y][x] = new Room();
 
 	map[4][4]->isDoor[UP] = true;
+	map[3][4]->isDoor[DOWN] = true;
 	for (int i = 0; i < 20; i++)
 		map[4][4]->objectList.push_front(new EnemyB(i, 28));
 	
@@ -83,6 +88,10 @@ void GameManager::CreateMap()		//아직 미완성
 	map[4][4]->objectList.push_back(new EnemyB(40, 2));
 	map[4][4]->objectList.push_back(new EnemyB(6, 23));
 	map[4][4]->objectList.push_back(new EnemyB(40, 23));
+
+	map[3][4]->objectList.push_back(new EnemyA(12, 3));
+	map[3][4]->objectList.push_back(new EnemyB(22, 22));
+	map[3][4]->objectList.push_back(new EnemyB(40, 22));
 }
 GameManager* GameManager::GetInstance()
 {
@@ -241,6 +250,15 @@ void GameManager::DrawGameOverPage()
 	}
 	count++;
 }
+void GameManager::DrawChangeMap()
+{
+	for (int y = 0; y < 30; y++)
+	{
+		gotoxy(2, 1 + y);
+		for (int x = 0; x < 50; x++)
+			cout << "  ";
+	}
+}
 void GameManager::GameSetting()
 {
 	//맵생성
@@ -280,6 +298,19 @@ void GameManager::ObjectDraw()		//오브젝트리스트 돌면서 Draw()실행
 		(*iter)->Draw();
 	player->Draw();
 }
+DIRECTION_TYPE GameManager::IsMapChange()
+{
+	if (player->GetPositionX() == 24 && player->GetPositionY() == 0)
+		return UP;
+	else if (player->GetPositionX() == 24 && player->GetPositionY() == 29)
+		return DOWN;
+	else if (player->GetPositionX() == 0 && player->GetPositionY() == 14)
+		return LEFT;
+	else if (player->GetPositionX() == 49 && player->GetPositionY() == 14)
+		return RIGHT;
+	else
+		return NONE;
+}
 void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 {
 	
@@ -293,13 +324,13 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 		this->nowMapX += 1;
 	
 	if (dir == UP)				//플레이어 위치 변경
-		this->player->SetPosition(24,29);
+		this->player->SetPosition(25,29);
 	else if (dir == DOWN)
-		this->player->SetPosition(24, 0);
+		this->player->SetPosition(25, 0);
 	else if (dir == LEFT)
-		this->player->SetPosition(0, 14);
+		this->player->SetPosition(0, 15);
 	else if (dir == RIGHT)
-		this->player->SetPosition(49, 14);
+		this->player->SetPosition(49, 15);
 
 
 	if ((nowMapX <= 0 || nowMapX >= 9) || (nowMapY <= 0 || nowMapY >= 9))	//맵범위 벋어 날까봐 해둔거
@@ -317,6 +348,9 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 	for (; iter != this->nowObjectList->end(); iter++)
 		(*iter)->SetCollision(NONE);
 	this->player->SetCollision(NONE);
+
+	//디스플레이
+	DrawChangeMap();
 }
 void GameManager::SetGameState(GAMESTATE_TYPE state)
 {

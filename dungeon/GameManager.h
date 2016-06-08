@@ -33,6 +33,7 @@ private:
 public:
 	Room(bool isDoor[4], list<Object*>& objectList);
 	Room();
+	bool IsDoor(DIRECTION_TYPE dir);
 	~Room();
 };
 
@@ -57,9 +58,11 @@ public:
 	void DrawPausePage();		//일시정지 화면 출력
 	void DrawStartPage();		//게임 시작 화면 출력
 	void DrawGameOverPage();	//게임 오버 화면 출력
+	void DrawChangeMap();		//맵변환시 보이는 화면
 	void GameSetting();			//게임 시작전 준비
 	void ObjectUpdate();		//nowObjectList의 Object들의 Update()실행
 	void ObjectDraw();			//nowObjectList의 Object들의 Draw()실행
+	DIRECTION_TYPE IsMapChange();	//맵변경상황인지 확인
 	void ChangeMap(DIRECTION_TYPE dir);	//맵변경
 	void SetGameState(GAMESTATE_TYPE state);	//게임 상태 변경
 	~GameManager();

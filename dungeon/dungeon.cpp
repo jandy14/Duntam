@@ -48,6 +48,17 @@ int main()
 			gameManager->KeyEvent();
 			//상태 정보 그리기
 
+			//맴변환
+			DIRECTION_TYPE dir = gameManager->IsMapChange();
+
+			if (dir != NONE)
+			{
+				if (gameManager->map[gameManager->nowMapY][gameManager->nowMapX]->IsDoor(dir))
+				{
+					gameManager->ChangeMap(dir);//맵변환
+					Sleep(300);					//잠시 뜸들임 (0.5초)
+				}
+			}
 			//플레이어 사망시
 			if (gameManager->player->isDie)
 			{
@@ -55,13 +66,6 @@ int main()
 				gameManager->SetGameState(GAMEOVER);
 			}
 
-			if (false/*맵 변환*/)
-			{
-				DIRECTION_TYPE dir;			//방향값
-
-				gameManager->ChangeMap(dir);//맵변환
-				Sleep(300);					//잠시 뜸들임 (0.5초)
-			}
 		}
 
 		if (gameManager->gameState == PAUSE/*일시 정지*/)
