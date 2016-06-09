@@ -1,7 +1,7 @@
 #include "GameManager.h"
 #include "Player.h"
 #include "Enemy.h"
-//#include<algorithm>
+#include<algorithm>
 //인클루드를 더 해줘야할듯
 Room::Room(bool isDoor[4], list<Object*>& objectList)
 {
@@ -21,7 +21,7 @@ bool Room::IsDoor(DIRECTION_TYPE dir)
 }
 bool Room::IsUse()
 {
-	return this->isDoor[UP] && this->isDoor[DOWN] && this->isDoor[LEFT] && this->isDoor[RIGHT];
+	return this->isDoor[UP] || this->isDoor[DOWN] || this->isDoor[LEFT] || this->isDoor[RIGHT];
 }
 
 GameManager::GameManager()
@@ -109,7 +109,7 @@ void GameManager::CreateMap()
 	list<int> nextMake;	//다음에 만들어질 방 번호
 	nextMake.push_front(40);
 	list<int>::iterator nowMake = nextMake.begin();
-	for (; nowMake != nextMake.end(); nowMake++)
+	for (int index = 0; nowMake != nextMake.end(); nowMake++, index++)
 	{
 		list<DIRECTION_TYPE> makeDoor;	//방에서 문이 생길 방향을 넣어둔다.
 		do
@@ -126,12 +126,17 @@ void GameManager::CreateMap()
 					continue;
 				if (!(map[*nowMake / 9][*nowMake % 9]->IsDoor((DIRECTION_TYPE)i)))	//문이 없으면
 				{
-					if (random(5) < 2)	//50%의 확률로 makeDoor에 넣는다
-						makeDoor.push_back((DIRECTION_TYPE)i);
+					if (random(100) < 80 - (index*3))	//40%의 확률로 makeDoor에 넣는다
+					{
+						if (random(2))
+							makeDoor.push_back((DIRECTION_TYPE)i);
+						else
+							makeDoor.push_front((DIRECTION_TYPE)i);
+					}
 				}
 			}
-		}while (makeDoor.size() == 0 && *nowMake == 40);
-		//random_shuffle(makeDoor.begin(), makeDoor.end());	//makeDoor를 섞는다 랜덤하게
+		}while (makeDoor.size() == 0 && *nowMake == 40);	//do while쓸일이 다있네
+
 		for (; makeDoor.size() != 0;)	//하나씩 꺼내서 문을 만든다
 		{
 			switch (makeDoor.front())
@@ -164,7 +169,8 @@ void GameManager::CreateMap()
 			makeDoor.pop_front();
 		}
 	}
-	
+	//nextMake를 이용해서 안에 내용도 채워줘야할듯하다
+
 }
 GameManager* GameManager::GetInstance()
 {
@@ -287,9 +293,9 @@ void GameManager::DrawPausePage()
 	int mapX = 16, mapY = 1;		//맵의 시작 위치
 	//일시정지 화면 출력
 	//맵출력
-	this->PrintMap(mapX, mapY);
+	this->PrintMap(mapX, mapY);		//없어도 될듯(최적화할때 1순위ㅋ)
 	//현재 위치 표시(깜박임)
-	if (count == 50)
+	if (count == 30)
 	{
 		if (isPrint)
 		{
