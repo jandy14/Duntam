@@ -443,9 +443,9 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//¸ÊÀÌµ¿
 	else if (dir == DOWN)
 		this->player->SetPosition(25, 0);
 	else if (dir == LEFT)
-		this->player->SetPosition(0, 15);
-	else if (dir == RIGHT)
 		this->player->SetPosition(49, 15);
+	else if (dir == RIGHT)
+		this->player->SetPosition(0, 15);
 
 	
 
