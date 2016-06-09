@@ -14,6 +14,7 @@ public:
 	virtual void Attack() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
+	virtual void Interact(Object& target) = 0;
 	virtual ~Enemy();
 };
 
@@ -26,6 +27,7 @@ public:
 	virtual void Attack();
 	virtual void Update();
 	virtual void Draw();
+	virtual void Interact(Object& target);
 	virtual ~EnemyA();
 };
 
@@ -38,5 +40,6 @@ public:
 	virtual void Attack();
 	virtual void Update();
 	virtual void Draw();
+	virtual void Interact(Object& target);
 	virtual ~EnemyB();
 };

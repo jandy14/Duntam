@@ -79,9 +79,11 @@ void GameManager::CreateMap()		//아직 미완성
 
 	map[4][4]->isDoor[UP] = true;
 	map[3][4]->isDoor[DOWN] = true;
-	for (int i = 0; i < 20; i++)
-		map[4][4]->objectList.push_front(new EnemyB(i, 28));
-	
+	//for (int i = 0; i < 20; i++)
+	//	map[4][4]->objectList.push_front(new EnemyB(i, 28));
+	map[4][4]->objectList.push_back(new EnemyA(0, 2));
+	map[4][4]->objectList.push_back(new EnemyA(3, 2));
+	map[4][4]->objectList.push_back(new EnemyA(6  , 2));
 	map[4][4]->objectList.push_back(new EnemyB(2, 2));
 	map[4][4]->objectList.push_back(new EnemyB(44, 2));
 	map[4][4]->objectList.push_back(new EnemyB(4, 2));
@@ -118,14 +120,28 @@ void GameManager::KeyEvent()
 		this->player->Move(RIGHT);
 	}
 
-	if (GetAsyncKeyState(0x57) == (short)0x8001)
+	if (GetAsyncKeyState(0x57) == (short)0x8001)	//(W)위
 		this->player->SetLookingDir(UP);
-	if (GetAsyncKeyState(0x53) == (short)0x8001)
+	if (GetAsyncKeyState(0x53) == (short)0x8001)	//(S)아래
 		this->player->SetLookingDir(DOWN);
-	if (GetAsyncKeyState(0x41) == (short)0x8001)
+	if (GetAsyncKeyState(0x41) == (short)0x8001)	//(A)왼
 		this->player->SetLookingDir(LEFT);
-	if (GetAsyncKeyState(0x44) == (short)0x8001)
+	if (GetAsyncKeyState(0x44) == (short)0x8001)	//(D)오른
 		this->player->SetLookingDir(RIGHT);
+
+	if (GetAsyncKeyState(0x45) == (short)0x8001)	//(E)상호작용
+	{
+		if (!(this->player->IsWall(this->player->GetLookingDir())))
+		{
+			Object * target = this->player->CheckCollision(this->player->GetLookingDir());
+			if (target != NULL)
+				target->Interact(*(this->player));
+		}
+	}
+	if (GetAsyncKeyState(VK_RETURN) == (short)0x8001)	//(엔터) 다음 메세지
+	{
+		NextMessage();
+	}
 
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)//(스페이스)공격
 	{
@@ -297,6 +313,34 @@ void GameManager::ObjectDraw()		//오브젝트리스트 돌면서 Draw()실행
 	for (; iter != this->nowObjectList->end(); iter++)
 		(*iter)->Draw();
 	player->Draw();
+}
+void GameManager::SetMessage(list<string>& newMessage)
+{
+	//기존의 메세지 삭제 및 새로 복사
+	this->message.clear();
+	this->message.assign(newMessage.begin(), newMessage.end());
+	//첫메세지 출력
+	gotoxy(72, 34);
+	cout << this->message.front();
+	this->message.pop_front();
+
+}
+void GameManager::NextMessage()
+{
+	gotoxy(72, 34);
+	if (this->message.size() != 0)
+	{
+		//메세지 출력
+		cout << "                              ";
+		cout << this->message.front();
+		//리스트에서 삭제
+		this->message.pop_front();
+	}
+	else
+	{
+		//공백 출력
+		cout << "                              ";
+	}
 }
 DIRECTION_TYPE GameManager::IsMapChange()
 {

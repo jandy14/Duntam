@@ -68,5 +68,9 @@ void Bullet::Draw()
 	}
 	SetColor(7, 16);
 }
+void Bullet::Interact(Object& targer)
+{
+
+}
 void Bullet::Damage(int p){}
 void Bullet::Heal(int p){}

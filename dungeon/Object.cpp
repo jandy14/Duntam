@@ -257,6 +257,10 @@ void Object::SetLookingDir(DIRECTION_TYPE dir)
 	if (dir != NONE)
 		lookingDir = dir;
 }
+DIRECTION_TYPE Object::GetLookingDir()
+{
+	return lookingDir;
+}
 void Object::Die()
 {
 	delete this;

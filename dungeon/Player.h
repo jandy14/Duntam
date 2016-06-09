@@ -12,6 +12,7 @@ public:
 	void Attack();
 	virtual void Update();
 	virtual void Draw();
+	virtual void Interact(Object& target);
 	virtual void Damage(int p);
 	virtual ~Player();
 };

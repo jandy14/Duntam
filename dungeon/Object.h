@@ -19,6 +19,7 @@ public:
 	Object(int posX,int posY);
 	virtual void Update() = 0;		//매프레임 처리할 일
 	virtual void Draw() = 0;		//그려지는 부분 처리
+	virtual void Interact(Object& target) = 0; //상호작용
 	virtual void Move(DIRECTION_TYPE dir);	//이동 부분
 	virtual void ClearImage();				//이미지 정리
 	virtual void ClearCollision();			//테이블 정리
@@ -32,6 +33,7 @@ public:
 	virtual int GetPositionY();	//오브젝트 Y좌표
 	virtual void SetPosition(int posX, int posY);	//오브젝트 좌표 설정
 	virtual void SetLookingDir(DIRECTION_TYPE dir);	//보는 방향 설정
+	virtual DIRECTION_TYPE GetLookingDir();			//보는 방향 값
 	virtual ~Object();
 };
 

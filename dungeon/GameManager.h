@@ -3,6 +3,7 @@
 #include"GameFunc.h"
 #include"Player.h"
 
+
 using namespace std;
 
 
@@ -48,6 +49,7 @@ public:
 	Room* map[9][9];				//맵정보
 	list<Object*>* nowObjectList;	//현재 방 오브젝트리스트
 	Object* collisionTable[30][50];	//현재 방 충돌 테이블
+	list<string> message;			//메세지리스트
 	int nowMapX, nowMapY;			//현재 방 좌표
 	GAMESTATE_TYPE gameState;		//현재 게임 상태
 	Player * player;				//플레이어
@@ -62,6 +64,8 @@ public:
 	void GameSetting();			//게임 시작전 준비
 	void ObjectUpdate();		//nowObjectList의 Object들의 Update()실행
 	void ObjectDraw();			//nowObjectList의 Object들의 Draw()실행
+	void SetMessage(list<string>& newMessage);	//메세지 내용 고침
+	void NextMessage();			//메세지리스트의 다음내용 출력
 	DIRECTION_TYPE IsMapChange();	//맵변경상황인지 확인
 	void ChangeMap(DIRECTION_TYPE dir);	//맵변경
 	void SetGameState(GAMESTATE_TYPE state);	//게임 상태 변경

@@ -69,3 +69,7 @@ void Player::Damage(int p)
 	if (this->health <= 0)
 		this->isDie = true;
 }
+void Player::Interact(Object& target)
+{
+
+}

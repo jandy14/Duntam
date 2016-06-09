@@ -4,6 +4,7 @@
 #include<time.h>
 #include<iostream>
 #include<list>
+#include<string>
 
 #define randomize() srand((unsigned)time(NULL))	//매크로 함수
 #define random(n) (rand() % (n))

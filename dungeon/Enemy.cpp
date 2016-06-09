@@ -69,6 +69,15 @@ list<DIRECTION_TYPE>* EnemyA::BehaviorPattern()
 	movingQueue->push_front((DIRECTION_TYPE)random(4));
 	return movingQueue;
 }
+void EnemyA::Interact(Object& target)
+{
+	list<string> message;
+	message.push_back("안녕");
+	message.push_back("난 EnemyA라고 해");
+	message.push_back("난 생각이 없어");
+	message.push_back("정말이야");
+	GameManager::GetInstance()->SetMessage(message);
+}
 
 EnemyB::EnemyB(int posX, int posY) : Enemy(posX, posY)
 {
@@ -164,6 +173,10 @@ list<DIRECTION_TYPE>* EnemyB::BehaviorPattern()
 		movingQueue->push_front((DIRECTION_TYPE)random(4));
 
 	return movingQueue;
+}
+void EnemyB::Interact(Object& target)
+{
+
 }
 EnemyB::~EnemyB()
 {
