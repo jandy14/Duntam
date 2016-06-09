@@ -1,6 +1,7 @@
 #include "GameManager.h"
 #include "Player.h"
 #include "Enemy.h"
+//#include<algorithm>
 //인클루드를 더 해줘야할듯
 Room::Room(bool isDoor[4], list<Object*>& objectList)
 {
@@ -17,6 +18,10 @@ Room::Room()
 bool Room::IsDoor(DIRECTION_TYPE dir)
 {
 	return this->isDoor[dir];
+}
+bool Room::IsUse()
+{
+	return this->isDoor[UP] && this->isDoor[DOWN] && this->isDoor[LEFT] && this->isDoor[RIGHT];
 }
 
 GameManager::GameManager()
@@ -70,7 +75,7 @@ void GameManager::PrintMap(int mapX, int mapY)
 		}
 	}
 }
-void GameManager::CreateMap()		//아직 미완성
+void GameManager::CreateDebugMap()		//아직 미완성
 {
 	//여긴 우째야 할지...
 	for (int y = 0; y < 9; y++) 
@@ -94,6 +99,72 @@ void GameManager::CreateMap()		//아직 미완성
 	map[3][4]->objectList.push_back(new EnemyA(12, 3));
 	map[3][4]->objectList.push_back(new EnemyB(22, 22));
 	map[3][4]->objectList.push_back(new EnemyB(40, 22));
+}
+void GameManager::CreateMap()
+{
+	for (int y = 0; y < 9; y++)
+		for (int x = 0; x < 9; x++)
+			map[y][x] = new Room();
+	//너비우선
+	list<int> nextMake;	//다음에 만들어질 방 번호
+	nextMake.push_front(40);
+	list<int>::iterator nowMake = nextMake.begin();
+	for (; nowMake != nextMake.end(); nowMake++)
+	{
+		list<DIRECTION_TYPE> makeDoor;	//방에서 문이 생길 방향을 넣어둔다.
+		do
+		{
+			for (int i = 0; i < 4; i++)
+			{
+				if (*nowMake / 9 == 0 && i == 0)	//못가는 곳 미리 차단
+					continue;
+				if (*nowMake / 9 == 8 && i == 1)
+					continue;
+				if (*nowMake % 9 == 0 && i == 2)
+					continue;
+				if (*nowMake % 9 == 8 && i == 3)
+					continue;
+				if (!(map[*nowMake / 9][*nowMake % 9]->IsDoor((DIRECTION_TYPE)i)))	//문이 없으면
+				{
+					if (random(5) < 2)	//50%의 확률로 makeDoor에 넣는다
+						makeDoor.push_back((DIRECTION_TYPE)i);
+				}
+			}
+		}while (makeDoor.size() == 0 && *nowMake == 40);
+		//random_shuffle(makeDoor.begin(), makeDoor.end());	//makeDoor를 섞는다 랜덤하게
+		for (; makeDoor.size() != 0;)	//하나씩 꺼내서 문을 만든다
+		{
+			switch (makeDoor.front())
+			{
+			case UP:
+				if (!(map[(*nowMake / 9) - 1][*nowMake % 9]->IsUse()))	
+					nextMake.push_back(*nowMake - 9);					//push_back을 insert로 바꾸면 깊이우선이 된다
+				map[*nowMake / 9][*nowMake % 9]->isDoor[UP] = true;
+				map[(*nowMake / 9) - 1][*nowMake % 9]->isDoor[DOWN] = true;
+				break;
+			case DOWN:
+				if (!(map[(*nowMake / 9) + 1][*nowMake % 9]->IsUse()))
+					nextMake.push_back(*nowMake + 9);
+				map[*nowMake / 9][*nowMake % 9]->isDoor[DOWN] = true;
+				map[(*nowMake / 9) + 1][*nowMake % 9]->isDoor[UP] = true;
+				break;
+			case LEFT:
+				if (!(map[*nowMake / 9][(*nowMake % 9) - 1]->IsUse()))
+					nextMake.push_back(*nowMake - 1);
+				map[*nowMake / 9][*nowMake % 9]->isDoor[LEFT] = true;
+				map[*nowMake / 9][(*nowMake % 9) - 1]->isDoor[RIGHT] = true;
+				break;
+			case RIGHT:
+				if (!(map[*nowMake / 9][(*nowMake % 9) + 1]->IsUse()))
+					nextMake.push_back(*nowMake + 1);
+				map[*nowMake / 9][*nowMake % 9]->isDoor[RIGHT] = true;
+				map[*nowMake / 9][(*nowMake % 9) + 1]->isDoor[LEFT] = true;
+				break;
+			}
+			makeDoor.pop_front();
+		}
+	}
+	
 }
 GameManager* GameManager::GetInstance()
 {
@@ -285,6 +356,8 @@ void GameManager::GameSetting()
 	this->nowObjectList = &(map[4][4]->objectList);
 	this->nowMapX = 4;
 	this->nowMapY = 4;
+	//메세지 정리
+	this->message.clear();
 	//콜리젼 테이블 설정
 	for (int i = 0; i < 30; i++)	//콜리젼 테이블 값 초기화
 		for (int j = 0; j < 50; j++)
@@ -328,18 +401,14 @@ void GameManager::SetMessage(list<string>& newMessage)
 void GameManager::NextMessage()
 {
 	gotoxy(72, 34);
+	cout << "                              ";
+	gotoxy(72, 34);
 	if (this->message.size() != 0)
 	{
 		//메세지 출력
-		cout << "                              ";
 		cout << this->message.front();
 		//리스트에서 삭제
 		this->message.pop_front();
-	}
-	else
-	{
-		//공백 출력
-		cout << "                              ";
 	}
 }
 DIRECTION_TYPE GameManager::IsMapChange()
@@ -366,7 +435,9 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 		this->nowMapX -= 1;
 	else if (dir == RIGHT)
 		this->nowMapX += 1;
-	
+
+	this->player->RemoveAfterimage();	//잔상 미리 제거
+
 	if (dir == UP)				//플레이어 위치 변경
 		this->player->SetPosition(25,29);
 	else if (dir == DOWN)
@@ -376,6 +447,7 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 	else if (dir == RIGHT)
 		this->player->SetPosition(49, 15);
 
+	
 
 	if ((nowMapX <= 0 || nowMapX >= 9) || (nowMapY <= 0 || nowMapY >= 9))	//맵범위 벋어 날까봐 해둔거
 		for (;;)

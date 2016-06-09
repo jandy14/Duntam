@@ -70,7 +70,11 @@ void Bullet::Draw()
 }
 void Bullet::Interact(Object& targer)
 {
-
+	list<string> message;
+	message.push_back("내 살다살다 총알한테");
+	message.push_back("말거는 병신이 다있네");
+	message.push_back("수고해라 병신아");
+	GameManager::GetInstance()->SetMessage(message);
 }
 void Bullet::Damage(int p){}
 void Bullet::Heal(int p){}

@@ -34,7 +34,8 @@ private:
 public:
 	Room(bool isDoor[4], list<Object*>& objectList);
 	Room();
-	bool IsDoor(DIRECTION_TYPE dir);
+	bool IsDoor(DIRECTION_TYPE dir);	//이쪽에 문이 있는지
+	bool IsUse();	//사용되는 방인지 확인
 	~Room();
 };
 
@@ -44,7 +45,8 @@ private:
 	static GameManager* singleton;	//하나만 생성된다
 	GameManager();					//싱글톤이라 생성자가 private
 	void PrintMap(int mapX,int mapY);	//맵출력
-	void CreateMap();				//맵생성
+	void CreateDebugMap();				//디버그용맵생성
+	void CreateMap();
 public:
 	Room* map[9][9];				//맵정보
 	list<Object*>* nowObjectList;	//현재 방 오브젝트리스트

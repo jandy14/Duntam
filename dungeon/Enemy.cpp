@@ -176,6 +176,12 @@ list<DIRECTION_TYPE>* EnemyB::BehaviorPattern()
 }
 void EnemyB::Interact(Object& target)
 {
+	list<string> message;
+	message.push_back("크와아아아아악 이리와!");
+	message.push_back("같이 놀자 크아아");
+	message.push_back("해칠 생각은 없어");
+	message.push_back("정말이야 크크크크");
+	GameManager::GetInstance()->SetMessage(message);
 
 }
 EnemyB::~EnemyB()

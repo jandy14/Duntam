@@ -32,6 +32,7 @@ int main()
 			//스페이스바 누르면 게임 시작
 			if (GetAsyncKeyState(VK_SPACE) & 0x0001)	//게임 세팅(맵생성) 게임상태(게임중)
 			{
+				randomize();
 				gameManager->GameSetting();
 				gameManager->SetGameState(GAMING);
 			}
