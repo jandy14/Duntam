@@ -354,6 +354,7 @@ void GameManager::DrawChangeMap()
 }
 void GameManager::PrintPlayerState()
 {
+
 	gotoxy(2, 35);
 	cout << "HP : " << to_string(player->health) << "  ";
 }
