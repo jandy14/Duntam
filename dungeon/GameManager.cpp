@@ -1,7 +1,7 @@
 #include "GameManager.h"
 #include "Player.h"
 #include "Enemy.h"
-#include<algorithm>
+//#include<algorithm>
 //인클루드를 더 해줘야할듯
 Room::Room(bool isDoor[4], list<Object*>& objectList)
 {
@@ -126,7 +126,7 @@ void GameManager::CreateMap()
 					continue;
 				if (!(map[*nowMake / 9][*nowMake % 9]->IsDoor((DIRECTION_TYPE)i)))	//문이 없으면
 				{
-					if (random(100) < 80 - (index*3))	//40%의 확률로 makeDoor에 넣는다
+					if (random(100) < 80 - (index*3))	//확률이 점점 낮아진다 80%에서
 					{
 						if (random(2))
 							makeDoor.push_back((DIRECTION_TYPE)i);
@@ -293,7 +293,7 @@ void GameManager::DrawPausePage()
 	int mapX = 16, mapY = 1;		//맵의 시작 위치
 	//일시정지 화면 출력
 	//맵출력
-	this->PrintMap(mapX, mapY);		//없어도 될듯(최적화할때 1순위ㅋ)
+	//this->PrintMap(mapX, mapY);		//없어도 될듯(최적화할때 1순위ㅋ)
 	//현재 위치 표시(깜박임)
 	if (count == 30)
 	{
@@ -352,10 +352,15 @@ void GameManager::DrawChangeMap()
 			cout << "  ";
 	}
 }
+void GameManager::PrintPlayerState()
+{
+	gotoxy(2, 35);
+	cout << "HP : " << to_string(player->health) << "  ";
+}
 void GameManager::GameSetting()
 {
 	//맵생성
-	this->CreateMap();
+	this->CreateDebugMap();
 	//플레이어 생성
 	player = new Player(24,14);
 	//오브젝트 리스트 포인터값 설정

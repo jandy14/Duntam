@@ -28,6 +28,7 @@ class massageview
 class Room
 {
 	friend class GameManager;
+	friend class MapInfo;
 private:
 	bool isDoor[4];
 	list<Object*> objectList;
@@ -63,6 +64,7 @@ public:
 	void DrawStartPage();		//게임 시작 화면 출력
 	void DrawGameOverPage();	//게임 오버 화면 출력
 	void DrawChangeMap();		//맵변환시 보이는 화면
+	void PrintPlayerState();	//플레이어 상태 출력
 	void GameSetting();			//게임 시작전 준비
 	void ObjectUpdate();		//nowObjectList의 Object들의 Update()실행
 	void ObjectDraw();			//nowObjectList의 Object들의 Draw()실행

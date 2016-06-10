@@ -45,6 +45,8 @@ int main()
 
 			gameManager->ObjectDraw();	//오브젝트 그리기
 
+			gameManager->PrintPlayerState();	//플레이어 상태 출력
+
 			//키보드 이벤트
 			gameManager->KeyEvent();
 			//상태 정보 그리기

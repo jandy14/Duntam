@@ -5,6 +5,7 @@
 
 class Player : public Object
 {
+	friend class GameManager;
 public:
 	bool isDie;
 
