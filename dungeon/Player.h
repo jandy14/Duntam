@@ -6,6 +6,7 @@
 class Player : public Object
 {
 	friend class GameManager;
+	int damageCount;
 public:
 	bool isDie;
 

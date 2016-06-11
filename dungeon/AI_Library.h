@@ -6,7 +6,7 @@ using namespace std;
 
 namespace AI
 {
-	DIRECTION_TYPE& VectorToDirection(int x1, int y1, int x2, int y2);
+	DIRECTION_TYPE VectorToDirection(int x1, int y1, int x2, int y2);
 	bool IsDirect(int x1, int y1, int x2, int y2);
 
 	class CheckStatus: public Node
@@ -56,6 +56,7 @@ namespace AI
 		EnemyC* m_this;
 	public:
 		Move(EnemyC* p_this) : m_this(p_this) {}
+		~Move() { delete m_this; }
 		virtual bool Run()
 		{
 			int lastX, lastY;
@@ -95,6 +96,7 @@ namespace AI
 		DIRECTION_TYPE dir;
 	public:
 		Attack(EnemyC* p_this,int p_range) : m_this(p_this),m_range(p_range) {}
+		~Attack() { delete m_this; }
 		virtual bool Run() override
 		{
 			int x = m_this->GetPositionX();
@@ -123,6 +125,7 @@ namespace AI
 		DIRECTION_TYPE dir;
 	public:
 		Attack_Dynamic(EnemyC* p_this, int p_range) : m_this(p_this), m_range(p_range) {}
+		~Attack_Dynamic() { delete m_this; }
 		virtual bool Run() override
 		{
 			int x = m_this->GetPositionX();
@@ -150,7 +153,7 @@ namespace AI
 		}
 	};
 
-	DIRECTION_TYPE& VectorToDirection(int x1, int y1, int x2, int y2) // 방향 반환
+	DIRECTION_TYPE VectorToDirection(int x1, int y1, int x2, int y2) // 방향 반환
 	{
 		DIRECTION_TYPE dir;
 

@@ -14,6 +14,7 @@ public:
 
 class EnemyBullet : public Object
 {
+public:
 	EnemyBullet(int posX, int posY, DIRECTION_TYPE lookingDir);
 	~EnemyBullet();
 	virtual void Update();		//¢¬???¡¤©ö?? ?©ø¢¬¢ç?? ??

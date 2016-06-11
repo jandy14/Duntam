@@ -35,7 +35,7 @@ void Bullet::Update()
 	if (frozing)
 		frozing--;
 
-	if (moveDelay == 0)
+ 	if (moveDelay == 0)
 	{
 		Move(lookingDir);
 	}
@@ -133,7 +133,7 @@ void EnemyBullet::Draw()
 	//이전에 남은 그림 지우기
 	RemoveAfterimage();
 
-	SetColor(14, 16);
+	SetColor(12, 16);
 	if (lookingDir == UP || lookingDir == DOWN)
 	{
 		gotoxy(2 + (positionX * 2), 1 + positionY);

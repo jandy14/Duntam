@@ -211,7 +211,7 @@ EnemyC::EnemyC(int posX, int posY) : Enemy(posX, posY)
 	this->sizeX = 1;
 	this->sizeY = 1;
 	this->moveDelayMax = 10;
-	this->health = 10;
+	this->health = 1;
 	this->frozing = 300;
 	m_maxAttackDelay = 10;
 }
@@ -219,7 +219,7 @@ void EnemyC::Attack()
 {
 
 }
-void EnemyC::Attack(DIRECTION_TYPE& dir)
+void EnemyC::Attack(DIRECTION_TYPE dir)
 {
 	if (m_attackDelay != 0)
 		return;
@@ -231,7 +231,7 @@ void EnemyC::Attack(DIRECTION_TYPE& dir)
 	target = CheckCollision(dir);
 	if (target == NULL)
 	{
-		GameManager::GetInstance()->nowObjectList->push_back(new Bullet(positionX, positionY, dir));
+		GameManager::GetInstance()->nowObjectList->push_back(new EnemyBullet(positionX, positionY, dir));
 		GameManager::GetInstance()->nowObjectList->back()->SetCollision(NONE);
 	}
 	else
@@ -410,7 +410,7 @@ EnemyE::EnemyE(int posX, int posY) : EnemyC(posX, posY)
 	this->sizeX = 1;
 	this->sizeY = 1;
 	this->moveDelayMax = 10;
-	this->health = 10;
+	this->health = 1;
 	this->frozing = 300;
 	m_maxAttackDelay = 10;
 }

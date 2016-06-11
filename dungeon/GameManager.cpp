@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "ReadMapInfo.h"
+#include "Block.h"
 //#include<algorithm>
 //인클루드를 더 해줘야할듯
 using namespace std;
@@ -99,13 +100,13 @@ void GameManager::CreateDebugMap()		//아직 미완성
 	map[4][4]->objectList.push_back(new EnemyB(6, 23));
 	map[4][4]->objectList.push_back(new EnemyB(40, 23));
 
-	map[3][4]->objectList.push_back(new EnemyD(12, 3));
+	/*map[3][4]->objectList.push_back(new EnemyD(12, 3));
 	map[3][4]->objectList.push_back(new EnemyC(22, 22));
-	map[3][4]->objectList.push_back(new EnemyE(40, 22));
 	map[3][4]->objectList.push_back(new EnemyD(13, 3));
-	map[3][4]->objectList.push_back(new EnemyC(23, 22));
-	map[3][4]->objectList.push_back(new EnemyE(43, 22));
-
+	map[3][4]->objectList.push_back(new EnemyC(23, 22));*/
+	map[3][4]->objectList.push_back(new EnemyE(40, 22));
+	map[3][4]->objectList.push_back(new EnemyC(43, 22));
+	map[3][4]->objectList.push_back(new BreakableBlock(24, 10));
 }
 void GameManager::CreateMap()
 {
@@ -401,14 +402,15 @@ void GameManager::GameSetting(int mode)
 void GameManager::ObjectUpdate()		//오브젝트리스트 돌면서 Update()실행
 {
 	list<Object*>::iterator iter = this->nowObjectList->begin();
-	list<Object*>::iterator nextiter = iter;
-	for (;iter != this->nowObjectList->end();)
-	{
-		nextiter++;
+	for (;iter != this->nowObjectList->end(); iter++)
 		(*iter)->Update();
-		iter = nextiter;
-	}
 	player->Update();
+	//죽은거 처리
+	while (dieObjectList.size() != 0)
+	{
+		delete dieObjectList.front();
+		dieObjectList.pop_front();
+	}
 }
 void GameManager::ObjectDraw()		//오브젝트리스트 돌면서 Draw()실행
 {

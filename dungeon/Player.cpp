@@ -4,6 +4,7 @@
 
 Player::Player(int posX,int posY) : Object(posX,posY)
 {
+	this->damageCount = 0;
 	this->sizeX = 1;
 	this->sizeY = 1;
 	this->moveDelayMax = 5;
@@ -32,6 +33,13 @@ void Player::Draw()		//시작 좌표를 기록하는게 좋을 듯 하다
 	//이미지 출력
 	if(frozing)
 		SetColor(11, 16);
+	if (damageCount)
+	{
+		SetColor(12, 16);
+		damageCount++;
+		if (damageCount > 3)
+			damageCount = 0;
+	}
 	gotoxy(2 + (positionX * 2), 1 + positionY);
 	if (lookingDir == UP)
 		cout << "▲";
@@ -68,6 +76,7 @@ void Player::Damage(int p)
 	this->health -= p;
 	if (this->health <= 0)
 		this->isDie = true;
+	this->damageCount = 1;
 }
 void Player::Interact(Object& target)
 {

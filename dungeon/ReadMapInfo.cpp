@@ -101,8 +101,27 @@ void MapInfo::FillInList()
 			case 1:
 				targetRoom->objectList.push_back(new Block(x, y));
 				break;
+			case 2:
+				targetRoom->objectList.push_back(new BreakableBlock(x, y));
+				break;
+			case 10:
+				targetRoom->objectList.push_back(new EnemyA(x, y));
+				break;
+			case 11:
+				targetRoom->objectList.push_back(new EnemyB(x, y));
+				break;
+			case 12:
+				targetRoom->objectList.push_back(new EnemyC(x, y));
+				break;
+			case 13:
+				targetRoom->objectList.push_back(new EnemyD(x, y));
+				break;
+			case 14:
+				targetRoom->objectList.push_back(new EnemyE(x, y));
+				break;
 			case 20:
 				targetRoom->objectList.push_back(new AltarOfLuck(x, y));
+				break;
 			case 21:
 				targetRoom->objectList.push_back(new BulletTrap(x, y, UP));
 				break;

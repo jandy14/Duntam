@@ -51,6 +51,7 @@ private:
 public:
 	Room* map[9][9];				//맵정보
 	list<Object*>* nowObjectList;	//현재 방 오브젝트리스트
+	list<Object*> dieObjectList;	//죽은 오브젝트리스트
 	Object* collisionTable[30][50];	//현재 방 충돌 테이블
 	list<string> message;			//메세지리스트
 	int nowMapX, nowMapY;			//현재 방 좌표

@@ -263,5 +263,5 @@ DIRECTION_TYPE Object::GetLookingDir()
 }
 void Object::Die()
 {
-	delete this;
+	GameManager::GetInstance()->dieObjectList.push_back(this);
 }
