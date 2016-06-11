@@ -1,8 +1,11 @@
 #include "GameManager.h"
 #include "Player.h"
 #include "Enemy.h"
+#include "ReadMapInfo.h"
 //#include<algorithm>
 //인클루드를 더 해줘야할듯
+using namespace std;
+
 Room::Room(bool isDoor[4], list<Object*>& objectList)
 {
 	for (int i = 0; i < 4; i++)	//방의 통로 채워줌
@@ -96,9 +99,13 @@ void GameManager::CreateDebugMap()		//아직 미완성
 	map[4][4]->objectList.push_back(new EnemyB(6, 23));
 	map[4][4]->objectList.push_back(new EnemyB(40, 23));
 
-	map[3][4]->objectList.push_back(new EnemyA(12, 3));
-	map[3][4]->objectList.push_back(new EnemyB(22, 22));
-	map[3][4]->objectList.push_back(new EnemyB(40, 22));
+	map[3][4]->objectList.push_back(new EnemyD(12, 3));
+	map[3][4]->objectList.push_back(new EnemyC(22, 22));
+	map[3][4]->objectList.push_back(new EnemyE(40, 22));
+	map[3][4]->objectList.push_back(new EnemyD(13, 3));
+	map[3][4]->objectList.push_back(new EnemyC(23, 22));
+	map[3][4]->objectList.push_back(new EnemyE(43, 22));
+
 }
 void GameManager::CreateMap()
 {
@@ -170,7 +177,15 @@ void GameManager::CreateMap()
 		}
 	}
 	//nextMake를 이용해서 안에 내용도 채워줘야할듯하다
-
+	MapInfo mapInfo;
+	for (int y = 0; y < 9; y++)
+	{
+		for (int x = 0; x < 9; x++)
+		{
+			if (map[y][x]->IsUse())
+				mapInfo.SetRoom(map[y][x]);
+		}
+	}
 }
 GameManager* GameManager::GetInstance()
 {
@@ -358,10 +373,13 @@ void GameManager::PrintPlayerState()
 	gotoxy(2, 35);
 	cout << "HP : " << to_string(player->health) << "  ";
 }
-void GameManager::GameSetting()
+void GameManager::GameSetting(int mode)
 {
 	//맵생성
-	this->CreateDebugMap();
+	if (mode == 0)
+		this->CreateMap();
+	else
+		this->CreateDebugMap();
 	//플레이어 생성
 	player = new Player(24,14);
 	//오브젝트 리스트 포인터값 설정
@@ -405,6 +423,8 @@ void GameManager::SetMessage(list<string>& newMessage)
 	this->message.clear();
 	this->message.assign(newMessage.begin(), newMessage.end());
 	//첫메세지 출력
+	gotoxy(72, 34);
+	cout << "                              ";
 	gotoxy(72, 34);
 	cout << this->message.front();
 	this->message.pop_front();
@@ -461,7 +481,7 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 
 	
 
-	if ((nowMapX <= 0 || nowMapX >= 9) || (nowMapY <= 0 || nowMapY >= 9))	//맵범위 벋어 날까봐 해둔거
+	if ((nowMapX < 0 || nowMapX >= 9) || (nowMapY < 0 || nowMapY >= 9))	//맵범위 벋어 날까봐 해둔거
 		for (;;)
 			cout << "map range_out";
 

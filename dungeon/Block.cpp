@@ -5,6 +5,7 @@ using namespace std;
 
 Block::Block(int posX, int posY) : Object(posX,posY)
 {
+	this->interactionCount = 0;
 	this->sizeX = 1;
 	this->sizeY = 1;
 	this->moveDelayMax = 1;
@@ -25,15 +26,14 @@ void Block::Draw()
 }
 void Block::Interact(Object& target)
 {
-	static int count = 0;
 	list<string> message;
-	if (count == 0)
+	if (interactionCount == 0)
 	{
 		message.push_back("ÀÌºÁ ³¯ °ÇµéÁö¸¶");
 		message.push_back("³ª¸¦ ±ÍÂú°Ô ÇÏ¸é");
 		message.push_back("È¥³¯ÁÙ ¾Ë¾Æ");
 		GameManager::GetInstance()->SetMessage(message);
-		count++;
+		interactionCount++;
 	}
 	else
 	{

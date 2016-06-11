@@ -3,6 +3,11 @@
 #include<sstream>
 #include<iomanip>
 #include<fstream>
+#include"Block.h"
+#include"Enemy.h"
+#include"Thing.h"
+
+list<string>* Split(string str, char delimiter); //문자열 나누기
 
 int MapInfo::CountFile()	//C에서 쓰던 방법이라 나랑 좀 안맞다
 {
@@ -55,12 +60,66 @@ void MapInfo::FillInList()
 		int infoNum = random(CountFile());	//랜덤한 방번호
 		stringstream roomNum;
 		roomNum << setw(2) << setfill('0') << infoNum;	// 00 01 02 ...
-		string pathName = this->path + roomNum.str();
+		string pathName = this->path + roomNum.str() + ".csv";
 		input.open(pathName.c_str());
 	} while (!(input.is_open()));
 
 	//읽어서 넣어주기
-	//targetRoom->objectList.push_back(new Player(3,3));
+	list<string>* lineinfo;
+	string line;
+	for (int y = 0; y < 30; y++)
+	{
+		getline(input, line);
+		lineinfo = Split(line, ',');
+		for (int x = 0; x < 50; x++, lineinfo->pop_front())
+		{
+			if (targetRoom->IsDoor(UP))
+			{
+				if ((x == 24 || x == 25) && y == 0)
+					continue;
+			}
+			if (targetRoom->IsDoor(DOWN))
+			{
+				if ((x == 24 || x == 25) && y == 29)
+					continue;
+			}
+			if (targetRoom->IsDoor(LEFT))
+			{
+				if ((y == 14 || y == 15) && x == 0)
+					continue;
+			}
+			if (targetRoom->IsDoor(RIGHT))
+			{
+				if ((y == 14 || y == 15) && x == 49)
+					continue;
+			}
+
+			switch (stoi(lineinfo->front()))
+			{
+			case 0:
+				break;
+			case 1:
+				targetRoom->objectList.push_back(new Block(x, y));
+				break;
+			case 20:
+				targetRoom->objectList.push_back(new AltarOfLuck(x, y));
+			case 21:
+				targetRoom->objectList.push_back(new BulletTrap(x, y, UP));
+				break;
+			case 22:
+				targetRoom->objectList.push_back(new BulletTrap(x, y, DOWN));
+				break;
+			case 23:
+				targetRoom->objectList.push_back(new BulletTrap(x, y, LEFT));
+				break;
+			case 24:
+				targetRoom->objectList.push_back(new BulletTrap(x, y, RIGHT));
+				break;
+			}
+		}
+		delete lineinfo;
+	}
+	
 
 	input.close();
 }
@@ -69,4 +128,17 @@ void MapInfo::SetRoom(Room * target)
 	this->targetRoom = target;
 	SetPath();
 	FillInList();
+}
+
+list<string>* Split(string str, char delimiter)	//문자열 나누기
+{
+	list<string>* internal = new list<string>();
+	stringstream ss(str); // Turn the string into a stream.
+	string tok;
+
+	while (getline(ss, tok, delimiter)) {
+		internal->push_back(tok);
+	}
+
+	return internal;
 }

@@ -3,6 +3,8 @@
 
 class Block : public Object
 {
+private:
+	int interactionCount;
 public:
 	Block(int posX, int posY);
 	virtual void Attack();

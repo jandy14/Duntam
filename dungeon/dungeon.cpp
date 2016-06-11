@@ -33,7 +33,13 @@ int main()
 			if (GetAsyncKeyState(VK_SPACE) & 0x0001)	//게임 세팅(맵생성) 게임상태(게임중)
 			{
 				randomize();
-				gameManager->GameSetting();
+				gameManager->GameSetting(0);
+				gameManager->SetGameState(GAMING);
+			}
+			else if (GetAsyncKeyState(0x44) & 0x0001)
+			{
+				randomize();
+				gameManager->GameSetting(1);
 				gameManager->SetGameState(GAMING);
 			}
 		}

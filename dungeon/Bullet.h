@@ -12,3 +12,13 @@ public:
 	virtual void Heal(int p);	//치료 받음
 };
 
+class EnemyBullet : public Object
+{
+	EnemyBullet(int posX, int posY, DIRECTION_TYPE lookingDir);
+	~EnemyBullet();
+	virtual void Update();		//¸???·¹?? ?³¸®?? ??
+	virtual void Draw();		//±×·???´? º?ºÐ ?³¸®
+	virtual void Interact(Object& target);	//??????¿?
+	virtual void Damage(int p);	//??¹??? ¹Þ?½
+	virtual void Heal(int p);	//?¡·? ¹Þ?½
+};
