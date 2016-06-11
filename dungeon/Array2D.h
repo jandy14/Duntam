@@ -1,10 +1,3 @@
-// ============================================================================
-// Data Structures For Game Programmers
-// Ron Penton
-// Array2D.h
-// This is the 2D Aray class
-// ============================================================================
-
 #ifndef ARRAY2D_H
 #define ARRAY2D_H
 
@@ -13,29 +6,23 @@ template <class Datatype>
 class Array2D
 {
 public:
+	Datatype* m_array;
+	int m_width;
+	int m_height;
 
-// -------------------------------------------------------
-// Name:        Array2D::Array2D
-// Description: This creates the 2D array using a single
-//              linear array.
-// -------------------------------------------------------
 	Array2D()
 	{
 		m_array = new Datatype[50 * 30];
-
-		// set the width and height
 		m_width = 50;
 		m_height = 30;
 	}
-    Array2D( int p_width, int p_height )
-    {
-        // create the new array
-        m_array = new Datatype[ p_width * p_height ];
+	Array2D(int p_width, int p_height)
+	{
+		m_array = new Datatype[p_width * p_height];
 
-        // set the width and height
-        m_width = p_width;
-        m_height = p_height;
-    }
+		m_width = p_width;
+		m_height = p_height;
+	}
 	Array2D(Array2D<Datatype>& other)
 	{
 		this->m_height = other.Height;
@@ -43,137 +30,61 @@ public:
 		this->m_array = new Datatype[m_width * m_height];
 	}
 
+	~Array2D()
+	{
+		if (m_array != 0)
+			delete[] m_array;
+		m_array = 0;
+	}
 
-// -------------------------------------------------------
-// Name:        Array2D::~Array2D
-// Description: This destructs the array.
-// -------------------------------------------------------
-    ~Array2D()
-    {
-        // if the array is valid, delete it.
-        if( m_array != 0 )
-            delete[] m_array;
-        m_array = 0;
-    }
+	Datatype& Get(int p_x, int p_y)
+	{
+		return m_array[p_y * m_width + p_x];
+	}
 
- 
-// -------------------------------------------------------
-// Name:        Array2D::Get
-// Description: This retrieves the item at the given
-//              index.
-// -------------------------------------------------------
-    Datatype& Get( int p_x, int p_y )
-    {
-        return m_array[ p_y * m_width + p_x ];
-    }
+	void Resize(int p_width, int p_height)
+	{
+		Datatype* newarray = new Datatype[p_width * p_height];
 
+		if (newarray == 0)
+			return;
 
+		int x, y, t1, t2;
 
-// -------------------------------------------------------
-// Name:        Array2D::Resize
-// Description: This resizes the array.
-// -------------------------------------------------------
-    void Resize( int p_width, int p_height )
-    {
-        // create a new array.
-        Datatype* newarray = new Datatype[ p_width * p_height ];
+		int minx = (p_width < m_width ? p_width : m_width);
+		int miny = (p_height < m_height ? p_height : m_height);
 
-        if( newarray == 0 )
-            return;
+		for (y = 0; y < miny; y++)
+		{
+			t1 = y * p_width;
+			t2 = y * m_width;
+			for (x = 0; x < minx; x++)
+			{
+				newarray[t1 + x] = m_array[t2 + x];
+			}
+		}
 
-        // create the two coordinate variables and the two temp 
-        // variables.
-        int x, y, t1, t2;
+		if (m_array != 0)
+			delete[] m_array;
 
-        // determine the minimum of both dimensions.
-        int minx = (p_width < m_width ? p_width : m_width);
-        int miny = (p_height < m_height ? p_height : m_height);
+		m_array = newarray;
+		m_width = p_width;
+		m_height = p_height;
+	}
 
-        // loop through each cell and copy everything over.
-        for( y = 0; y < miny; y++ )
-        {
-            // OPTIMISATION: pre-calculate t1 and t2
-            // the standard algorithm to calculate the
-            // position in a 2d array is [y * w + x].
-            // however, since y * w doesn't change at all
-            // in the innermost loop, we calculate it out
-            // here instead.
-            t1 = y * p_width;
-            t2 = y * m_width;
-            for( x = 0; x < minx; x++ )
-            {
-                // move the data to the new array.
-                newarray[ t1 + x ] = m_array[ t2 + x ];
-            }
-        }
+	int Size()
+	{
+		return m_width * m_height;
+	}
 
-        // delete the old array.        
-        if( m_array != 0 )
-            delete[] m_array;
+	int Width()
+	{
+		return m_width;
+	}
 
-        // set the new array, and the width and height.
-        m_array = newarray;
-        m_width = p_width;
-        m_height = p_height;
-    }
-
-
-
-// -------------------------------------------------------
-//  Name:         Array2D::Size
-//  Description:  gets the size of the array.
-//  Return Value: the size of the array.
-// -------------------------------------------------------
-    int Size()
-    {
-        return m_width * m_height;
-    }
-
-
-// -------------------------------------------------------
-//  Name:         Array2D::Width
-//  Description:  gets the width of the array.
-//  Return Value: the width of the array.
-// -------------------------------------------------------
-    int Width()
-    {
-        return m_width;
-    }
-
-
-// -------------------------------------------------------
-//  Name:         Array2D::Height
-//  Description:  gets the height of the array.
-//  Return Value: the height of the array.
-// -------------------------------------------------------
-    int Height()
-    {
-        return m_height;
-    }
-
-
-
-
-// -------------------------------------------------------
-// Name:        array2d::m_array
-// Description: This is a pointer to the array.
-// -------------------------------------------------------
- Datatype* m_array;
-
-// -------------------------------------------------------
-// Name:        array2d::m_width
-// Description: the current width of the array.
-// -------------------------------------------------------
- int m_width;
-
-// -------------------------------------------------------
-// Name:        array2d::m_height
-// Description: the current height of the array.
-// -------------------------------------------------------
- int m_height;
+	int Height()
+	{
+		return m_height;
+	}
 };
-
-
-
-
 #endif

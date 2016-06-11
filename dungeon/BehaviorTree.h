@@ -1,6 +1,5 @@
 #pragma once
-#include <iostream>
-#include <list>
+#include "GameFunc.h"
 
 class Node
 {
