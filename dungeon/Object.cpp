@@ -13,13 +13,8 @@ Object::Object(int posX, int posY)
 
 Object::~Object()
 {
-	//리스트에서도 지우고
+	//리스트에서도 지운다
 	GameManager::GetInstance()->nowObjectList->remove(this);
-	//콜리전테이블에서 지우고
-	this->ClearCollision();
-	//화면에 그려진것도 지운다
-	this->ClearImage();
-	this->RemoveAfterimage();
 }
 void Object::Move(DIRECTION_TYPE dir)
 {
@@ -94,6 +89,12 @@ Object* Object::CheckCollision(DIRECTION_TYPE dir)
 				break;
 		}
 	}
+	return target;
+}
+Object* Object::CheckCollision(int posX, int posY)
+{
+	Object* target = NULL;
+	target = GameManager::GetInstance()->collisionTable[posY][posX];
 	return target;
 }
 void Object::ClearImage()
@@ -228,6 +229,8 @@ int Object::GetPositionY()
 }
 void Object::SetPosition(int posX, int posY)
 {
+	this->ClearCollision();
+	this->ClearImage();
 	if (posX + sizeX - 1 < 50 && posX >= 0)
 		this->positionX = posX;
 	else if (posX < 0)
@@ -241,6 +244,7 @@ void Object::SetPosition(int posX, int posY)
 		this->positionY = 0;
 	else
 		this->positionY = 29 - sizeY + 1;
+	this->SetCollision(NONE);
 }
 void Object::Damage(int p)
 {
@@ -263,5 +267,11 @@ DIRECTION_TYPE Object::GetLookingDir()
 }
 void Object::Die()
 {
+	//dieObjectList에 넣고
 	GameManager::GetInstance()->dieObjectList.push_back(this);
+	//콜리전테이블에서 지우고
+	this->ClearCollision();
+	//화면에 그려진것도 지운다
+	this->ClearImage();
+	this->RemoveAfterimage();
 }

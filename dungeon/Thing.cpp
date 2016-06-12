@@ -31,7 +31,7 @@ void AltarOfLuck::Draw()
 	{
 		SetColor(10, 16);
 		gotoxy(2 + (positionX * 2), 1 + positionY);
-		cout << "ⅹ";
+		cout << "×";
 		SetColor(7, 16);
 		gotoxy(2 + (positionX * 2), 1 + positionY + 1);
 		cout << "▲";
@@ -160,6 +160,64 @@ void BulletTrap::Interact(Object& target)
 	else
 	{
 		message.push_back("정도껏 해");
+	}
+	GameManager::GetInstance()->SetMessage(message);
+}
+
+Teleporter::Teleporter(int posX, int posY, int warpX, int warpY) : Thing(posX, posY)
+{
+	this->sizeX = 1;
+	this->sizeY = 1;
+	this->drawCount = 0;
+	this->instractionCount = 0;
+	this->warpPointX = warpX;
+	this->warpPointY = warpY;
+}
+Teleporter::~Teleporter () {}
+void Teleporter::Attack() {}
+void Teleporter::Update() {}
+void Teleporter::Draw()
+{
+	//RemoveAfterimage();
+	if(drawCount < 60)
+		SetColor(11, 16);
+	else
+	{
+		if (random(2))
+			SetColor(12, 16);
+		else
+			SetColor(14, 16);
+	}
+
+	gotoxy(2 + (positionX * 2), 1 + positionY);
+	cout << "●";
+
+	SetColor(7, 16);
+	drawCount++;
+	if (drawCount >= 120)
+		drawCount = 0;
+}
+void Teleporter::Interact(Object& target)
+{
+	list<string> message;
+	if (instractionCount == 0)
+	{
+		message.push_back("텔레포터");
+		message.push_back("지정된 위치로 이동합니다");
+		instractionCount++;
+	}
+	else
+	{
+		if (CheckCollision(warpPointX, warpPointY) == NULL)
+		{
+			message.push_back("워프!");
+			target.SetPosition(warpPointX, warpPointY);
+		}
+		else
+		{
+			message.push_back("지정된 좌표에 무언가 있습니다");
+			message.push_back("잠시후 다시 시도하십시오");
+		}
 	}
 	GameManager::GetInstance()->SetMessage(message);
 }

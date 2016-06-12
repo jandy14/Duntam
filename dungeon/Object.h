@@ -25,6 +25,7 @@ public:
 	virtual void ClearCollision();			//테이블 정리
 	virtual void SetCollision(DIRECTION_TYPE dir);	//충돌 테이블 적용
 	virtual Object* CheckCollision(DIRECTION_TYPE dir);	//충돌 확인
+	virtual Object* CheckCollision(int posX, int posY);	//충돌 확인 좌표로 확인
 	virtual bool IsWall(DIRECTION_TYPE dir);	//게임밖으로 나가는지 체크
 	virtual void RemoveAfterimage();	//잔상 제거
 	virtual void Damage(int p);	//데미지 받음

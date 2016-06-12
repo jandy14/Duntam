@@ -3,6 +3,7 @@
 #include "Enemy.h"
 #include "ReadMapInfo.h"
 #include "Block.h"
+#include "Thing.h"
 //#include<algorithm>
 //인클루드를 더 해줘야할듯
 using namespace std;
@@ -92,7 +93,7 @@ void GameManager::CreateDebugMap()		//아직 미완성
 	//	map[4][4]->objectList.push_front(new EnemyB(i, 28));
 	map[4][4]->objectList.push_back(new EnemyA(0, 2));
 	map[4][4]->objectList.push_back(new EnemyA(3, 2));
-	map[4][4]->objectList.push_back(new EnemyA(6  , 2));
+	map[4][4]->objectList.push_back(new EnemyA(6, 2));
 	map[4][4]->objectList.push_back(new EnemyB(2, 2));
 	map[4][4]->objectList.push_back(new EnemyB(44, 2));
 	map[4][4]->objectList.push_back(new EnemyB(4, 2));
@@ -100,13 +101,16 @@ void GameManager::CreateDebugMap()		//아직 미완성
 	map[4][4]->objectList.push_back(new EnemyB(6, 23));
 	map[4][4]->objectList.push_back(new EnemyB(40, 23));
 
-	/*map[3][4]->objectList.push_back(new EnemyD(12, 3));
+	map[3][4]->objectList.push_back(new EnemyD(12, 3));
 	map[3][4]->objectList.push_back(new EnemyC(22, 22));
 	map[3][4]->objectList.push_back(new EnemyD(13, 3));
-	map[3][4]->objectList.push_back(new EnemyC(23, 22));*/
+	map[3][4]->objectList.push_back(new EnemyC(23, 22));
 	map[3][4]->objectList.push_back(new EnemyE(40, 22));
 	map[3][4]->objectList.push_back(new EnemyC(43, 22));
 	map[3][4]->objectList.push_back(new BreakableBlock(24, 10));
+	map[3][4]->objectList.push_back(new AltarOfLuck(2, 10));
+	map[3][4]->objectList.push_back(new Teleporter(2, 15, 40, 15));
+
 }
 void GameManager::CreateMap()
 {
@@ -423,6 +427,9 @@ void GameManager::SetMessage(list<string>& newMessage)
 {
 	//기존의 메세지 삭제 및 새로 복사
 	this->message.clear();
+
+	if (newMessage.size() == 0)
+		return;
 	this->message.assign(newMessage.begin(), newMessage.end());
 	//첫메세지 출력
 	gotoxy(72, 34);

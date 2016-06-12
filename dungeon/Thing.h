@@ -42,3 +42,18 @@ public:
 	virtual void Interact(Object& target);
 	virtual ~BulletTrap();
 };
+
+class Teleporter : public Thing
+{
+private:
+	int instractionCount;
+	int drawCount;
+	int warpPointX, warpPointY;	//워프되는 위치
+public:
+	Teleporter(int posX, int posY, int warpX, int warpY);
+	virtual void Attack();
+	virtual void Update();
+	virtual void Draw();
+	virtual void Interact(Object& target);
+	virtual ~Teleporter();
+};

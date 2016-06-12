@@ -211,7 +211,7 @@ EnemyC::EnemyC(int posX, int posY) : Enemy(posX, posY)
 	this->sizeX = 1;
 	this->sizeY = 1;
 	this->moveDelayMax = 10;
-	this->health = 1;
+	this->health = 10;
 	this->frozing = 300;
 	m_maxAttackDelay = 10;
 }
@@ -410,7 +410,7 @@ EnemyE::EnemyE(int posX, int posY) : EnemyC(posX, posY)
 	this->sizeX = 1;
 	this->sizeY = 1;
 	this->moveDelayMax = 10;
-	this->health = 1;
+	this->health = 10;
 	this->frozing = 300;
 	m_maxAttackDelay = 10;
 }
