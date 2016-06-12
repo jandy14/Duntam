@@ -11,22 +11,25 @@ protected:
 	int frozing;				//상태이상(얼음)
 	int health;					//체력
 	DIRECTION_TYPE prevMove;	//이전 이동 방향(Draw용)
-	DIRECTION_TYPE lookingDir;	//보는 방향
+	DIRECTION_TYPE lookingDir;	//보는 방향	
 	//char image;				//그려질 이미지
 
 	void Die();
 public:
+	int TypeName;
 	Object(int posX,int posY);
 	virtual void Update() = 0;		//매프레임 처리할 일
 	virtual void Draw() = 0;		//그려지는 부분 처리
 	virtual void Interact(Object& target) = 0; //상호작용
 	virtual void Move(DIRECTION_TYPE dir);	//이동 부분
+	virtual void Move(int p_x, int p_y, DIRECTION_TYPE dir);
 	virtual void ClearImage();				//이미지 정리
 	virtual void ClearCollision();			//테이블 정리
 	virtual void SetCollision(DIRECTION_TYPE dir);	//충돌 테이블 적용
 	virtual Object* CheckCollision(DIRECTION_TYPE dir);	//충돌 확인
 	virtual Object* CheckCollision(int posX, int posY);	//충돌 확인 좌표로 확인
 	virtual bool IsWall(DIRECTION_TYPE dir);	//게임밖으로 나가는지 체크
+	virtual bool IsWall(int p_x, int p_y);
 	virtual void RemoveAfterimage();	//잔상 제거
 	virtual void Damage(int p);	//데미지 받음
 	virtual void Heal(int p);	//치료 받음

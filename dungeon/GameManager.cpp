@@ -101,12 +101,16 @@ void GameManager::CreateDebugMap()		//아직 미완성
 	map[4][4]->objectList.push_back(new EnemyB(6, 23));
 	map[4][4]->objectList.push_back(new EnemyB(40, 23));
 
-	map[3][4]->objectList.push_back(new EnemyD(12, 3));
-	map[3][4]->objectList.push_back(new EnemyC(22, 22));
-	map[3][4]->objectList.push_back(new EnemyD(13, 3));
-	map[3][4]->objectList.push_back(new EnemyC(23, 22));
-	map[3][4]->objectList.push_back(new EnemyE(40, 22));
-	map[3][4]->objectList.push_back(new EnemyC(43, 22));
+	map[3][4]->objectList.push_back(new EnemyD(5, 5));
+	map[3][4]->objectList.push_back(new EnemyD(1, 5));
+	map[3][4]->objectList.push_back(new EnemyD(5, 3));
+	//map[3][4]->objectList.push_back(new EnemyC(22, 22));
+	//map[3][4]->objectList.push_back(new EnemyD(13, 3));
+	//map[3][4]->objectList.push_back(new EnemyC(23, 22));
+	//map[3][4]->objectList.push_back(new EnemyE(40, 22));
+	//map[3][4]->objectList.push_back(new EnemyC(43, 22));
+	map[3][4]->objectList.push_back(new Teleporter_sounghoo(10, 10, 20, 20));
+	map[3][4]->objectList.push_back(new Teleporter_sounghoo(20, 20, 10, 10));
 	map[3][4]->objectList.push_back(new BreakableBlock(24, 10));
 	map[3][4]->objectList.push_back(new AltarOfLuck(2, 10));
 	map[3][4]->objectList.push_back(new Teleporter(2, 15, 40, 15));

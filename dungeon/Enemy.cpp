@@ -260,39 +260,6 @@ void EnemyC::AI()
 
 	root->Run();
 }
-void EnemyC::Move(DIRECTION_TYPE dir)
-{
-	if (moveDelay != 0)	//움직여도 되는지 확인
-		return;
-	//이동 물론 그전에 충돌 확인하고
-	//이동처리 콜리젼 테이블까지(충돌테이블까지)
-	Object * target = NULL;
-
-	if (IsWall(dir))
-		return;
-
-	if (CheckCollision(dir) == NULL)	//충돌 확인
-	{
-		SetCollision(dir);	//충돌 테이블 설정
-		prevMove = dir;		//움직임 저장(Draw용)
-
-		if (dir == UP)		//좌표 갱신
-			positionY -= 1;
-		else if (dir == DOWN)
-			positionY += 1;
-		else if (dir == LEFT)
-			positionX -= 1;
-		else if (dir == RIGHT)
-			positionX += 1;
-
-		lookingDir = dir;
-
-		if (frozing)		//딜레이 리셋
-			moveDelay = moveDelayMax * 3; //frozing 상태일땐 2배 느려짐
-		else
-			moveDelay = moveDelayMax;
-	}
-}
 void EnemyC::Update()
 {
 
@@ -355,7 +322,7 @@ void EnemyD::AI()
 {
 	Sequence *root = new Sequence;
 	AI::CheckStatus *checkStatus = new AI::CheckStatus(moveDelay);
-	AI::SearchingWay *searchingWay = new AI::SearchingWay(positionX, positionY, 100);
+	AI::SearchingWay_teleporter *searchingWay = new AI::SearchingWay_teleporter(positionX, positionY, 100);
 	Sequence *sequence1 = new Sequence;
 	Selector *selector1 = new Selector;
 	AI::Move *move = new AI::Move(this);

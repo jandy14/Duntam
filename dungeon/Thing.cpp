@@ -221,3 +221,63 @@ void Teleporter::Interact(Object& target)
 	}
 	GameManager::GetInstance()->SetMessage(message);
 }
+
+Teleporter_sounghoo::Teleporter_sounghoo(int posX, int posY, int warpX, int warpY) : Thing(posX, posY)
+{
+	this->sizeX = 1;
+	this->sizeY = 1;
+	this->warpPointX = warpX;
+	this->warpPointY = warpY;
+	this->TypeName = 52;
+
+	//if (CheckCollision(warpPointX, warpPointY) == NULL)
+	//{
+	//	this->warpPointX = this->positionX;
+	//	this->warpPointY = this->positionY;
+	//	this->warpPoint = this;
+	//}
+	//else if (CheckCollision(warpPointX, warpPointY)->TypeName == 52) // Æ÷Å» ÁÂÇ¥°¡ Æ÷Å»ÀÎÁö È®ÀÎ
+	//{
+	//	Teleporter_sounghoo* other = (Teleporter_sounghoo*)CheckCollision(warpPointX, warpPointY);
+	//	this->warpPoint = other;
+	//	other->warpPoint = this;
+	//	other->warpPointX = this->positionX;
+	//	other->warpPointY = this->positionY;
+	//}
+}
+Teleporter_sounghoo::~Teleporter_sounghoo() {}
+void Teleporter_sounghoo::Attack() {}
+void Teleporter_sounghoo::Update() {}
+void Teleporter_sounghoo::Draw()
+{
+	SetColor(10, 16);
+
+	gotoxy(2 + (positionX * 2), 1 + positionY);
+	cout << "¡Ü";
+
+	SetColor(7, 16);
+}
+void Teleporter_sounghoo::Interact(Object& target)
+{
+	DIRECTION_TYPE dir = target.GetLookingDir();
+
+	int x = 0, y = 0;
+
+	switch (dir)
+	{
+	case UP:
+		y--;
+		break;
+	case DOWN:
+		y++;
+		break;
+	case LEFT:
+		x--;
+		break;
+	case RIGHT:
+		x++;
+		break;
+	}
+
+	target.SetPosition(warpPointX + x, warpPointY + y);
+}

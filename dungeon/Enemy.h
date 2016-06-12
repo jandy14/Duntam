@@ -54,7 +54,6 @@ public:
 	explicit EnemyC(int posX, int posY);
 	virtual void Attack();
 	virtual void Attack(DIRECTION_TYPE dir);
-	virtual void Move(DIRECTION_TYPE dir);
 	virtual void AI();
 	virtual void Update();
 	virtual void Draw();

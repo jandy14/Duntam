@@ -50,6 +50,29 @@ namespace AI
 			}		
 		}
 	};
+	class SearchingWay_teleporter : public Node
+	{
+	private:
+		int m_x, m_y;
+		int m_range;
+	public:
+		SearchingWay_teleporter(int p_x, int p_y, int p_range) : m_x(p_x), m_y(p_y), m_range(p_range) {}
+		virtual bool Run() override
+		{
+			int targetX = GameManager::GetInstance()->player->GetPositionX();
+			int targetY = GameManager::GetInstance()->player->GetPositionY();
+
+			if (m_range > Distance(targetX, targetY, m_x, m_y))
+			{
+				Astar_Telepoter(MAP, targetX, targetY, m_x, m_y);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	};
 	class Move : public Node
 	{
 	private:
