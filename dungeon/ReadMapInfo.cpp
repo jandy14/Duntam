@@ -51,17 +51,18 @@ void MapInfo::SetPath()
 	else
 		this->path += "0";
 	this->path += "/";
+
+	int infoNum = random(CountFile());	//랜덤한 방번호
+	stringstream roomNum;
+	roomNum << setw(2) << setfill('0') << infoNum;	// 00 01 02 ...
+	this->path = this->path + roomNum.str() + ".csv";
 }
 void MapInfo::FillInList()
 {
 	ifstream input;
 	do
 	{
-		int infoNum = random(CountFile());	//랜덤한 방번호
-		stringstream roomNum;
-		roomNum << setw(2) << setfill('0') << infoNum;	// 00 01 02 ...
-		string pathName = this->path + roomNum.str() + ".csv";
-		input.open(pathName.c_str());
+		input.open(this->path.c_str());
 	} while (!(input.is_open()));
 
 	//읽어서 넣어주기
@@ -146,6 +147,12 @@ void MapInfo::SetRoom(Room * target)
 {
 	this->targetRoom = target;
 	SetPath();
+	FillInList();
+}
+void MapInfo::SetRoom(Room * target, char * roomName)
+{
+	this->targetRoom = target;
+	this->path = string(roomName);
 	FillInList();
 }
 
