@@ -9,6 +9,7 @@ Object::Object(int posX, int posY)
 	this->prevMove = NONE;
 	this->moveDelay = 0;
 	this->frozing = 0;
+	this->TypeName = 0;
 }
 
 Object::~Object()
@@ -48,11 +49,40 @@ void Object::Move(DIRECTION_TYPE dir)
 		else
 			moveDelay = moveDelayMax;
 	}
+	else if (CheckCollision(dir)->TypeName == 52)
+	{
+		CheckCollision(dir)->Interact(*this);
+	}
+}
+void Object::Move(int p_x, int p_y,DIRECTION_TYPE dir)
+{
+	if (moveDelay != 0)	//움직여도 되는지 확인
+		return;
+	//이동 물론 그전에 충돌 확인하고
+	//이동처리 콜리젼 테이블까지(충돌테이블까지)
+	Object * target = NULL;
+
+	if (IsWall(p_x,p_y))
+		return;
+
+	if (CheckCollision(p_x,p_y) == NULL)	//충돌 확인
+	{
+		SetPosition(p_x, p_y);
+		SetCollision(NONE);	//충돌 테이블 설정
+		prevMove = dir;		//움직임 저장(Draw용)
+
+		lookingDir = dir;
+
+		if (frozing)		//딜레이 리셋
+			moveDelay = moveDelayMax * 3; //frozing 상태일땐 2배 느려짐
+		else
+			moveDelay = moveDelayMax;
+	}
 }
 Object* Object::CheckCollision(DIRECTION_TYPE dir)
 {
 	Object * target = NULL;
-	//자신이 가야하는 곳 전부 체크해서 하나라도 있으면 target의 주소값 리터 없으면 NULL리턴
+	//자신이 가야하는 곳 전부 체크해서 하나라도 있으면 target의 주소값 리턴 없으면 NULL리턴
 	if (dir == UP)
 	{
 		for (int i = 0; i < sizeX; i++)
@@ -183,6 +213,13 @@ bool Object::IsWall(DIRECTION_TYPE dir)	//인덱스를 넘어가면 true 안전범위면 fals
 		else
 			return true;
 	}
+}
+bool Object::IsWall(int p_x, int p_y)	//인덱스를 넘어가면 true 안전범위면 false
+{
+	if ((0 <= p_x && p_x + sizeX - 1 < 50) && (0 <= p_y && p_y + sizeY - 1 < 30))
+		return true;
+	else
+		return false;
 }
 void Object::RemoveAfterimage()
 {

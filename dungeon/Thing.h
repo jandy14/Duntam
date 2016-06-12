@@ -57,3 +57,16 @@ public:
 	virtual void Interact(Object& target);
 	virtual ~Teleporter();
 };
+
+class Teleporter_sounghoo : public Thing
+{
+public:
+	int warpPointX, warpPointY;
+	Teleporter_sounghoo* warpPoint;
+	Teleporter_sounghoo(int posX, int posY, int warpX, int warpY);
+	virtual void Attack();
+	virtual void Update();
+	virtual void Draw();
+	virtual void Interact(Object& target);
+	virtual ~Teleporter_sounghoo();
+};
