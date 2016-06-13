@@ -48,10 +48,13 @@ class EnemyC : public Enemy
 {
 protected:
 	int m_maxAttackDelay;
+	int m_range;
+	bool m_isAttacked;
 public:
 	int m_attackDelay;
 	explicit EnemyC();
 	explicit EnemyC(int posX, int posY);
+	virtual void Damage(int p_damage) override;
 	virtual void Attack();
 	virtual void Attack(DIRECTION_TYPE dir);
 	virtual void AI();
@@ -59,6 +62,12 @@ public:
 	virtual void Draw();
 	virtual void Interact(Object& target);
 	virtual ~EnemyC();
+	int GetAttackDelay() { return m_attackDelay; }
+	void SetAttackDelay(int p_attackDelay) { m_attackDelay = p_attackDelay; }
+	int GetRange() { return m_range; }
+	void SetRange(int p_range) { m_range = p_range; }
+	bool IsAttacked() { return m_isAttacked; }
+	void SetIsAttacked(bool p_isAttacked) { m_isAttacked = p_isAttacked; }
 };
 
 class EnemyD : public EnemyC

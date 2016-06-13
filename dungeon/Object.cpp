@@ -19,7 +19,7 @@ Object::~Object()
 }
 void Object::Move(DIRECTION_TYPE dir)
 {
-	if (moveDelay != 0)	//움직여도 되는지 확인
+	if (moveDelay > 0)	//움직여도 되는지 확인
 		return;
 	//이동 물론 그전에 충돌 확인하고
 	//이동처리 콜리젼 테이블까지(충돌테이블까지)
@@ -56,7 +56,7 @@ void Object::Move(DIRECTION_TYPE dir)
 }
 void Object::Move(int p_x, int p_y,DIRECTION_TYPE dir)
 {
-	if (moveDelay != 0)	//움직여도 되는지 확인
+	if (moveDelay > 0)	//움직여도 되는지 확인
 		return;
 	//이동 물론 그전에 충돌 확인하고
 	//이동처리 콜리젼 테이블까지(충돌테이블까지)
