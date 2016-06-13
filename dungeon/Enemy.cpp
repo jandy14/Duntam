@@ -203,6 +203,8 @@ EnemyC::EnemyC() : Enemy(3, 3)
 	this->moveDelayMax = 10;
 	this->health = 10;
 	this->frozing = 300;
+	this->m_range = 5;
+	this->m_isAttacked = false;
 	m_maxAttackDelay = 10;
 }
 
@@ -213,6 +215,8 @@ EnemyC::EnemyC(int posX, int posY) : Enemy(posX, posY)
 	this->moveDelayMax = 10;
 	this->health = 10;
 	this->frozing = 300;
+	this->m_range = 5;
+	this->m_isAttacked = false;
 	m_maxAttackDelay = 10;
 }
 void EnemyC::Attack()
@@ -221,7 +225,7 @@ void EnemyC::Attack()
 }
 void EnemyC::Attack(DIRECTION_TYPE dir)
 {
-	if (m_attackDelay != 0)
+	if (m_attackDelay > 0)
 		return;
 	if (IsWall(dir))
 		return;
@@ -244,18 +248,27 @@ void EnemyC::Attack(DIRECTION_TYPE dir)
 	else
 		m_attackDelay = m_maxAttackDelay;
 }
+void EnemyC::Damage(int p_damage)
+{
+	this->health -= p_damage;
+	m_isAttacked = true;
+	if (this->health <= 0)
+		this->Die();
+}
 void EnemyC::AI()
 {
 	Sequence *root = new Sequence;
 	AI::CheckStatus *checkStatus = new AI::CheckStatus(moveDelay);
-	AI::SearchingWay *searchingWay = new AI::SearchingWay(positionX, positionY, 20);
+	AI::Detect *detect = new AI::Detect(this);
+	AI::SearchingWay *searchingWay = new AI::SearchingWay(this, m_range * 4);
 	Sequence *sequence1 = new Sequence;
 	Selector *selector1 = new Selector;
 	AI::Move *move = new AI::Move(this);
-	AI::Attack *attack = new AI::Attack(this, 5);
+	AI::Attack *attack = new AI::Attack(this, m_range);
 
 	root->AddChild(sequence1);
-	sequence1->AddChild(checkStatus); sequence1->AddChild(searchingWay); sequence1->AddChild(selector1);
+	sequence1->AddChild(checkStatus); sequence1->AddChild(detect);
+	sequence1->AddChild(searchingWay); sequence1->AddChild(selector1);
 	selector1->AddChild(attack); selector1->AddChild(move);
 
 	root->Run();
@@ -306,6 +319,7 @@ EnemyD::EnemyD() : EnemyC(3, 3)
 	this->moveDelayMax = 5;
 	this->health = 10;
 	this->frozing = 300;
+	this->m_range = 1;
 	m_maxAttackDelay = 10;
 }
 
@@ -316,17 +330,18 @@ EnemyD::EnemyD(int posX, int posY) : EnemyC(posX, posY)
 	this->moveDelayMax = 5;
 	this->health = 10;
 	this->frozing = 300;
+	this->m_range = 1;
 	m_maxAttackDelay = 10;
 }
 void EnemyD::AI()
 {
 	Sequence *root = new Sequence;
 	AI::CheckStatus *checkStatus = new AI::CheckStatus(moveDelay);
-	AI::SearchingWay_teleporter *searchingWay = new AI::SearchingWay_teleporter(positionX, positionY, 100);
+	AI::SearchingWay_teleporter *searchingWay = new AI::SearchingWay_teleporter(positionX, positionY, m_range * 100);
 	Sequence *sequence1 = new Sequence;
 	Selector *selector1 = new Selector;
 	AI::Move *move = new AI::Move(this);
-	AI::Attack *attack = new AI::Attack(this, 1);
+	AI::Attack *attack = new AI::Attack(this, m_range);
 
 	root->AddChild(sequence1);
 	sequence1->AddChild(checkStatus); sequence1->AddChild(searchingWay); sequence1->AddChild(selector1);
@@ -379,20 +394,23 @@ EnemyE::EnemyE(int posX, int posY) : EnemyC(posX, posY)
 	this->moveDelayMax = 10;
 	this->health = 10;
 	this->frozing = 300;
+	this->m_range = 10;
 	m_maxAttackDelay = 10;
 }
 void EnemyE::AI()
 {
 	Sequence *root = new Sequence;
 	AI::CheckStatus *checkStatus = new AI::CheckStatus(moveDelay);
-	AI::SearchingWay *searchingWay = new AI::SearchingWay(positionX, positionY, 20);
+	AI::Detect *detect = new AI::Detect(this);
+	AI::SearchingWay *searchingWay = new AI::SearchingWay(this, m_range * 2);
 	Sequence *sequence1 = new Sequence;
 	Selector *selector1 = new Selector;
 	AI::Move *move = new AI::Move(this);
-	AI::Attack_Dynamic *attack = new AI::Attack_Dynamic(this, 10);
+	AI::Attack *attack = new AI::Attack(this, m_range);
 
 	root->AddChild(sequence1);
-	sequence1->AddChild(checkStatus); sequence1->AddChild(searchingWay); sequence1->AddChild(selector1);
+	sequence1->AddChild(checkStatus); sequence1->AddChild(detect);
+	sequence1->AddChild(searchingWay); sequence1->AddChild(selector1);
 	selector1->AddChild(attack); selector1->AddChild(move);
 
 	root->Run();
@@ -412,9 +430,9 @@ void EnemyE::Draw()
 void EnemyE::Interact(Object& target)
 {
 	list<string> message;
-	message.push_back("...");
-	message.push_back("......");
-	message.push_back("..............");
+	message.push_back("22");
+	message.push_back("1+1");
+	message.push_back("2%2");
 	message.push_back(".");
 	GameManager::GetInstance()->SetMessage(message);
 }

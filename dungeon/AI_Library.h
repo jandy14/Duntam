@@ -27,21 +27,51 @@ namespace AI
 			}		
 		}
 	};
-	class SearchingWay : public Node
+	class Detect : public Node
 	{
 	private:
-		int m_x,m_y;
-		int m_range;
+		EnemyC* m_this;
 	public:
-		SearchingWay(int p_x, int p_y,int p_range) : m_x(p_x), m_y(p_y), m_range(p_range){}
+		Detect(EnemyC *p_this) : m_this(p_this) {}
+		~Detect() { delete m_this; }
 		virtual bool Run() override
 		{
 			int targetX = GameManager::GetInstance()->player->GetPositionX();
 			int targetY = GameManager::GetInstance()->player->GetPositionY();
+			int x = m_this->GetPositionX();
+			int y = m_this->GetPositionY();
 
-			if (m_range > Distance(targetX, targetY, m_x, m_y))
+			if (m_this->IsAttacked() || (m_this->GetRange() >= Distance(targetX, targetY, x, y)))
 			{
-				Astar(MAP, targetX, targetY, m_x, m_y);
+				if (m_this->IsAttacked())
+					m_this->SetRange(100);
+				if ((m_this->GetRange() >= Distance(targetX, targetY, x, y)))
+					m_this->SetRange(m_this->GetRange() + 5);
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+	};
+	class SearchingWay : public Node
+	{
+	private:
+		EnemyC* m_this;
+		int m_range;
+	public:
+		SearchingWay(EnemyC* p_this,int p_range) : m_this(p_this), m_range(p_range){}
+		virtual bool Run() override
+		{
+			int targetX = GameManager::GetInstance()->player->GetPositionX();
+			int targetY = GameManager::GetInstance()->player->GetPositionY();
+			int x = m_this->GetPositionX();
+			int y = m_this->GetPositionY();
+
+			if (m_range * 1.5f >= Distance(targetX, targetY, x, y))
+			{
+				Astar(MAP, targetX, targetY, x, y);
 				return true;
 			}
 			else
