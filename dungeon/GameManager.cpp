@@ -89,6 +89,8 @@ void GameManager::CreateDebugMap()		//아직 미완성
 
 	map[4][4]->isDoor[UP] = true;
 	map[3][4]->isDoor[DOWN] = true;
+	map[3][4]->isDoor[UP] = true;
+	map[2][4]->isDoor[DOWN] = true;
 	//for (int i = 0; i < 20; i++)
 	//	map[4][4]->objectList.push_front(new EnemyB(i, 28));
 	map[4][4]->objectList.push_back(new EnemyA(0, 2));
@@ -114,6 +116,13 @@ void GameManager::CreateDebugMap()		//아직 미완성
 	map[3][4]->objectList.push_back(new BreakableBlock(24, 10));
 	map[3][4]->objectList.push_back(new AltarOfLuck(2, 10));
 	map[3][4]->objectList.push_back(new Teleporter(2, 15, 40, 15));
+
+	MapInfo mapInfo;
+	mapInfo.SetRoom(map[2][4], "MapInfo/Debug/00.csv");
+	map[2][4]->objectList.push_back(new EnemyD(7,22));
+	map[2][4]->objectList.push_back(new EnemyD(1,12));
+	map[2][4]->objectList.push_back(new EnemyD(27,12));
+	map[2][4]->objectList.push_back(new EnemyD(48,18));
 
 }
 void GameManager::CreateMap()

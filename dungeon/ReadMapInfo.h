@@ -15,4 +15,5 @@ private:
 	void FillInList();
 public:
 	void SetRoom(Room * target);
+	void SetRoom(Room * target, char * roomName);
 };
