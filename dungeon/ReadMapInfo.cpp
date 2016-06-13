@@ -12,7 +12,7 @@ list<string>* Split(string str, char delimiter); //문자열 나누기
 int MapInfo::CountFile()	//C에서 쓰던 방법이라 나랑 좀 안맞다
 {
 	int count = 0;
-	string pathName = this->path + "*.*";
+	string pathName = this->path + "*.csv";
 	const char* path = pathName.c_str();
 
 	_finddata_t fd;
@@ -26,7 +26,7 @@ int MapInfo::CountFile()	//C에서 쓰던 방법이라 나랑 좀 안맞다
 	while (result != -1)
 	{
 		count++;
-		result = _findnext(handle, &fd);
+ 		result = _findnext(handle, &fd);
 	}
 	_findclose(handle);
 	return count;
@@ -52,7 +52,7 @@ void MapInfo::SetPath()
 		this->path += "0";
 	this->path += "/";
 
-	int infoNum = random(CountFile());	//랜덤한 방번호
+	int infoNum = random(CountFile());
 	stringstream roomNum;
 	roomNum << setw(2) << setfill('0') << infoNum;	// 00 01 02 ...
 	this->path = this->path + roomNum.str() + ".csv";

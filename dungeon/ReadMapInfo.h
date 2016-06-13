@@ -10,10 +10,10 @@ private:
 	Room* targetRoom;
 	string path;
 
-	int CountFile();
-	void SetPath();
-	void FillInList();
+	int CountFile();	//폴더안 파일 갯수
+	void SetPath();		//파일 경로 설정
+	void FillInList();	//리스트안에 맵내용 읽어서 넣어줌
 public:
-	void SetRoom(Room * target);
-	void SetRoom(Room * target, char * roomName);
+	void SetRoom(Room * target);	//방 내용 세팅(랜덤하게)
+	void SetRoom(Room * target, char * roomName);	//경로 지정
 };

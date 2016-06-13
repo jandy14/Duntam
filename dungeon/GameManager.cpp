@@ -87,43 +87,51 @@ void GameManager::CreateDebugMap()		//아직 미완성
 		for (int x = 0; x < 9; x++)
 			map[y][x] = new Room();
 
+	MapInfo mapInfo;
+
 	map[4][4]->isDoor[UP] = true;
+	mapInfo.SetRoom(map[4][4], "MapInfo/Debug/02.csv");
+	
 	map[3][4]->isDoor[DOWN] = true;
 	map[3][4]->isDoor[UP] = true;
+	mapInfo.SetRoom(map[3][4], "MapInfo/Debug/04.csv");
+	map[3][4]->objectList.push_back(new EnemyA(1, 1));
+	map[3][4]->objectList.push_back(new EnemyA(4, 5));
+	map[3][4]->objectList.push_back(new EnemyB(45, 5));
+	map[3][4]->objectList.push_back(new EnemyB(47, 5));
+	//map[3][4]->objectList.push_back(new BreakableBlock(24, 10));
+	//map[3][4]->objectList.push_back(new AltarOfLuck(2, 10));
+
 	map[2][4]->isDoor[DOWN] = true;
-	//for (int i = 0; i < 20; i++)
-	//	map[4][4]->objectList.push_front(new EnemyB(i, 28));
-	map[4][4]->objectList.push_back(new EnemyA(0, 2));
-	map[4][4]->objectList.push_back(new EnemyA(3, 2));
-	map[4][4]->objectList.push_back(new EnemyA(6, 2));
-	map[4][4]->objectList.push_back(new EnemyB(2, 2));
-	map[4][4]->objectList.push_back(new EnemyB(44, 2));
-	map[4][4]->objectList.push_back(new EnemyB(4, 2));
-	map[4][4]->objectList.push_back(new EnemyB(40, 2));
-	map[4][4]->objectList.push_back(new EnemyB(6, 23));
-	map[4][4]->objectList.push_back(new EnemyB(40, 23));
-
-	map[3][4]->objectList.push_back(new EnemyD(5, 5));
-	map[3][4]->objectList.push_back(new EnemyD(1, 5));
-	map[3][4]->objectList.push_back(new EnemyD(5, 3));
-	//map[3][4]->objectList.push_back(new EnemyC(22, 22));
-	//map[3][4]->objectList.push_back(new EnemyD(13, 3));
-	//map[3][4]->objectList.push_back(new EnemyC(23, 22));
-	//map[3][4]->objectList.push_back(new EnemyE(40, 22));
-	//map[3][4]->objectList.push_back(new EnemyC(43, 22));
-	map[3][4]->objectList.push_back(new Teleporter_sounghoo(10, 10, 20, 20));
-	map[3][4]->objectList.push_back(new Teleporter_sounghoo(20, 20, 10, 10));
-	map[3][4]->objectList.push_back(new BreakableBlock(24, 10));
-	map[3][4]->objectList.push_back(new AltarOfLuck(2, 10));
-	map[3][4]->objectList.push_back(new Teleporter(2, 15, 40, 15));
-
-	MapInfo mapInfo;
+	map[2][4]->isDoor[RIGHT] = true;
 	mapInfo.SetRoom(map[2][4], "MapInfo/Debug/00.csv");
 	map[2][4]->objectList.push_back(new EnemyD(7,22));
 	map[2][4]->objectList.push_back(new EnemyD(1,12));
 	map[2][4]->objectList.push_back(new EnemyD(27,12));
 	map[2][4]->objectList.push_back(new EnemyD(48,18));
 
+	map[2][5]->isDoor[LEFT] = true;
+	map[2][5]->isDoor[RIGHT] = true;
+	mapInfo.SetRoom(map[2][5], "MapInfo/Debug/01.csv");
+	map[2][5]->objectList.push_back(new Teleporter(3, 15, 45, 15));
+
+	map[2][6]->isDoor[LEFT] = true;
+	map[2][6]->isDoor[RIGHT] = true;
+	mapInfo.SetRoom(map[2][6], "MapInfo/Debug/01.csv");
+	map[2][6]->objectList.push_back(new Teleporter_sounghoo(3, 15, 46, 15));
+	map[2][6]->objectList.push_back(new Teleporter_sounghoo(46, 15, 3, 15));
+
+	map[2][7]->isDoor[LEFT] = true;
+	map[2][7]->isDoor[RIGHT] = true;
+	mapInfo.SetRoom(map[2][7], "MapInfo/Debug/05.csv");
+	map[2][7]->objectList.push_back(new Teleporter_sounghoo(46, 4, 46, 13));
+	map[2][7]->objectList.push_back(new Teleporter_sounghoo(46, 13, 46, 4));
+	map[2][7]->objectList.push_back(new Teleporter_sounghoo(46, 27, 46, 17));
+	map[2][7]->objectList.push_back(new Teleporter_sounghoo(46, 17, 46, 27));
+	map[2][7]->objectList.push_back(new EnemyD(3, 3));
+	map[2][7]->objectList.push_back(new EnemyD(4, 4));
+	map[2][7]->objectList.push_back(new EnemyB(3, 27));
+	map[2][7]->objectList.push_back(new EnemyB(4, 26));
 }
 void GameManager::CreateMap()
 {

@@ -17,7 +17,7 @@ list<DIRECTION_TYPE>* Enemy::BehaviorPattern()
 }
 EnemyA::EnemyA(int posX, int posY) : Enemy(posX, posY)
 {
-	this->sizeX = 2;
+	this->sizeX = 1;
 	this->sizeY = 1;
 	this->moveDelayMax = 20;
 	this->health = 10;
@@ -63,7 +63,7 @@ void EnemyA::Draw()
 		SetColor(11, 16);
 
 	gotoxy(2 + (positionX * 2), 1 + positionY);
-	cout << "Àú¾ï";
+	cout << "Àû";
 
 	SetColor(7, 16);
 }
