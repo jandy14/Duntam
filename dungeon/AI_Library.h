@@ -63,6 +63,7 @@ namespace AI
 		int m_range;
 	public:
 		SearchingWay(EnemyC* p_this,int p_range) : m_this(p_this), m_range(p_range){}
+		~SearchingWay() { delete m_this; }
 		virtual bool Run() override
 		{
 			int targetX = GameManager::GetInstance()->player->GetPositionX();
@@ -237,45 +238,3 @@ namespace AI
 			return isDirect;
 	}
 }
-/*
-void EnemyC::AI()
-{
-	DIRECTION_TYPE dir = NONE;
-
-	if (moveDelay == 0)
-	{
-
-		int x = positionX;
-		int y = positionY;
-		int targetX = GameManager::GetInstance()->player->GetPositionX();
-		int targetY = GameManager::GetInstance()->player->GetPositionY();
-		int lastX = 0;
-		int lastY = 0;
-
-		Astar(MAP, targetX, targetY, x, y);
-		lastX = MAP.Get(x, y).m_lastX;
-		lastY = MAP.Get(x, y).m_lastY;
-
-		// 얻은 좌표를 방향으로 변환
-		if (lastX > x)
-			dir = RIGHT;
-		else if (lastX < x)
-			dir = LEFT;
-		else if (lastY > y)
-			dir = DOWN;
-		else if (lastY < y)
-			dir = UP;
-
-		Move(dir);
-	}
-	if (moveDelay == 0)
-	{
-		if (!IsWall(dir))
-		{
-			Object* target = CheckCollision(dir);
-			if (target == (Object*)GameManager::GetInstance()->player)
-				target->Damage(1);
-		}
-	}
-}
-*/

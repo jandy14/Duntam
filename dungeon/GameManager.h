@@ -37,7 +37,6 @@ public:
 	Room();
 	bool IsDoor(DIRECTION_TYPE dir);	//이쪽에 문이 있는지
 	bool IsUse();	//사용되는 방인지 확인
-	~Room();
 };
 
 class GameManager

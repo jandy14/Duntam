@@ -34,6 +34,25 @@ GameManager::GameManager()
 	this->gameState = STARTMENU;
 	//그냥 있는다.
 }
+GameManager::~GameManager()
+{
+	for (int y = 0; y < 9; y++)
+	{
+		for (int x = 0; x < 9; x++)
+		{
+			delete map[y][x];
+		}
+	}
+	for (int y = 0; y < 30; y++)
+	{
+		for (int x = 0; x < 50; x++)
+			collisionTable[y][x] = NULL;
+	}
+
+	delete nowObjectList;	
+	delete player;			
+	delete singleton;
+}
 void GameManager::PrintMap(int mapX, int mapY)
 {	
 	//맵출력
@@ -48,33 +67,33 @@ void GameManager::PrintMap(int mapX, int mapY)
 				int drawY = mapY + y * 4;
 				//방 그리기
 				gotoxy(drawX, drawY);
-				cout << "■■■";
+				printf("■■■");
 				gotoxy(drawX, drawY + 1);
-				cout << "■";
+				printf("■");
 				gotoxy(drawX + 4, drawY + 1);
-				cout << "■";
+				printf("■");
 				gotoxy(drawX, drawY + 2);
-				cout << "■■■";
+				printf("■■■");
 				//통로 그리기
 				if (this->map[y][x]->isDoor[UP])
 				{
 					gotoxy(drawX + 2, drawY - 1);
-					cout << "□";
+					printf("□");
 				}
 				if (this->map[y][x]->isDoor[DOWN])
 				{
 					gotoxy(drawX + 2, drawY + 3);
-					cout << "□";
+					printf("□");
 				}
 				if (this->map[y][x]->isDoor[LEFT])
 				{
 					gotoxy(drawX - 2, drawY + 1);
-					cout << "□";
+					printf("□");
 				}
 				if (this->map[y][x]->isDoor[RIGHT])
 				{
 					gotoxy(drawX + 6, drawY + 1);
-					cout << "□";
+					printf("□");
 				}
 			}
 		}
@@ -167,6 +186,7 @@ void GameManager::CreateMap()
 	for (int y = 0; y < 9; y++)
 		for (int x = 0; x < 9; x++)
 			map[y][x] = new Room();
+			
 	//너비우선
 	list<int> nextMake;	//다음에 만들어질 방 번호
 	nextMake.push_front(40);
@@ -319,29 +339,29 @@ void GameManager::DrawFrame()		//프레임그리기
 {
 	gotoxy(0, 0);
 	for (int i = 0; i < 52; i++)
-		cout << "▩";
+		printf("▩");
 	for (int i = 1; i < 32; i++)
 	{
 		gotoxy(0, i);
-		cout << "▩";
+		printf("▩");
 		gotoxy(102, i);
-		cout << "▩";
+		printf("▩");
 	}
 	gotoxy(0, 31);
 	for (int i = 0; i < 52; i++)
-		cout << "▩";
+		printf("▩");
 	for (int i = 32; i < 37; i++)
 	{
 		gotoxy(0, i);
-		cout << "▩";
+		printf("▩");
 		gotoxy(70, i);
-		cout << "▩";
+		printf("▩");
 		gotoxy(102, i);
-		cout << "▩";
+		printf("▩");
 	}
 	gotoxy(0, 37);
 	for (int i = 0; i < 52; i++)
-		cout << "▩";
+		printf("▩");
 }
 void GameManager::DrawStartPage()
 {
@@ -440,22 +460,22 @@ void GameManager::DrawGameClearPage()
 	int explanX = 37, explanY = 22;	//설명문 위치
 									//시작화면 출력
 	gotoxy(titleX, titleY);		//제목
-	cout << "Game Clear!";
+	puts("Game Clear!");
 	gotoxy(titleX - 2, titleY + 1);
-	cout << "Congratulation!!";
+	puts("Congratulation!!");
 
 	if (count == 50)	//(press ..)깜박거리게 하기용
 	{
 		if (isPrint)
 		{
 			gotoxy(explanX, explanY);
-			cout << "                              ";
+			puts("                              ");
 			isPrint = false;
 		}
 		else
 		{
 			gotoxy(explanX, explanY);
-			cout << "Press spacebar to go startmenu";
+			puts("Press spacebar to go startmenu");
 			isPrint = true;
 		}
 		count = 0;
@@ -468,7 +488,7 @@ void GameManager::DrawChangeMap()
 	{
 		gotoxy(2, 1 + y);
 		for (int x = 0; x < 50; x++)
-			cout << "  ";
+			printf("  ");
 	}
 }
 void GameManager::PrintPlayerState()
@@ -495,7 +515,11 @@ void GameManager::GameSetting(int mode)
 	//콜리젼 테이블 설정
 	for (int i = 0; i < 30; i++)	//콜리젼 테이블 값 초기화
 		for (int j = 0; j < 50; j++)
+		{
+			delete(this->collisionTable[i][j]);
 			this->collisionTable[i][j] = NULL;
+		}
+			
 
 	list<Object*>::iterator iter = this->nowObjectList->begin();	//콜리젼 테이블 세팅
 	for (; iter != this->nowObjectList->end(); iter++)
@@ -539,7 +563,7 @@ void GameManager::SetMessage(list<string>& newMessage)
 	this->message.assign(newMessage.begin(), newMessage.end());
 	//첫메세지 출력
 	gotoxy(72, 34);
-	cout << "                              ";
+	puts("                              ");
 	gotoxy(72, 34);
 	cout << this->message.front();
 	this->message.pop_front();
@@ -548,7 +572,7 @@ void GameManager::SetMessage(list<string>& newMessage)
 void GameManager::NextMessage()
 {
 	gotoxy(72, 34);
-	cout << "                              ";
+	puts("                              ");
 	gotoxy(72, 34);
 	if (this->message.size() != 0)
 	{
@@ -598,7 +622,7 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 
 	if ((nowMapX < 0 || nowMapX >= 9) || (nowMapY < 0 || nowMapY >= 9))	//맵범위 벋어 날까봐 해둔거
 		for (;;)
-			cout << "map range_out";
+			puts("map range_out");
 
 	this->nowObjectList = &(map[nowMapY][nowMapX]->objectList);	//오브젝트리스트의 포인터값 변경
 

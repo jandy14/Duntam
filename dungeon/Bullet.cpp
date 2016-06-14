@@ -60,12 +60,12 @@ void Bullet::Draw()
 	if (lookingDir == UP || lookingDir == DOWN)
 	{
 		gotoxy(2 + (positionX * 2), 1 + positionY);
-		cout << "бл";
+		puts("бл");
 	}
 	else if (lookingDir == LEFT || lookingDir == RIGHT)
 	{
 		gotoxy(2 + (positionX * 2), 1 + positionY);
-		cout << "г╜";
+		puts("г╜");
 	}
 	SetColor(7, 16);
 }
@@ -138,12 +138,12 @@ void EnemyBullet::Draw()
 	if (lookingDir == UP || lookingDir == DOWN)
 	{
 		gotoxy(2 + (positionX * 2), 1 + positionY);
-		cout << "бл";
+		puts("бл");
 	}
 	else if (lookingDir == LEFT || lookingDir == RIGHT)
 	{
 		gotoxy(2 + (positionX * 2), 1 + positionY);
-		cout << "г╜";
+		puts("г╜");
 	}
 	SetColor(7, 16);
 }

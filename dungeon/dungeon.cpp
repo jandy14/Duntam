@@ -119,7 +119,7 @@ int main()
 		if (timer != time(NULL))
 		{
 			gotoxy(0, 0);
-			cout << "FPS : " << count;
+			printf("FPS : %d",count);
 			count = 0;
 			timer = time(NULL);
 		}

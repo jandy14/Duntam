@@ -64,7 +64,7 @@ void EnemyA::Draw()
 		SetColor(11, 16);
 
 	gotoxy(2 + (positionX * 2), 1 + positionY);
-	cout << "적";
+	puts("적");
 
 	SetColor(7, 16);
 }
@@ -136,10 +136,10 @@ void EnemyB::Draw()
 	if (frozing)
 		SetColor(11, 16);
 
-	gotoxy(2 + (positionX *  2), 1 + positionY);
-	cout << "매우";
+	gotoxy(2 + (positionX *  2), 1 + positionY );
+	puts("매우");
 	gotoxy(2 + (positionX * 2), 1 + positionY + 1);
-	cout << "큰적";
+	puts("큰적");
 
 	SetColor(7, 16);
 }
@@ -293,7 +293,7 @@ void EnemyC::Draw()
 		SetColor(11, 16);
 
 	gotoxy(2 + positionX * 2, positionY + 1); // 2+X 와 Y + 1 의 의미가 무엇인가??
-	cout << "씨";
+	puts("씨");
 
 	SetColor(7, 16);
 }
@@ -358,7 +358,7 @@ void EnemyD::Draw()
 		SetColor(11, 16);
 
 	gotoxy(2 + positionX * 2, positionY + 1); // 2+X 와 Y + 1 의 의미가 무엇인가??
-	cout << "디";
+	puts("디");
 
 	SetColor(7, 16);
 }
@@ -424,7 +424,7 @@ void EnemyE::Draw()
 		SetColor(11, 16);
 
 	gotoxy(2 + positionX * 2, positionY + 1); // 2+X 와 Y + 1 의 의미가 무엇인가??
-	cout << "이";
+	puts("이");
 
 	SetColor(7, 16);
 }

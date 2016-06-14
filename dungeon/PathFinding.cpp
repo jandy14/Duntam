@@ -149,8 +149,6 @@ void Astar(Array2D<Cell>& p_map, int p_x, int p_y, int p_gx, int p_gy)
 	int x, y;
 	int ax, ay;
 	int dir;
-	int tempX;
-	int tempY;
 	float distance = 0;
 
 	queue.m_count = 0;
@@ -296,8 +294,6 @@ void Astar_Telepoter(Array2D<Cell>& p_map, int p_x, int p_y, int p_gx, int p_gy)
 	int x, y;
 	int ax, ay;
 	int dir;
-	int tempX;
-	int tempY;
 	float distance = 0;
 
 	queue.m_count = 0;
