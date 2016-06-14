@@ -407,12 +407,12 @@ void EnemyE::AI()
 	Sequence *sequence1 = new Sequence;
 	Selector *selector1 = new Selector;
 	AI::Move *move = new AI::Move(this);
-	AI::Attack *attack = new AI::Attack(this, m_range);
+	AI::Attack_Dynamic *attackDynamic = new AI::Attack_Dynamic(this, m_range);
 
 	root->AddChild(sequence1);
 	sequence1->AddChild(checkStatus); sequence1->AddChild(detect);
 	sequence1->AddChild(searchingWay); sequence1->AddChild(selector1);
-	selector1->AddChild(attack); selector1->AddChild(move);
+	selector1->AddChild(attackDynamic); selector1->AddChild(move);
 
 	root->Run();
 }
