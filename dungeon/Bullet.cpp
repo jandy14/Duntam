@@ -157,3 +157,87 @@ void EnemyBullet::Interact(Object& targer)
 }
 void EnemyBullet::Damage(int p) {}
 void EnemyBullet::Heal(int p) {}
+
+BombBullet::BombBullet(int posX, int posY, DIRECTION_TYPE lookingDir) : Bullet(posX, posY, lookingDir)
+{
+	this->moveDelayMax = 2;
+	this->moveDelay = 2;
+	this->isExplosion = false;
+}
+void BombBullet::Update()
+{
+	Object* target = NULL;
+	if (moveDelay)
+		moveDelay--;
+	if (frozing)
+		frozing--;
+
+	if (!IsWall(UP))
+	{
+		target = CheckCollision(UP);
+		if (target != NULL)
+		{
+			this->isExplosion = true;
+		}
+	}
+	if (!IsWall(DOWN))
+	{
+		target = CheckCollision(DOWN);
+		if (target != NULL)
+		{
+			this->isExplosion = true;
+		}
+	}
+	if (!IsWall(LEFT))
+	{
+		target = CheckCollision(LEFT);
+		if (target != NULL)
+		{
+			this->isExplosion = true;
+		}
+	}
+	if (!IsWall(RIGHT))
+	{
+		target = CheckCollision(RIGHT);
+		if (target != NULL)
+		{
+			this->isExplosion = true;
+		}
+	}
+	if (isExplosion)
+	{
+		/////여기만 적으면된다
+	}
+	if (moveDelay == 0)
+	{
+		Move(lookingDir);
+	}
+	if (moveDelay == 0)
+	{
+		this->Die();
+	}
+}
+void BombBullet::Draw()
+{
+	//이전에 남은 그림 지우기
+	RemoveAfterimage();
+
+	SetColor(13, 16);
+	if (lookingDir == UP || lookingDir == DOWN)
+	{
+		gotoxy(2 + (positionX * 2), 1 + positionY);
+		cout << "∥";
+	}
+	else if (lookingDir == LEFT || lookingDir == RIGHT)
+	{
+		gotoxy(2 + (positionX * 2), 1 + positionY);
+		cout << "＝";
+	}
+	SetColor(7, 16);
+}
+void BombBullet::Interact(Object& target)
+{
+	list<string> message;
+	message.push_back("그러다 다친다");
+	GameManager::GetInstance()->SetMessage(message);
+}

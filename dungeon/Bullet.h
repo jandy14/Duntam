@@ -26,6 +26,8 @@ public:
 
 class BombBullet : public Bullet
 {
+protected:
+	bool isExplosion;		//터질지 확인
 public:
 	BombBullet(int posX, int posY, DIRECTION_TYPE lookingDir);
 	~BombBullet();
