@@ -10,6 +10,8 @@ protected:
 	int moveDelay, moveDelayMax;//움직임 딜레이와 최댓값
 	int frozing;				//상태이상(얼음)
 	int health;					//체력
+	int drawCount;				//drawCount
+	int interactionCount;		//상호작용Count
 	DIRECTION_TYPE prevMove;	//이전 이동 방향(Draw용)
 	DIRECTION_TYPE lookingDir;	//보는 방향	
 	//char image;				//그려질 이미지
@@ -35,6 +37,7 @@ public:
 	virtual void Heal(int p);	//치료 받음
 	virtual int GetPositionX();	//오브젝트 X좌표
 	virtual int GetPositionY();	//오브젝트 Y좌표
+	virtual void SetDrawCountZero();	//drawcount  = 0;
 	virtual void SetPosition(int posX, int posY);	//오브젝트 좌표 설정
 	virtual void SetLookingDir(DIRECTION_TYPE dir);	//보는 방향 설정
 	virtual DIRECTION_TYPE GetLookingDir();			//보는 방향 값

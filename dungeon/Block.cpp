@@ -5,7 +5,6 @@ using namespace std;
 
 Block::Block(int posX, int posY) : Object(posX,posY)
 {
-	this->interactionCount = 0;
 	this->sizeX = 1;
 	this->sizeY = 1;
 	this->moveDelayMax = 1;
@@ -19,10 +18,14 @@ void Block::Attack(){}
 void Block::Update(){}
 void Block::Draw()
 {
-	RemoveAfterimage();
+	if (drawCount == 0)
+	{
+		RemoveAfterimage();
 
-	gotoxy(2 + (positionX * 2), 1 + positionY);
-	cout << "бс";
+		gotoxy(2 + (positionX * 2), 1 + positionY);
+		cout << "бс";
+		drawCount++;
+	}
 }
 void Block::Interact(Object& target)
 {

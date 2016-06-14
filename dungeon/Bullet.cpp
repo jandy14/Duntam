@@ -12,6 +12,7 @@ Bullet::Bullet(int posX, int posY, DIRECTION_TYPE lookingDir) : Object(posX, pos
 	this->health = 1;
 	this->frozing = 0;
 	this->lookingDir = lookingDir;
+	this->TypeName = 1;
 	//위치 재설정
 	if (lookingDir == UP)
 		this->positionY -= 1;

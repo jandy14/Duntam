@@ -15,7 +15,7 @@
 
 typedef enum { NOCURSOR, SOLIDCURSOR, NORMALCURSOR } CURSOR_TYPE;	//커서타입정의
 typedef enum { UP, DOWN, LEFT, RIGHT, NONE } DIRECTION_TYPE;		 //방향타입
-typedef enum { STARTMENU, GAMING, PAUSE, GAMEOVER } GAMESTATE_TYPE;	//게임상태타입
+typedef enum { STARTMENU, GAMING, PAUSE, GAMEOVER, GAMECLEAR } GAMESTATE_TYPE;	//게임상태타입
 
 void setcursortype(CURSOR_TYPE c);		//커서 모양 지정함수
 void gotoxy(int x, int y);				//(옆으로,아래로)

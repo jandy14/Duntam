@@ -19,7 +19,7 @@ AltarOfLuck::AltarOfLuck(int posX, int posY) : Thing(posX, posY)
 	this->sizeX = 1;
 	this->sizeY = 2;
 	this->drawCount = 0;
-	this->instractionCount = 0;
+	this->interactionCount = 0;
 }
 AltarOfLuck::~AltarOfLuck() {}
 void AltarOfLuck::Attack() {}
@@ -52,20 +52,20 @@ void AltarOfLuck::Draw()
 void AltarOfLuck::Interact(Object& target)
 {
 	list<string> message;
-	if (instractionCount == 0)
+	if (interactionCount == 0)
 	{
 		message.push_back("행운의 제단");
 		message.push_back("운이 좋다면 생명을");
 		message.push_back("운이 나쁘면 공격을");
-		instractionCount++;
+		interactionCount++;
 	}
-	else if (instractionCount == 1)
+	else if (interactionCount == 1)
 	{
 		if (random(2))
 			target.Heal(10);
 		else
 			target.Damage(5);
-		instractionCount++;
+		interactionCount++;
 	}
 	else
 	{
@@ -73,12 +73,37 @@ void AltarOfLuck::Interact(Object& target)
 	}
 	GameManager::GetInstance()->SetMessage(message);
 }
-
+AltarOfHeal::AltarOfHeal(int posX, int posY) : AltarOfLuck(posX, posY){}
+void AltarOfHeal::Draw()
+{
+	SetColor(12, 16);
+	gotoxy(2 + (positionX * 2), 1 + positionY);
+	cout << "＋";
+	SetColor(7, 16);
+	gotoxy(2 + (positionX * 2), 1 + positionY + 1);
+	cout << "▲";
+}
+void AltarOfHeal::Interact(Object& target)
+{
+	list<string> message;
+	if (interactionCount == 0)
+	{
+		message.push_back("치료의 제단");
+		message.push_back("그대에게 생명을...");
+		interactionCount++;
+	}
+	else
+	{
+		target.Heal(10);
+		message.push_back("기회는 한번만...");
+	}
+	GameManager::GetInstance()->SetMessage(message);
+}
+AltarOfHeal::~AltarOfHeal() {}
 BulletTrap::BulletTrap(int posX, int posY, DIRECTION_TYPE dir) : Thing(posX, posY)
 {
 	this->sizeX = 1;
 	this->sizeY = 1;
-	this->instractionCount = 0;
 	this->lookingDir = dir;
 	this->attackDelay = 10;
 	this->attackDelayMax = 10;
@@ -114,48 +139,52 @@ void BulletTrap::Update()
 }
 void BulletTrap::Draw()
 {
-	//RemoveAfterimage();
-	if (lookingDir == UP)
+	if (drawCount == 0)
 	{
-		gotoxy(2 + (positionX * 2), 1 + positionY);
-		cout << "△";
-	}
-	else if (lookingDir == DOWN)
-	{
-		gotoxy(2 + (positionX * 2), 1 + positionY);
-		cout << "▽";
-	}
-	else if (lookingDir == LEFT)
-	{
-		gotoxy(2 + (positionX * 2), 1 + positionY);
-		cout << "◁";
-	}
-	else if (lookingDir == RIGHT)
-	{
-		gotoxy(2 + (positionX * 2), 1 + positionY);
-		cout << "▷";
+		//RemoveAfterimage();
+		if (lookingDir == UP)
+		{
+			gotoxy(2 + (positionX * 2), 1 + positionY);
+			cout << "△";
+		}
+		else if (lookingDir == DOWN)
+		{
+			gotoxy(2 + (positionX * 2), 1 + positionY);
+			cout << "▽";
+		}
+		else if (lookingDir == LEFT)
+		{
+			gotoxy(2 + (positionX * 2), 1 + positionY);
+			cout << "◁";
+		}
+		else if (lookingDir == RIGHT)
+		{
+			gotoxy(2 + (positionX * 2), 1 + positionY);
+			cout << "▷";
+		}
+		drawCount++;
 	}
 }
 void BulletTrap::Interact(Object& target)
 {
 	list<string> message;
-	if (instractionCount == 0)
+	if (interactionCount == 0)
 	{
 		message.push_back("나한테 말을 걸다니");
 		message.push_back("베짱이 두둑하군");
-		instractionCount++;
+		interactionCount++;
 	}
-	else if (instractionCount == 1)
+	else if (interactionCount == 1)
 	{
 		target.Heal(1);
 		message.push_back("맘에 들었다 선물을 주지");
-		instractionCount++;
+		interactionCount++;
 	}
-	else if (instractionCount < 10)
+	else if (interactionCount < 10)
 	{
 		target.Heal(1);
 		message.push_back("맘에 드나? 또 주지!");
-		instractionCount++;
+		interactionCount++;
 	}
 	else
 	{
@@ -169,7 +198,6 @@ Teleporter::Teleporter(int posX, int posY, int warpX, int warpY) : Thing(posX, p
 	this->sizeX = 1;
 	this->sizeY = 1;
 	this->drawCount = 0;
-	this->instractionCount = 0;
 	this->warpPointX = warpX;
 	this->warpPointY = warpY;
 }
@@ -200,11 +228,11 @@ void Teleporter::Draw()
 void Teleporter::Interact(Object& target)
 {
 	list<string> message;
-	if (instractionCount == 0)
+	if (interactionCount == 0)
 	{
 		message.push_back("텔레포터");
 		message.push_back("지정된 위치로 이동합니다");
-		instractionCount++;
+		interactionCount++;
 	}
 	else
 	{
@@ -280,4 +308,45 @@ void Teleporter_sounghoo::Interact(Object& target)
 	}
 
 	target.SetPosition(warpPointX + x, warpPointY + y);
+}
+
+ClearObject::ClearObject(int posX, int posY) : Thing(posX, posY)
+{
+	this->sizeX = 1;
+	this->sizeY = 2;
+	this->drawCount = 0;
+	this->interactionCount = 0;
+}
+ClearObject::~ClearObject() {}
+void ClearObject::Attack() {}
+void ClearObject::Update() {}
+void ClearObject::Draw()
+{
+	//RemoveAfterimage();
+
+	SetColor(drawCount + 9, 16);
+	gotoxy(2 + (positionX * 2), 1 + positionY);
+	cout << "＠";
+	SetColor(15, 16);
+	gotoxy(2 + (positionX * 2), 1 + positionY + 1);
+	cout << "♨";
+	drawCount++;
+	if (drawCount >= 7)
+		drawCount = 0;
+	SetColor(7, 16);
+}
+void ClearObject::Interact(Object& target)
+{
+	list<string> message;
+	if (interactionCount == 0)
+	{
+		message.push_back("나는 신비한 물체");
+		message.push_back("여정을 끝내려면 다시 말을 걸게");
+		interactionCount++;
+	}
+	else
+	{
+		GameManager::GetInstance()->SetGameState(GAMECLEAR);
+	}
+	GameManager::GetInstance()->SetMessage(message);
 }

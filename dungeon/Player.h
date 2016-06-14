@@ -7,6 +7,7 @@ class Player : public Object
 {
 	friend class GameManager;
 	int damageCount;
+	int superPower;
 public:
 	bool isDie;
 
@@ -16,6 +17,7 @@ public:
 	virtual void Draw();
 	virtual void Interact(Object& target);
 	virtual void Damage(int p);
+	void SetSuperPower();
 	virtual ~Player();
 };
 

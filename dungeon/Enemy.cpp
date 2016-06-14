@@ -6,6 +6,7 @@
 Enemy::Enemy(int posX,int posY) : Object(posX,posY)
 {
 	this->movingQueue = new list<DIRECTION_TYPE>();
+	this->TypeName = 10;
 }
 Enemy::~Enemy()
 {
@@ -85,7 +86,7 @@ void EnemyA::Interact(Object& target)
 
 EnemyB::EnemyB(int posX, int posY) : Enemy(posX, posY)
 {
-	this->sizeX = 1;
+	this->sizeX = 2;
 	this->sizeY = 2;
 	this->moveDelayMax = 10;
 	this->health = 10;
@@ -135,10 +136,10 @@ void EnemyB::Draw()
 	if (frozing)
 		SetColor(11, 16);
 
-	gotoxy(2 + (positionX * 2), 1 + positionY);
-	cout << "저";
+	gotoxy(2 + (positionX *  2), 1 + positionY);
+	cout << "매우";
 	gotoxy(2 + (positionX * 2), 1 + positionY + 1);
-	cout << "억";
+	cout << "큰적";
 
 	SetColor(7, 16);
 }

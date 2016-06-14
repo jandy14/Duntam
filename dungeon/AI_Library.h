@@ -51,6 +51,7 @@ namespace AI
 			}
 			else
 			{
+				m_this->Move((DIRECTION_TYPE)random(4));
 				return false;
 			}
 		}

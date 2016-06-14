@@ -64,11 +64,13 @@ public:
 	void DrawPausePage();		//일시정지 화면 출력
 	void DrawStartPage();		//게임 시작 화면 출력
 	void DrawGameOverPage();	//게임 오버 화면 출력
+	void DrawGameClearPage();	//게임 클리어 화면 출력
 	void DrawChangeMap();		//맵변환시 보이는 화면
 	void PrintPlayerState();	//플레이어 상태 출력
 	void GameSetting(int mode);			//게임 시작전 준비
 	void ObjectUpdate();		//nowObjectList의 Object들의 Update()실행
 	void ObjectDraw();			//nowObjectList의 Object들의 Draw()실행
+	void ObjectDrawCountZero();	//nowObjectList의 Object들의 DrawCountZero()실행
 	void SetMessage(list<string>& newMessage);	//메세지 내용 고침
 	void NextMessage();			//메세지리스트의 다음내용 출력
 	DIRECTION_TYPE IsMapChange();	//맵변경상황인지 확인

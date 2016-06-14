@@ -4,7 +4,6 @@
 class Block : public Object
 {
 protected:
-	int interactionCount;
 public:
 	Block(int posX, int posY);
 	virtual void Attack();

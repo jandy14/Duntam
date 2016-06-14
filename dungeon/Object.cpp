@@ -10,6 +10,8 @@ Object::Object(int posX, int posY)
 	this->moveDelay = 0;
 	this->frozing = 0;
 	this->TypeName = 0;
+	this->interactionCount = 0;
+	this->drawCount = 0;
 }
 
 Object::~Object()
@@ -263,6 +265,10 @@ int Object::GetPositionX()
 int Object::GetPositionY()
 {
 	return this->positionY;
+}
+void Object::SetDrawCountZero()
+{
+	this->drawCount = 0;
 }
 void Object::SetPosition(int posX, int posY)
 {

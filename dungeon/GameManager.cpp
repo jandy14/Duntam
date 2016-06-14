@@ -89,9 +89,10 @@ void GameManager::CreateDebugMap()		//아직 미완성
 
 	MapInfo mapInfo;
 
+	//시작방
 	map[4][4]->isDoor[UP] = true;
 	mapInfo.SetRoom(map[4][4], "MapInfo/Debug/02.csv");
-	
+	//적 사이즈방
 	map[3][4]->isDoor[DOWN] = true;
 	map[3][4]->isDoor[UP] = true;
 	mapInfo.SetRoom(map[3][4], "MapInfo/Debug/04.csv");
@@ -99,39 +100,67 @@ void GameManager::CreateDebugMap()		//아직 미완성
 	map[3][4]->objectList.push_back(new EnemyA(4, 5));
 	map[3][4]->objectList.push_back(new EnemyB(45, 5));
 	map[3][4]->objectList.push_back(new EnemyB(47, 5));
-	//map[3][4]->objectList.push_back(new BreakableBlock(24, 10));
-	//map[3][4]->objectList.push_back(new AltarOfLuck(2, 10));
-
+	//a*와 그냥의 비교
 	map[2][4]->isDoor[DOWN] = true;
-	map[2][4]->isDoor[RIGHT] = true;
-	mapInfo.SetRoom(map[2][4], "MapInfo/Debug/00.csv");
-	map[2][4]->objectList.push_back(new EnemyD(7,22));
-	map[2][4]->objectList.push_back(new EnemyD(1,12));
-	map[2][4]->objectList.push_back(new EnemyD(27,12));
-	map[2][4]->objectList.push_back(new EnemyD(48,18));
+	map[2][4]->isDoor[UP] = true;
+	mapInfo.SetRoom(map[2][4], "MapInfo/Debug/07.csv");
+	map[2][4]->objectList.push_back(new EnemyD(1, 25));
+	map[2][4]->objectList.push_back(new EnemyB(1, 27));
+	//미로푸는 a*
+	map[1][4]->isDoor[DOWN] = true;
+	map[1][4]->isDoor[RIGHT] = true;
+	mapInfo.SetRoom(map[1][4], "MapInfo/Debug/00.csv");
+	map[1][4]->objectList.push_back(new EnemyD(7,22));
+	map[1][4]->objectList.push_back(new EnemyD(1,12));
+	map[1][4]->objectList.push_back(new EnemyD(27,12));
+	map[1][4]->objectList.push_back(new EnemyD(48,18));
+	//워프 일반
+	map[1][5]->isDoor[LEFT] = true;
+	map[1][5]->isDoor[RIGHT] = true;
+	mapInfo.SetRoom(map[1][5], "MapInfo/Debug/01.csv");
+	map[1][5]->objectList.push_back(new Teleporter(3, 15, 45, 15));
+	//포탈
+	map[1][6]->isDoor[LEFT] = true;
+	map[1][6]->isDoor[RIGHT] = true;
+	mapInfo.SetRoom(map[1][6], "MapInfo/Debug/01.csv");
+	map[1][6]->objectList.push_back(new Teleporter_sounghoo(3, 15, 46, 15));
+	map[1][6]->objectList.push_back(new Teleporter_sounghoo(46, 15, 3, 15));
+	//포탈이용하는 a*
+	map[1][7]->isDoor[LEFT] = true;
+	map[1][7]->isDoor[RIGHT] = true;
+	mapInfo.SetRoom(map[1][7], "MapInfo/Debug/05.csv");
+	map[1][7]->objectList.push_back(new Teleporter_sounghoo(46, 4, 46, 13));
+	map[1][7]->objectList.push_back(new Teleporter_sounghoo(46, 13, 46, 4));
+	map[1][7]->objectList.push_back(new Teleporter_sounghoo(46, 27, 46, 17));
+	map[1][7]->objectList.push_back(new Teleporter_sounghoo(46, 17, 46, 27));
+	map[1][7]->objectList.push_back(new EnemyD(3, 3));
+	map[1][7]->objectList.push_back(new EnemyD(4, 4));
+	map[1][7]->objectList.push_back(new EnemyB(3, 27));
+	map[1][7]->objectList.push_back(new EnemyB(4, 26));
+	//총탄방
+	map[1][8]->isDoor[LEFT] = true;
+	map[1][8]->isDoor[DOWN] = true;
+	mapInfo.SetRoom(map[1][8], "MapInfo/Debug/08.csv");
+	map[1][8]->objectList.push_back(new EnemyD(48, 2));
+	//힐방
+	map[2][8]->isDoor[UP] = true;
+	map[2][8]->isDoor[DOWN] = true;
+	mapInfo.SetRoom(map[2][8], "MapInfo/Debug/03.csv");
+	map[2][8]->objectList.push_back(new AltarOfHeal(20, 2));
+	map[2][8]->objectList.push_back(new AltarOfHeal(30, 2));
+	map[2][8]->objectList.push_back(new AltarOfHeal(20, 25));
+	map[2][8]->objectList.push_back(new AltarOfHeal(30, 25));
+	//적C방
+	map[3][8]->isDoor[UP] = true;
+	map[3][8]->isDoor[DOWN] = true;
+	mapInfo.SetRoom(map[3][8], "MapInfo/Debug/09.csv");
+	map[3][8]->objectList.push_back(new EnemyE(48, 28));
+	//도착
+	map[4][8]->isDoor[UP] = true;
+	mapInfo.SetRoom(map[4][8], "MapInfo/Debug/06.csv");
+	map[4][8]->objectList.push_back(new ClearObject(24, 14));
 
-	map[2][5]->isDoor[LEFT] = true;
-	map[2][5]->isDoor[RIGHT] = true;
-	mapInfo.SetRoom(map[2][5], "MapInfo/Debug/01.csv");
-	map[2][5]->objectList.push_back(new Teleporter(3, 15, 45, 15));
-
-	map[2][6]->isDoor[LEFT] = true;
-	map[2][6]->isDoor[RIGHT] = true;
-	mapInfo.SetRoom(map[2][6], "MapInfo/Debug/01.csv");
-	map[2][6]->objectList.push_back(new Teleporter_sounghoo(3, 15, 46, 15));
-	map[2][6]->objectList.push_back(new Teleporter_sounghoo(46, 15, 3, 15));
-
-	map[2][7]->isDoor[LEFT] = true;
-	map[2][7]->isDoor[RIGHT] = true;
-	mapInfo.SetRoom(map[2][7], "MapInfo/Debug/05.csv");
-	map[2][7]->objectList.push_back(new Teleporter_sounghoo(46, 4, 46, 13));
-	map[2][7]->objectList.push_back(new Teleporter_sounghoo(46, 13, 46, 4));
-	map[2][7]->objectList.push_back(new Teleporter_sounghoo(46, 27, 46, 17));
-	map[2][7]->objectList.push_back(new Teleporter_sounghoo(46, 17, 46, 27));
-	map[2][7]->objectList.push_back(new EnemyD(3, 3));
-	map[2][7]->objectList.push_back(new EnemyD(4, 4));
-	map[2][7]->objectList.push_back(new EnemyB(3, 27));
-	map[2][7]->objectList.push_back(new EnemyB(4, 26));
+	map[4][4]->objectList.push_back(new ClearObject(24, 14));
 }
 void GameManager::CreateMap()
 {
@@ -212,6 +241,15 @@ void GameManager::CreateMap()
 				mapInfo.SetRoom(map[y][x]);
 		}
 	}
+	while (true)
+	{
+		int goal = random(81);
+		if (map[goal / 9][goal % 9]->IsUse() && goal != 40)
+		{
+			map[goal / 9][goal % 9]->objectList.push_back(new ClearObject(24, 14));
+			break;
+		}
+	}
 }
 GameManager* GameManager::GetInstance()
 {
@@ -255,6 +293,14 @@ void GameManager::KeyEvent()
 			if (target != NULL)
 				target->Interact(*(this->player));
 		}
+	}
+	if (GetAsyncKeyState(0x4B) == (short)0x8001)	//(K)자살
+	{
+		player->Damage(999);
+	}
+	if (GetAsyncKeyState(0x51) == (short)0x8001)	//(Q)슈퍼파워
+	{
+		player->SetSuperPower();
 	}
 	if (GetAsyncKeyState(VK_RETURN) == (short)0x8001)	//(엔터) 다음 메세지
 	{
@@ -384,6 +430,38 @@ void GameManager::DrawGameOverPage()
 	}
 	count++;
 }
+void GameManager::DrawGameClearPage()
+{
+	//게임오버 화면 출력
+	static int count = 0;	//화면 출력카운드 (0에서 50까지)
+	static bool isPrint = true;	//화면 출력 여부(press ..)
+
+	int titleX = 47, titleY = 15;	//제목 위치
+	int explanX = 37, explanY = 22;	//설명문 위치
+									//시작화면 출력
+	gotoxy(titleX, titleY);		//제목
+	cout << "Game Clear!";
+	gotoxy(titleX - 2, titleY + 1);
+	cout << "Congratulation!!";
+
+	if (count == 50)	//(press ..)깜박거리게 하기용
+	{
+		if (isPrint)
+		{
+			gotoxy(explanX, explanY);
+			cout << "                              ";
+			isPrint = false;
+		}
+		else
+		{
+			gotoxy(explanX, explanY);
+			cout << "Press spacebar to go startmenu";
+			isPrint = true;
+		}
+		count = 0;
+	}
+	count++;
+}
 void GameManager::DrawChangeMap()
 {
 	for (int y = 0; y < 30; y++)
@@ -443,6 +521,13 @@ void GameManager::ObjectDraw()		//오브젝트리스트 돌면서 Draw()실행
 	for (; iter != this->nowObjectList->end(); iter++)
 		(*iter)->Draw();
 	player->Draw();
+}
+void GameManager::ObjectDrawCountZero()
+{
+	list<Object*>::iterator iter = this->nowObjectList->begin();
+	for (; iter != this->nowObjectList->end(); iter++)
+		(*iter)->SetDrawCountZero();
+	player->SetDrawCountZero();
 }
 void GameManager::SetMessage(list<string>& newMessage)
 {
@@ -526,6 +611,8 @@ void GameManager::ChangeMap(DIRECTION_TYPE dir)	//맵이동
 	for (; iter != this->nowObjectList->end(); iter++)
 		(*iter)->SetCollision(NONE);
 	this->player->SetCollision(NONE);
+
+	ObjectDrawCountZero();
 
 	//디스플레이
 	DrawChangeMap();

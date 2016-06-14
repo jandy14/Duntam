@@ -29,6 +29,7 @@ static Array2D<Cell> MAP;
 static list<Cell> TELEPORT;
 
 void ClearCells(Array2D<Cell>& MAP, int p_x, int p_y, int p_gx, int p_gy);
+void ClearCells2(Array2D<Cell>& p_map, int p_gx, int p_gy, int p_x, int p_y);
 float ComplexHeuristic(int x, int y, int targetX, int targetY, int dir);
 float AdmissibleHeuristic(int x, int y, int gx, int gy, int dir);
 float Distance(int x1, int y1, int x2, int y2);

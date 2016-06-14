@@ -23,3 +23,13 @@ public:
 	virtual void Damage(int p);	//??¹??? ¹Þ?½
 	virtual void Heal(int p);	//?¡·? ¹Þ?½
 };
+
+class BombBullet : public Bullet
+{
+public:
+	BombBullet(int posX, int posY, DIRECTION_TYPE lookingDir);
+	~BombBullet();
+	virtual void Update();		//매프레임 처리할 일
+	virtual void Draw();		//그려지는 부분 처리
+	virtual void Interact(Object& target);	//상호작용
+};

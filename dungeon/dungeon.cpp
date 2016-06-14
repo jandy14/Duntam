@@ -30,13 +30,13 @@ int main()
 			//시작화면 출력 함수
 			gameManager->DrawStartPage();
 			//스페이스바 누르면 게임 시작
-			if (GetAsyncKeyState(VK_SPACE) & 0x0001)	//게임 세팅(맵생성) 게임상태(게임중)
+			if (GetAsyncKeyState(VK_SPACE) == (short)0x8001)	//게임 세팅(맵생성) 게임상태(게임중)
 			{
 				randomize();
 				gameManager->GameSetting(0);
 				gameManager->SetGameState(GAMING);
 			}
-			else if (GetAsyncKeyState(0x44) & 0x0001)
+			else if (GetAsyncKeyState(0x44) == (short)0x8001)
 			{
 				randomize();
 				gameManager->GameSetting(1);
@@ -82,8 +82,11 @@ int main()
 			//일시 정시 화면 출력
 			gameManager->DrawPausePage();
 			//키 이벤트 확인 하고 있으면 다시 게임으로 아니면 계속 루프
-			if (GetAsyncKeyState(0x50) & 0x0001)
+			if (GetAsyncKeyState(0x50) == (short)0x8001)
+			{
+				gameManager->ObjectDrawCountZero();
 				gameManager->SetGameState(GAMING);
+			}
 
 		}
 
@@ -94,7 +97,17 @@ int main()
 			gameManager->DrawGameOverPage();
 
 			//그리고 다시 게임 시작화면 true
-			if (GetAsyncKeyState(VK_SPACE) & 0x0001)
+			if (GetAsyncKeyState(VK_SPACE) == (short)0x8001)
+				gameManager->SetGameState(STARTMENU);
+		}
+
+		if (gameManager->gameState == GAMECLEAR/*게임 오버*/)
+		{
+			//게임오버 화면 출력
+			gameManager->DrawGameClearPage();
+
+			//그리고 다시 게임 시작화면 true
+			if (GetAsyncKeyState(VK_SPACE) == (short)0x8001)
 				gameManager->SetGameState(STARTMENU);
 		}
 

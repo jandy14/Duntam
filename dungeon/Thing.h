@@ -16,8 +16,6 @@ public:
 class AltarOfLuck : public Thing
 {
 private:
-	int drawCount;
-	int instractionCount;
 public:
 	AltarOfLuck(int posX, int posY);
 	virtual void Attack();
@@ -26,11 +24,18 @@ public:
 	virtual void Interact(Object& target);
 	virtual ~AltarOfLuck();
 };
-
+class AltarOfHeal : public AltarOfLuck
+{
+private:
+public:
+	AltarOfHeal(int posX, int posY);
+	virtual void Draw();
+	virtual void Interact(Object& target);
+	virtual ~AltarOfHeal();
+};
 class BulletTrap : public Thing
 {
 private:
-	int instractionCount;
 	DIRECTION_TYPE lookingDir;
 	int attackDelay;
 	int attackDelayMax;
@@ -46,8 +51,6 @@ public:
 class Teleporter : public Thing
 {
 private:
-	int instractionCount;
-	int drawCount;
 	int warpPointX, warpPointY;	//워프되는 위치
 public:
 	Teleporter(int posX, int posY, int warpX, int warpY);
@@ -69,4 +72,16 @@ public:
 	virtual void Draw();
 	virtual void Interact(Object& target);
 	virtual ~Teleporter_sounghoo();
+};
+
+class ClearObject : public Thing
+{
+private:
+public:
+	ClearObject(int posX, int posY);
+	virtual void Attack();
+	virtual void Update();
+	virtual void Draw();
+	virtual void Interact(Object& target);
+	virtual ~ClearObject();
 };

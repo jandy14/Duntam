@@ -12,6 +12,7 @@ Player::Player(int posX,int posY) : Object(posX,posY)
 	this->frozing = 0;
 	this->lookingDir = DOWN;
 	this->isDie = false;
+	this->superPower = 0;
 }
 
 Player::~Player()
@@ -25,6 +26,8 @@ void Player::Update()
 		moveDelay--;
 	if (frozing)
 		frozing--;
+	if (superPower)
+		superPower--;
 }
 void Player::Draw()		//시작 좌표를 기록하는게 좋을 듯 하다
 {
@@ -40,6 +43,9 @@ void Player::Draw()		//시작 좌표를 기록하는게 좋을 듯 하다
 		if (damageCount > 3)
 			damageCount = 0;
 	}
+	if (superPower > 0)
+		SetColor((superPower % 7) + 9, 16);
+
 	gotoxy(2 + (positionX * 2), 1 + positionY);
 	if (lookingDir == UP)
 		cout << "▲";
@@ -73,12 +79,19 @@ void Player::Attack()
 }
 void Player::Damage(int p)
 {
-	this->health -= p;
-	if (this->health <= 0)
-		this->isDie = true;
-	this->damageCount = 1;
+	if (superPower == 0)
+	{
+		this->health -= p;
+		if (this->health <= 0)
+			this->isDie = true;
+		this->damageCount = 1;
+	}
 }
 void Player::Interact(Object& target)
 {
 
+}
+void Player::SetSuperPower()
+{
+	this->superPower += 100;
 }

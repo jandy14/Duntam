@@ -60,6 +60,69 @@ void ClearCells(Array2D<Cell>& p_map, int p_gx, int p_gy, int p_x, int p_y)
 		}
 	}
 }
+void ClearCells2(Array2D<Cell>& p_map, int p_gx, int p_gy, int p_x, int p_y)
+{
+	int x;
+	int y;
+	for (y = 0; y < 30; y++)
+	{
+		for (x = 0; x < 50; x++)
+		{
+			p_map.Get(x, y).m_marked = false;
+			p_map.Get(x, y).m_distance = 0.0f;
+			p_map.Get(x, y).m_lastX = -1;
+			p_map.Get(x, y).m_lastY = -1;
+
+			//그 좌표가 자신이거나 플레이어일 경우 여기서는 통과가능 하다고 한다.
+			if ((x == p_gx && y == p_gy) || (x == p_x && y == p_y))
+			{
+				p_map.Get(x, y).m_passable = true;
+				p_map.Get(x, y).m_x = x;
+				p_map.Get(x, y).m_y = y;
+			}
+			// 벽이 아닌경우
+			else if (GameManager::GetInstance()->collisionTable[y][x] == NULL)
+			{
+				p_map.Get(x, y).m_passable = true;
+				p_map.Get(x, y).m_x = x;
+				p_map.Get(x, y).m_y = y;
+			}
+			// 적인 경우
+			else if (GameManager::GetInstance()->collisionTable[y][x]->TypeName == 10)
+			{
+				p_map.Get(x, y).m_passable = true;
+				p_map.Get(x, y).m_x = x;
+				p_map.Get(x, y).m_y = y;
+			}
+			// 총알인 경우
+			else if (GameManager::GetInstance()->collisionTable[y][x]->TypeName == 1)
+			{
+				p_map.Get(x, y).m_passable = true;
+				p_map.Get(x, y).m_x = x;
+				p_map.Get(x, y).m_y = y;
+			}
+			// 텔레포터인 경우
+			else if (GameManager::GetInstance()->collisionTable[y][x]->TypeName == 52)
+			{
+				p_map.Get(x, y).m_passable = true;
+
+				Teleporter_sounghoo* telepoter = (Teleporter_sounghoo*)GameManager::GetInstance()->collisionTable[y][x];
+
+				p_map.Get(x, y).m_x = telepoter->warpPointX;
+				p_map.Get(x, y).m_y = telepoter->warpPointY;
+
+				TELEPORT.push_back(p_map.Get(x, y));
+			}
+			else
+			{
+				p_map.Get(x, y).m_passable = false;
+				p_map.Get(x, y).m_x = x;
+				p_map.Get(x, y).m_y = y;
+			}
+		}
+	}
+}
+
 
 float Distance(int x1, int y1, int x2, int y2)
 {
@@ -163,7 +226,7 @@ void Astar(Array2D<Cell>& p_map, int p_x, int p_y, int p_gx, int p_gy)
 	{
 		queue1.m_count = 0;
 
-		ClearCells(p_map, p_x, p_y, p_gx, p_gy);
+		ClearCells2(p_map, p_x, p_y, p_gx, p_gy);
 
 		c.x = p_x;
 		c.y = p_y;
@@ -190,6 +253,7 @@ void Astar(Array2D<Cell>& p_map, int p_x, int p_y, int p_gx, int p_gy)
 
 					if (ax >= 0 && ax < 50 &&
 						ay >= 0 && ay < 30 &&
+						p_map.Get(ax, ay).m_passable == true &&
 						p_map.Get(ax, ay).m_marked == false)
 					{
 						distance = p_map.Get(x, y).m_distance +
@@ -309,7 +373,7 @@ void Astar_Telepoter(Array2D<Cell>& p_map, int p_x, int p_y, int p_gx, int p_gy)
 	{
 		queue1.m_count = 0;
 
-		ClearCells(p_map, p_x, p_y, p_gx, p_gy);
+		ClearCells2(p_map, p_x, p_y, p_gx, p_gy);
 
 		c.x = p_x;
 		c.y = p_y;
@@ -336,6 +400,7 @@ void Astar_Telepoter(Array2D<Cell>& p_map, int p_x, int p_y, int p_gx, int p_gy)
 
 					if (ax >= 0 && ax < 50 &&
 						ay >= 0 && ay < 30 &&
+						p_map.Get(ax, ay).m_passable == true &&
 						p_map.Get(ax, ay).m_marked == false)
 					{
 						distance = p_map.Get(x, y).m_distance +
