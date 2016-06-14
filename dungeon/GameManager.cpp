@@ -20,6 +20,10 @@ Room::Room()
 		this->isDoor[i] = false;
 	this->objectList.clear();	//리스트 비워줌
 }
+Room::~Room()
+{
+	//해야한다
+}
 bool Room::IsDoor(DIRECTION_TYPE dir)
 {
 	return this->isDoor[dir];
@@ -36,22 +40,22 @@ GameManager::GameManager()
 }
 GameManager::~GameManager()
 {
-	for (int y = 0; y < 9; y++)
+	/*for (int y = 0; y < 9; y++)
 	{
 		for (int x = 0; x < 9; x++)
 		{
 			delete map[y][x];
 		}
-	}
-	for (int y = 0; y < 30; y++)
+	}*/
+	/*for (int y = 0; y < 30; y++)
 	{
 		for (int x = 0; x < 50; x++)
 			collisionTable[y][x] = NULL;
-	}
+	}*/
 
-	delete nowObjectList;	
-	delete player;			
-	delete singleton;
+	//delete nowObjectList;	
+	//delete player;			
+	//delete singleton;
 }
 void GameManager::PrintMap(int mapX, int mapY)
 {	
@@ -180,6 +184,7 @@ void GameManager::CreateDebugMap()		//아직 미완성
 	map[4][8]->objectList.push_back(new ClearObject(24, 14));
 
 	map[4][4]->objectList.push_back(new ClearObject(24, 14));
+
 }
 void GameManager::CreateMap()
 {
@@ -516,7 +521,6 @@ void GameManager::GameSetting(int mode)
 	for (int i = 0; i < 30; i++)	//콜리젼 테이블 값 초기화
 		for (int j = 0; j < 50; j++)
 		{
-			delete(this->collisionTable[i][j]);
 			this->collisionTable[i][j] = NULL;
 		}
 			
@@ -525,6 +529,12 @@ void GameManager::GameSetting(int mode)
 	for (; iter != this->nowObjectList->end(); iter++)
 		(*iter)->SetCollision(NONE);
 	player->SetCollision(NONE);
+}
+void GameManager::ClearRoom()
+{
+	for (int y = 0; y < 9; y++)
+		for (int x = 0; x < 9; x++)
+			delete map[y][x];
 }
 void GameManager::ObjectUpdate()		//오브젝트리스트 돌면서 Update()실행
 {

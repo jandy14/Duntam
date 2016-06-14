@@ -98,7 +98,10 @@ int main()
 
 			//그리고 다시 게임 시작화면 true
 			if (GetAsyncKeyState(VK_SPACE) == (short)0x8001)
+			{
+				gameManager->ClearRoom();
 				gameManager->SetGameState(STARTMENU);
+			}
 		}
 
 		if (gameManager->gameState == GAMECLEAR/*게임 오버*/)
@@ -108,7 +111,11 @@ int main()
 
 			//그리고 다시 게임 시작화면 true
 			if (GetAsyncKeyState(VK_SPACE) == (short)0x8001)
+			{
+				delete gameManager->player;
+				gameManager->ClearRoom();
 				gameManager->SetGameState(STARTMENU);
+			}
 		}
 
 

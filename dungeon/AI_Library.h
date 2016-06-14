@@ -33,7 +33,6 @@ namespace AI
 		EnemyC* m_this;
 	public:
 		Detect(EnemyC *p_this) : m_this(p_this) {}
-		~Detect() { delete m_this; }
 		virtual bool Run() override
 		{
 			int targetX = GameManager::GetInstance()->player->GetPositionX();
@@ -63,7 +62,6 @@ namespace AI
 		int m_range;
 	public:
 		SearchingWay(EnemyC* p_this,int p_range) : m_this(p_this), m_range(p_range){}
-		~SearchingWay() { delete m_this; }
 		virtual bool Run() override
 		{
 			int targetX = GameManager::GetInstance()->player->GetPositionX();
@@ -111,7 +109,6 @@ namespace AI
 		EnemyC* m_this;
 	public:
 		Move(EnemyC* p_this) : m_this(p_this) {}
-		~Move() { delete m_this; }
 		virtual bool Run()
 		{
 			int lastX, lastY;
@@ -151,7 +148,6 @@ namespace AI
 		DIRECTION_TYPE dir;
 	public:
 		Attack(EnemyC* p_this,int p_range) : m_this(p_this),m_range(p_range) {}
-		~Attack() { delete m_this; }
 		virtual bool Run() override
 		{
 			int x = m_this->GetPositionX();
@@ -180,7 +176,6 @@ namespace AI
 		DIRECTION_TYPE dir;
 	public:
 		Attack_Dynamic(EnemyC* p_this, int p_range) : m_this(p_this), m_range(p_range) {}
-		~Attack_Dynamic() { delete m_this; }
 		virtual bool Run() override
 		{
 			int x = m_this->GetPositionX();

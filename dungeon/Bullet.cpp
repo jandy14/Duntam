@@ -164,6 +164,7 @@ BombBullet::BombBullet(int posX, int posY, DIRECTION_TYPE lookingDir) : Bullet(p
 	this->moveDelay = 2;
 	this->isExplosion = false;
 }
+BombBullet::~BombBullet() {}
 void BombBullet::Update()
 {
 	Object* target = NULL;

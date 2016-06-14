@@ -35,6 +35,7 @@ private:
 public:
 	Room(bool isDoor[4], list<Object*>& objectList);
 	Room();
+	~Room();
 	bool IsDoor(DIRECTION_TYPE dir);	//이쪽에 문이 있는지
 	bool IsUse();	//사용되는 방인지 확인
 };
@@ -66,7 +67,8 @@ public:
 	void DrawGameClearPage();	//게임 클리어 화면 출력
 	void DrawChangeMap();		//맵변환시 보이는 화면
 	void PrintPlayerState();	//플레이어 상태 출력
-	void GameSetting(int mode);			//게임 시작전 준비
+	void GameSetting(int mode);	//게임 시작전 준비
+	void ClearRoom();			//룸비우기
 	void ObjectUpdate();		//nowObjectList의 Object들의 Update()실행
 	void ObjectDraw();			//nowObjectList의 Object들의 Draw()실행
 	void ObjectDrawCountZero();	//nowObjectList의 Object들의 DrawCountZero()실행

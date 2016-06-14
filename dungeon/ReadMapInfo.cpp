@@ -155,7 +155,6 @@ void MapInfo::SetRoom(Room * target, char * roomName)
 	this->path = string(roomName);
 	FillInList();
 }
-
 list<string>* Split(string str, char delimiter)	//문자열 나누기
 {
 	list<string>* internal = new list<string>();
