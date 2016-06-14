@@ -16,7 +16,6 @@ public:
 		m_count = 0;
 		m_compare = p_compare;
 	}
-
 	void Enqueue(DataType p_data)
 	{
 		m_count++;

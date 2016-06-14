@@ -23,7 +23,7 @@ void Block::Draw()
 		RemoveAfterimage();
 
 		gotoxy(2 + (positionX * 2), 1 + positionY);
-		cout << "бс";
+		puts( "бс");
 		drawCount++;
 	}
 }
@@ -63,7 +63,7 @@ void BreakableBlock::Draw()
 	RemoveAfterimage();
 
 	gotoxy(2 + (positionX * 2), 1 + positionY);
-	cout << "бр";
+	puts( "бр");
 }
 void BreakableBlock::Damage(int p)
 {

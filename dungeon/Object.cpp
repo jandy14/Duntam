@@ -135,7 +135,7 @@ void Object::ClearImage()
 	{
 		gotoxy((positionX * 2) + 2, positionY + y + 1);
 		for (int x = 0; x < sizeX; x++)
-			cout << "  ";
+			printf("  ");
 	}
 }
 void Object::ClearCollision()
@@ -231,20 +231,20 @@ void Object::RemoveAfterimage()
 		{
 			gotoxy((positionX * 2) + 2, positionY + sizeY + 1);
 			for (int i = 0; i < sizeX; i++)
-				cout << "  ";
+				printf("  ");
 		}
 		else if (prevMove == DOWN)
 		{
 			gotoxy((positionX * 2) + 2, positionY - 1 + 1);
 			for (int i = 0; i < sizeX; i++)
-				cout << "  ";
+				printf("  ");
 		}
 		else if (prevMove == LEFT)
 		{
 			for (int i = 0; i < sizeY; i++)
 			{
 				gotoxy((positionX * 2) + (sizeX * 2) + 2, positionY + 1 + i);
-				cout << "  ";
+				printf("  ");
 			}
 		}
 		else if (prevMove == RIGHT)
@@ -252,7 +252,7 @@ void Object::RemoveAfterimage()
 			for (int i = 0; i < sizeY; i++)
 			{
 				gotoxy((positionX * 2) - 2 + 2, positionY + 1 + i);
-				cout << "  ";
+				printf("  ");
 			}
 		}
 		prevMove = NONE;

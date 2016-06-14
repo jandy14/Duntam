@@ -48,15 +48,15 @@ void Player::Draw()		//시작 좌표를 기록하는게 좋을 듯 하다
 
 	gotoxy(2 + (positionX * 2), 1 + positionY);
 	if (lookingDir == UP)
-		cout << "▲";
+		puts("▲");
 	else if (lookingDir == DOWN)
-		cout << "▼";
+		puts("▼");
 	else if (lookingDir == LEFT)
-		cout << "◀";
+		puts("◀");
 	else if (lookingDir == RIGHT)
-		cout << "▶";
+		puts("▶");
 	else
-		cout << "★";
+		puts("★");
 	SetColor(7, 16);
 }
 void Player::Attack()

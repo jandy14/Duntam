@@ -273,7 +273,7 @@ Teleporter_sounghoo::Teleporter_sounghoo(int posX, int posY, int warpX, int warp
 	//	other->warpPointY = this->positionY;
 	//}
 }
-Teleporter_sounghoo::~Teleporter_sounghoo() {}
+Teleporter_sounghoo::~Teleporter_sounghoo() { delete warpPoint; }
 void Teleporter_sounghoo::Attack() {}
 void Teleporter_sounghoo::Update() {}
 void Teleporter_sounghoo::Draw()
