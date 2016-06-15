@@ -173,41 +173,49 @@ void BombBullet::Update()
 	if (frozing)
 		frozing--;
 
-	if (!IsWall(UP))
+	//주변에 적있는지 체크
+	for (int i = 0; i < 4; i++)
 	{
-		target = CheckCollision(UP);
-		if (target != NULL)
+		if (!IsWall((DIRECTION_TYPE)i))
 		{
-			this->isExplosion = true;
-		}
-	}
-	if (!IsWall(DOWN))
-	{
-		target = CheckCollision(DOWN);
-		if (target != NULL)
-		{
-			this->isExplosion = true;
-		}
-	}
-	if (!IsWall(LEFT))
-	{
-		target = CheckCollision(LEFT);
-		if (target != NULL)
-		{
-			this->isExplosion = true;
-		}
-	}
-	if (!IsWall(RIGHT))
-	{
-		target = CheckCollision(RIGHT);
-		if (target != NULL)
-		{
-			this->isExplosion = true;
+			target = CheckCollision((DIRECTION_TYPE)i);
+			if (target != NULL)
+			{
+				if (target->TypeName == 10)
+				{
+   					this->isExplosion = true;
+					break;
+				}
+			}
 		}
 	}
 	if (isExplosion)
 	{
-		/////여기만 적으면된다
+		//게임은 정말 재밋어
+		for (int y = 0; y < 3; y++)
+		{
+			int yy = y + positionY - 1;
+			for (int x = 0; x < 3; x++)
+			{
+				int xx = x + positionX - 1;
+				if (IsWall(xx, yy))
+				{
+					if (CheckCollision(xx, yy) != NULL)
+					{
+						if (CheckCollision(xx, yy)->TypeName == 10)
+						{
+							CheckCollision(xx, yy)->Damage(1000);
+							gotoxy(xx * 2 + 2, yy + 1);
+							SetColor(13, 16);
+							puts("●");
+							SetColor(7, 16);
+						}
+					}
+				}
+			}
+		}
+		this->Die();
+		return;
 	}
 	if (moveDelay == 0)
 	{
@@ -242,3 +250,67 @@ void BombBullet::Interact(Object& target)
 	message.push_back("그러다 다친다");
 	GameManager::GetInstance()->SetMessage(message);
 }
+
+IceArrow::IceArrow(int posX, int posY, DIRECTION_TYPE lookingDir) : Bullet(posX, posY, lookingDir)
+{
+	this->moveDelayMax = 3;
+	this->moveDelay = 3;
+}
+IceArrow::~IceArrow() {}
+void IceArrow::Update()
+{
+	Object* target = NULL;
+	if (moveDelay)
+		moveDelay--;
+
+	if (moveDelay == 0)
+	{
+		Move(lookingDir);
+	}
+	if (moveDelay == 0)
+	{
+		if (!IsWall(lookingDir))
+		{
+			Object* target = CheckCollision(lookingDir);
+			if (target != NULL)
+				target->Frozing(100);
+		}
+		this->Die();
+	}
+}
+void IceArrow::Draw()
+{
+	//이전에 남은 그림 지우기
+	RemoveAfterimage();
+
+	SetColor(11, 16);
+	if (lookingDir == UP)
+	{
+		gotoxy(2 + (positionX * 2), 1 + positionY);
+		cout << "↑";
+	}
+	else if (lookingDir == DOWN)
+	{
+		gotoxy(2 + (positionX * 2), 1 + positionY);
+		cout << "↓";
+	}
+	else if (lookingDir == LEFT)
+	{
+		gotoxy(2 + (positionX * 2), 1 + positionY);
+		cout << "←";
+	}
+	else if (lookingDir == RIGHT)
+	{
+		gotoxy(2 + (positionX * 2), 1 + positionY);
+		cout << "→";
+	}
+	SetColor(7, 16);
+}
+void IceArrow::Interact(Object& target)
+{
+	list<string> message;
+	message.push_back("꽁꽁");
+	message.push_back("꽁꽁~!");
+	GameManager::GetInstance()->SetMessage(message);
+}
+void IceArrow::Frozing(int p){}
