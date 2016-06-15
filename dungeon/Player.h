@@ -18,7 +18,7 @@ public:
 	virtual void Draw();
 	virtual void Interact(Object& target);
 	virtual void Damage(int p);
-	void SetSuperPower();
+	void SetSuperPower(int p);
 	void ToggleIceArrow();
 	virtual ~Player();
 };
