@@ -453,7 +453,7 @@ EnemyE::~EnemyE()
 //
 Boss::Boss() : EnemyC(3, 3)
 {
-	this->sizeX = 5;
+	this->sizeX = 1;
 	this->sizeY = 1;
 	this->moveDelayMax = 10;
 	this->health = 500;
@@ -466,8 +466,8 @@ Boss::Boss() : EnemyC(3, 3)
 
 Boss::Boss(int posX, int posY) : EnemyC(posX, posY)
 {
-	this->sizeX = 3;
-	this->sizeY = 3;
+	this->sizeX = 1;
+	this->sizeY = 1;
 	this->moveDelayMax = 10;
 	this->health = 500;
 	this->frozing = 0;
@@ -545,34 +545,9 @@ void Boss::Draw()
 {
 	RemoveAfterimage();
 
+	SetColor(9, 12);
 	gotoxy(2 + positionX * 2, 1 + positionY); // 2+X 와 Y + 1 의 의미가 무엇인가??
-	puts("가나다");
-	gotoxy(2 + positionX * 2 , 1 + positionY + 1);
-	puts("가나다");
-	gotoxy(2 + positionX * 2, 1 + positionY + 2);
-	puts("가나다");
-
-	/*gotoxy(2 + positionX * 2, positionY + 3);
-	puts("가나다라마바사아자차카타");
-	gotoxy(2 + positionX * 2 , positionY + 4);
-	puts("가나다라마바사아자차카타");
-	gotoxy(2 + positionX * 2, positionY + 5);
-	puts("가나다라마바사아자차카타");
-	gotoxy(2 + positionX * 2 , positionY + 6);
-	puts("가나다라마바사아자차카타");
-	gotoxy(2 + positionX * 2 , positionY + 7);
-	puts("가나다라마바사아자차카타");
-	gotoxy(2 + positionX * 2 , positionY + 8);
-	puts("가나다라마바사아자차카타");
-	gotoxy(2 + positionX * 2 , positionY + 9);
-	puts("가나다라마바사아자차카타");
-	gotoxy(2 + positionX * 2 , positionY + 10);
-	puts("가나다라마바사아자차카타");
-	gotoxy(2 + positionX * 2 , positionY + 11);
-	puts("가나다라마바사아자차카타");
-	gotoxy(2 + positionX * 2, positionY + 12);
-	puts("가나다라마바사아자차카타");*/
-
+	puts("○");
 
 	SetColor(7, 16);
 }
