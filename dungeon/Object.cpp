@@ -16,13 +16,18 @@ Object::Object(int posX, int posY)
 
 Object::~Object()
 {
-	//리스트에서도 지운다
-	GameManager::GetInstance()->nowObjectList->remove(this);
+
+	if(GameManager::GetInstance()->gameState == GAMING)
+		GameManager::GetInstance()->nowObjectList->remove(this);
+
 }
 void Object::Move(DIRECTION_TYPE dir)
 {
 	if (moveDelay > 0)	//움직여도 되는지 확인
 		return;
+	if (health <= 0)	//피는 있는지
+		return;
+
 	//이동 물론 그전에 충돌 확인하고
 	//이동처리 콜리젼 테이블까지(충돌테이블까지)
 	Object * target = NULL;
@@ -47,7 +52,7 @@ void Object::Move(DIRECTION_TYPE dir)
 		lookingDir = dir;
 
 		if (frozing)		//딜레이 리셋
-			moveDelay = moveDelayMax * 3; //frozing 상태일땐 2배 느려짐
+			moveDelay = moveDelayMax * 3; //frozing 상태일땐 3배 느려짐
 		else
 			moveDelay = moveDelayMax;
 	}
@@ -56,31 +61,31 @@ void Object::Move(DIRECTION_TYPE dir)
 		CheckCollision(dir)->Interact(*this);
 	}
 }
-void Object::Move(int p_x, int p_y,DIRECTION_TYPE dir)
-{
-	if (moveDelay > 0)	//움직여도 되는지 확인
-		return;
-	//이동 물론 그전에 충돌 확인하고
-	//이동처리 콜리젼 테이블까지(충돌테이블까지)
-	Object * target = NULL;
-
-	if (IsWall(p_x,p_y))
-		return;
-
-	if (CheckCollision(p_x,p_y) == NULL)	//충돌 확인
-	{
-		SetPosition(p_x, p_y);
-		SetCollision(NONE);	//충돌 테이블 설정
-		prevMove = dir;		//움직임 저장(Draw용)
-
-		lookingDir = dir;
-
-		if (frozing)		//딜레이 리셋
-			moveDelay = moveDelayMax * 3; //frozing 상태일땐 2배 느려짐
-		else
-			moveDelay = moveDelayMax;
-	}
-}
+// Object::Move(int p_x, int p_y,DIRECTION_TYPE dir)
+//{
+//	if (moveDelay > 0)	//움직여도 되는지 확인
+//		return;
+//	//이동 물론 그전에 충돌 확인하고
+//	//이동처리 콜리젼 테이블까지(충돌테이블까지)
+//	Object * target = NULL;
+//
+//	if (IsWall(p_x,p_y))
+//		return;
+//
+//	if (CheckCollision(p_x,p_y) == NULL)	//충돌 확인
+//	{
+//		SetPosition(p_x, p_y);
+//		SetCollision(NONE);	//충돌 테이블 설정
+//		prevMove = dir;		//움직임 저장(Draw용)
+//
+//		lookingDir = dir;
+//
+//		if (frozing)		//딜레이 리셋
+//			moveDelay = moveDelayMax * 3; //frozing 상태일땐 2배 느려짐
+//		else
+//			moveDelay = moveDelayMax;
+//	}
+//}
 Object* Object::CheckCollision(DIRECTION_TYPE dir)
 {
 	Object * target = NULL;
@@ -216,7 +221,7 @@ bool Object::IsWall(DIRECTION_TYPE dir)	//인덱스를 넘어가면 true 안전범위면 fals
 			return true;
 	}
 }
-bool Object::IsWall(int p_x, int p_y)	//인덱스를 넘어가면 true 안전범위면 false
+bool Object::IsWall(int p_x, int p_y)	//인덱스를 넘어가면 false 안전범위면 true
 {
 	if ((0 <= p_x && p_x + sizeX - 1 < 50) && (0 <= p_y && p_y + sizeY - 1 < 30))
 		return true;
@@ -298,6 +303,10 @@ void Object::Damage(int p)
 void Object::Heal(int p)
 {
 	this->health += p;
+}
+void Object::Frozing(int p)
+{
+	this->frozing += p;
 }
 void Object::SetLookingDir(DIRECTION_TYPE dir)
 {

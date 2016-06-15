@@ -24,7 +24,7 @@ public:
 	virtual void Draw() = 0;		//그려지는 부분 처리
 	virtual void Interact(Object& target) = 0; //상호작용
 	virtual void Move(DIRECTION_TYPE dir);	//이동 부분
-	virtual void Move(int p_x, int p_y, DIRECTION_TYPE dir);
+	//virtual void Move(int p_x, int p_y, DIRECTION_TYPE dir);
 	virtual void ClearImage();				//이미지 정리
 	virtual void ClearCollision();			//테이블 정리
 	virtual void SetCollision(DIRECTION_TYPE dir);	//충돌 테이블 적용
@@ -35,6 +35,7 @@ public:
 	virtual void RemoveAfterimage();	//잔상 제거
 	virtual void Damage(int p);	//데미지 받음
 	virtual void Heal(int p);	//치료 받음
+	virtual void Frozing(int p);//얼림
 	virtual int GetPositionX();	//오브젝트 X좌표
 	virtual int GetPositionY();	//오브젝트 Y좌표
 	virtual void SetDrawCountZero();	//drawcount  = 0;

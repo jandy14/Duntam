@@ -13,6 +13,7 @@ Player::Player(int posX,int posY) : Object(posX,posY)
 	this->lookingDir = DOWN;
 	this->isDie = false;
 	this->superPower = 0;
+	this->iceArrow = false;
 }
 
 Player::~Player()
@@ -67,14 +68,41 @@ void Player::Attack()
 	Object * target;
 	
 	target = CheckCollision(lookingDir);
-	if (target == NULL)
+	if (superPower != 0)
 	{
-		GameManager::GetInstance()->nowObjectList->push_back(new Bullet(positionX, positionY, lookingDir));
-		GameManager::GetInstance()->nowObjectList->back()->SetCollision(NONE);
+		if (target == NULL)
+		{
+			GameManager::GetInstance()->nowObjectList->push_back(new BombBullet(positionX, positionY, lookingDir));
+			GameManager::GetInstance()->nowObjectList->back()->SetCollision(NONE);
+		}
+		else
+		{
+			target->Damage(1);
+		}
+	}
+	else if (iceArrow)
+	{
+		if (target == NULL)
+		{
+			GameManager::GetInstance()->nowObjectList->push_back(new IceArrow(positionX, positionY, lookingDir));
+			GameManager::GetInstance()->nowObjectList->back()->SetCollision(NONE);
+		}
+		else
+		{
+			target->Frozing(100);
+		}
 	}
 	else
 	{
-		target->Damage(1);
+		if (target == NULL)
+		{
+			GameManager::GetInstance()->nowObjectList->push_back(new Bullet(positionX, positionY, lookingDir));
+			GameManager::GetInstance()->nowObjectList->back()->SetCollision(NONE);
+		}
+		else
+		{
+			target->Damage(1);
+		}
 	}
 }
 void Player::Damage(int p)
@@ -94,4 +122,11 @@ void Player::Interact(Object& target)
 void Player::SetSuperPower()
 {
 	this->superPower += 100;
+}
+void Player::ToggleIceArrow()
+{
+	if (iceArrow)
+		iceArrow = false;
+	else
+		iceArrow = true;
 }

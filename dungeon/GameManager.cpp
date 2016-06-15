@@ -23,6 +23,11 @@ Room::Room()
 Room::~Room()
 {
 	//해야한다
+	while (objectList.size() != 0)
+	{
+		delete objectList.front();
+		objectList.pop_front();
+	}
 }
 bool Room::IsDoor(DIRECTION_TYPE dir)
 {
@@ -327,6 +332,10 @@ void GameManager::KeyEvent()
 	{
 		player->SetSuperPower();
 	}
+	if (GetAsyncKeyState(0x49) == (short)0x8001)	//(I)얼음화살 토글
+	{
+		player->ToggleIceArrow();
+	}
 	if (GetAsyncKeyState(VK_RETURN) == (short)0x8001)	//(엔터) 다음 메세지
 	{
 		NextMessage();
@@ -335,6 +344,10 @@ void GameManager::KeyEvent()
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)//(스페이스)공격
 	{
 		this->player->Attack();
+	}
+	if (GetAsyncKeyState(VK_SHIFT) & 0x8000)
+	{
+		this->player->moveDelay = 0;
 	}
 
 	if (GetAsyncKeyState(0x50) & 0x0001)//(P)일시정지
@@ -520,9 +533,7 @@ void GameManager::GameSetting(int mode)
 	//콜리젼 테이블 설정
 	for (int i = 0; i < 30; i++)	//콜리젼 테이블 값 초기화
 		for (int j = 0; j < 50; j++)
-		{
 			this->collisionTable[i][j] = NULL;
-		}
 			
 
 	list<Object*>::iterator iter = this->nowObjectList->begin();	//콜리젼 테이블 세팅

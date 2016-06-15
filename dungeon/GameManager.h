@@ -11,19 +11,19 @@ using namespace std;
 
 //==========================================´øÅ½ °ü·Ã
 
-class gameview
-{
-	int sx, sy;
-	int width, height;
-};
-class stateview
-{
-
-};
-class massageview
-{
-
-};
+//class gameview
+//{
+//	int sx, sy;
+//	int width, height;
+//};
+//class stateview
+//{
+//
+//};
+//class massageview
+//{
+//
+//};
 
 class Room
 {
