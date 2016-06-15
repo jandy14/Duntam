@@ -449,12 +449,12 @@ EnemyE::~EnemyE()
 
 }
 //
-//	Boss의 구현
+//	Boss의 구현 출력 문제 때문에 잠정 연기
 //
 Boss::Boss() : EnemyC(3, 3)
 {
-	this->sizeX = 37;
-	this->sizeY = 12;
+	this->sizeX = 1;
+	this->sizeY = 1;
 	this->moveDelayMax = 10;
 	this->health = 500;
 	this->frozing = 0;
@@ -467,11 +467,11 @@ Boss::Boss() : EnemyC(3, 3)
 Boss::Boss(int posX, int posY) : EnemyC(posX, posY)
 {
 	this->sizeX = 1;
-	this->sizeY = 2;
+	this->sizeY = 1;
 	this->moveDelayMax = 10;
 	this->health = 500;
 	this->frozing = 0;
-	this->m_range = 5;
+	this->m_range = 100;
 	this->m_attackRange = 5;
 	this->m_isAttacked = false;
 	this->m_maxAttackDelay = 10;
@@ -545,31 +545,9 @@ void Boss::Draw()
 {
 	RemoveAfterimage();
 
-	gotoxy(2 + positionX * 2, positionY + 1); // 2+X 와 Y + 1 의 의미가 무엇인가??
-	puts("\"");
-	//gotoxy(2 + positionX * 2 + 11, positionY + 2);
-	//puts("J88;");
-	//gotoxy(2 + positionX * 2 + 3, positionY + 3);
-	//puts("♨     JIiii;      ♨");
-	//gotoxy(2 + positionX * 2 + 3, positionY + 4);
-	//puts("■■    Ji;;;ii;    ■■");
-	//gotoxy(2 + positionX * 2 + 4, positionY + 5);
-	//puts("■   JIiiiii$$;   ■");
-	//gotoxy(2 + positionX * 2 + 4, positionY + 6);
-	//puts("■■■J$$$$$$$$$$;■■■");
-	//gotoxy(2 + positionX * 2 + 6, positionY + 7);
-	//puts("J$F'_...._':$;");
-	//gotoxy(2 + positionX * 2 + 5, positionY + 8);
-	//puts("J8'.｀JL  :;｀$;");
-	//gotoxy(2 + positionX * 2 + 4, positionY + 9);
-	//puts("JI8b.｀.....'d$$$;");
-	//gotoxy(2 + positionX * 2 + 3, positionY + 10);
-	//puts("Jiii8$$88888$$iii $;");
-	//gotoxy(2 + positionX * 2 + 2, positionY + 11);
-	//puts("Jiiiiiiiiiiiiiiiiiii$;");
-	//gotoxy(2 + positionX * 2 + 1, positionY + 12);
-	//puts("\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"");
-
+	SetColor(9, 12);
+	gotoxy(2 + positionX * 2, 1 + positionY); // 2+X 와 Y + 1 의 의미가 무엇인가??
+	puts("○");
 
 	SetColor(7, 16);
 }

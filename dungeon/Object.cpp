@@ -271,6 +271,22 @@ int Object::GetPositionY()
 {
 	return this->positionY;
 }
+int Object::GetSizeX()
+{
+	return sizeX;
+}
+void Object::SetSizeX(int p_size)
+{
+	sizeX = p_size;
+}
+int Object::GetSizeY()
+{
+	return sizeY;
+}
+void Object::SetSizeY(int p_size)
+{
+	sizeY = p_size;
+}
 void Object::SetDrawCountZero()
 {
 	this->drawCount = 0;
