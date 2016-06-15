@@ -13,6 +13,8 @@
 #define FRAME 100	//이론적인 프레임수
 #define FPS 60		//실제 돌아가느 프레임수 (실험값)
 
+static const double PI = 3.141592;
+
 typedef enum { NOCURSOR, SOLIDCURSOR, NORMALCURSOR } CURSOR_TYPE;	//커서타입정의
 typedef enum { UP, DOWN, LEFT, RIGHT, NONE } DIRECTION_TYPE;		 //방향타입
 typedef enum { STARTMENU, GAMING, PAUSE, GAMEOVER, GAMECLEAR } GAMESTATE_TYPE;	//게임상태타입

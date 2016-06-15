@@ -1,5 +1,4 @@
 #include "Bullet.h"
-#include "GameManager.h"
 
 using namespace std;
 
@@ -157,6 +156,31 @@ void EnemyBullet::Interact(Object& targer)
 }
 void EnemyBullet::Damage(int p) {}
 void EnemyBullet::Heal(int p) {}
+
+HomingBullet::HomingBullet(int posX, int posY, DIRECTION_TYPE lookingDir) : EnemyBullet(posX, posY, lookingDir) {}
+HomingBullet::~HomingBullet() {}
+void HomingBullet::Update()
+{
+	if (moveDelay)
+		moveDelay--;
+	if (frozing)
+		frozing--;
+
+	AI();
+}
+void HomingBullet::AI()
+{
+	/*Sequence *root = new Sequence;
+	AI::CheckStatus *checkstatus = new AI::CheckStatus(moveDelay);
+	AI::SearchingWay *searchingway = new AI::SearchingWay(this, 100);
+	AI::Move *move = new AI::Move(this);
+
+	root->AddChild(checkstatus);
+	root->AddChild(searchingway);
+	root->AddChild(move);
+
+	root->Run();*/
+}
 
 BombBullet::BombBullet(int posX, int posY, DIRECTION_TYPE lookingDir) : Bullet(posX, posY, lookingDir)
 {

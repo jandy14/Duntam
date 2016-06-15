@@ -1,7 +1,8 @@
 #pragma once
 
 #include"GameFunc.h"
-#include"Player.h"
+#include "Player.h"
+#include "Enemy.h"
 
 
 using namespace std;

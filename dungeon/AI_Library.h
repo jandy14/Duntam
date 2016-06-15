@@ -58,10 +58,10 @@ namespace AI
 	class SearchingWay : public Node
 	{
 	private:
-		EnemyC* m_this;
+		Object* m_this;
 		int m_range;
 	public:
-		SearchingWay(EnemyC* p_this,int p_range) : m_this(p_this), m_range(p_range){}
+		SearchingWay(Object* p_this,int p_range) : m_this(p_this), m_range(p_range){}
 		virtual bool Run() override
 		{
 			int targetX = GameManager::GetInstance()->player->GetPositionX();
@@ -106,9 +106,9 @@ namespace AI
 	class Move : public Node
 	{
 	private:
-		EnemyC* m_this;
+		Object* m_this;
 	public:
-		Move(EnemyC* p_this) : m_this(p_this) {}
+		Move(Object* p_this) : m_this(p_this) {}
 		virtual bool Run()
 		{
 			int lastX, lastY;
@@ -202,7 +202,29 @@ namespace AI
 			}
 		}
 	};
+	class ChargingAttak : public Node
+	{
+	private:
+		Boss* m_this;
+		int m_maxFury;
+	public:
+		ChargingAttak(Boss* p_this,int p_maxFury) : m_this(p_this),m_maxFury(p_maxFury) {}
+		virtual bool Run() override
+		{
+			int fury = m_this->GetFury();
 
+			if (fury > m_maxFury)
+			{
+				m_this->SetFury(0);
+				return true;
+			}
+			else
+			{
+				m_this->SetFury(fury + 1);
+				return false;
+			}
+		}
+	};
 	DIRECTION_TYPE VectorToDirection(int x1, int y1, int x2, int y2) // 방향 반환
 	{
 		DIRECTION_TYPE dir;

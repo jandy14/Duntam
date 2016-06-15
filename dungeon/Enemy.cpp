@@ -294,7 +294,7 @@ void EnemyC::Draw()
 	if (frozing)
 		SetColor(11, 16);
 
-	gotoxy(2 + positionX * 2, positionY + 1); // 2+X 와 Y + 1 의 의미가 무엇인가??
+	gotoxy(2 + positionX * 2, positionY + 1);
 	puts("씨");
 
 	SetColor(7, 16);
@@ -361,7 +361,7 @@ void EnemyD::Draw()
 	if (frozing)
 		SetColor(11, 16);
 
-	gotoxy(2 + positionX * 2, positionY + 1); // 2+X 와 Y + 1 의 의미가 무엇인가??
+	gotoxy(2 + positionX * 2, positionY + 1);
 	puts("디");
 
 	SetColor(7, 16);
@@ -430,7 +430,7 @@ void EnemyE::Draw()
 	if (frozing)
 		SetColor(11, 16);
 
-	gotoxy(2 + positionX * 2, positionY + 1); // 2+X 와 Y + 1 의 의미가 무엇인가??
+	gotoxy(2 + positionX * 2, positionY + 1);
 	puts("이");
 
 	SetColor(7, 16);
@@ -545,8 +545,11 @@ void Boss::Draw()
 {
 	RemoveAfterimage();
 
-	SetColor(9, 12);
-	gotoxy(2 + positionX * 2, 1 + positionY); // 2+X 와 Y + 1 의 의미가 무엇인가??
+	if(sin(moveDelay * (PI / 180) * 36) > 0)
+		SetColor(10, 16);
+	else
+		SetColor(12, 16);
+	gotoxy(2 + positionX * 2, 1 + positionY);
 	puts("○");
 
 	SetColor(7, 16);

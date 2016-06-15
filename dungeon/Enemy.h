@@ -109,6 +109,8 @@ public:
 	virtual void DrawEye(DIRECTION_TYPE dir, int p_color);
 	virtual void DrawArms(float p_delay);
 	virtual void Interact(Object& target);
+	int GetFury() { return m_fury; }
+	void SetFury(int p_fury) { m_fury = p_fury; }
 	virtual ~Boss();
 };
 

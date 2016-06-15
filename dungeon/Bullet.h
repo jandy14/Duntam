@@ -1,5 +1,7 @@
 #pragma once
 #include "Object.h"
+#include "GameManager.h"
+
 class Bullet : public Object
 {
 public:
@@ -22,6 +24,15 @@ public:
 	virtual void Interact(Object& target);	//??????０?
 	virtual void Damage(int p);	//??易??? 易身?卦
 	virtual void Heal(int p);	//?╳﹞? 易身?卦
+};
+
+class HomingBullet : public EnemyBullet
+{
+public:
+	HomingBullet(int posX, int posY, DIRECTION_TYPE lookingDir);
+	~HomingBullet();
+	virtual void Update();
+	virtual void AI();
 };
 
 class BombBullet : public Bullet

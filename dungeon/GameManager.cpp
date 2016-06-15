@@ -1,9 +1,8 @@
 #include "GameManager.h"
-#include "Player.h"
-#include "Enemy.h"
 #include "ReadMapInfo.h"
 #include "Block.h"
 #include "Thing.h"
+
 //#include<algorithm>
 //인클루드를 더 해줘야할듯
 using namespace std;
@@ -124,7 +123,7 @@ void GameManager::CreateDebugMap()		//아직 미완성
 	map[3][4]->isDoor[DOWN] = true;
 	map[3][4]->isDoor[UP] = true;
 	mapInfo.SetRoom(map[3][4], "MapInfo/Debug/04.csv");
-	map[3][4]->objectList.push_back(new EnemyA(1, 1));
+	map[3][4]->objectList.push_back(new Boss(1, 1));
 	map[3][4]->objectList.push_back(new EnemyA(4, 5));
 	map[3][4]->objectList.push_back(new EnemyB(45, 5));
 	map[3][4]->objectList.push_back(new EnemyB(47, 5));
