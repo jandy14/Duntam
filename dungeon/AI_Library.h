@@ -69,7 +69,7 @@ namespace AI
 			int x = m_this->GetPositionX();
 			int y = m_this->GetPositionY();
 
-			if (m_range * 1.5f >= Distance(targetX, targetY, x, y))
+			if (m_range >= Distance(targetX, targetY, x, y))
 			{
 				Astar(MAP, targetX, targetY, x, y);
 				return true;

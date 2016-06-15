@@ -205,6 +205,7 @@ EnemyC::EnemyC() : Enemy(3, 3)
 	this->health = 10;
 	this->frozing = 300;
 	this->m_range = 5;
+	this->m_attackRange = 5;
 	this->m_isAttacked = false;
 	m_maxAttackDelay = 10;
 }
@@ -216,7 +217,8 @@ EnemyC::EnemyC(int posX, int posY) : Enemy(posX, posY)
 	this->moveDelayMax = 10;
 	this->health = 10;
 	this->frozing = 300;
-	this->m_range = 5;
+	this->m_range = 20;
+	this->m_attackRange = 5;
 	this->m_isAttacked = false;
 	m_maxAttackDelay = 10;
 }
@@ -261,11 +263,11 @@ void EnemyC::AI()
 	Sequence *root = new Sequence;
 	AI::CheckStatus *checkStatus = new AI::CheckStatus(moveDelay);
 	AI::Detect *detect = new AI::Detect(this);
-	AI::SearchingWay *searchingWay = new AI::SearchingWay(this, m_range * 4);
+	AI::SearchingWay *searchingWay = new AI::SearchingWay(this, m_range);
 	Sequence *sequence1 = new Sequence;
 	Selector *selector1 = new Selector;
 	AI::Move *move = new AI::Move(this);
-	AI::Attack *attack = new AI::Attack(this, m_range);
+	AI::Attack *attack = new AI::Attack(this, m_attackRange);
 
 	root->AddChild(sequence1);
 	sequence1->AddChild(checkStatus); sequence1->AddChild(detect);
@@ -320,7 +322,8 @@ EnemyD::EnemyD() : EnemyC(3, 3)
 	this->moveDelayMax = 5;
 	this->health = 10;
 	this->frozing = 300;
-	this->m_range = 1;
+	this->m_range = 100;
+	this->m_attackRange = 1;
 	m_maxAttackDelay = 10;
 }
 
@@ -331,18 +334,19 @@ EnemyD::EnemyD(int posX, int posY) : EnemyC(posX, posY)
 	this->moveDelayMax = 5;
 	this->health = 10;
 	this->frozing = 300;
-	this->m_range = 1;
+	this->m_range = 100;
+	this->m_attackRange = 1;
 	m_maxAttackDelay = 10;
 }
 void EnemyD::AI()
 {
 	Sequence *root = new Sequence;
 	AI::CheckStatus *checkStatus = new AI::CheckStatus(moveDelay);
-	AI::SearchingWay_teleporter *searchingWay = new AI::SearchingWay_teleporter(positionX, positionY, m_range * 100);
+	AI::SearchingWay_teleporter *searchingWay = new AI::SearchingWay_teleporter(positionX, positionY, m_range);
 	Sequence *sequence1 = new Sequence;
 	Selector *selector1 = new Selector;
 	AI::Move *move = new AI::Move(this);
-	AI::Attack *attack = new AI::Attack(this, m_range);
+	AI::Attack *attack = new AI::Attack(this, m_attackRange);
 
 	root->AddChild(sequence1);
 	sequence1->AddChild(checkStatus); sequence1->AddChild(searchingWay); sequence1->AddChild(selector1);
@@ -385,6 +389,8 @@ EnemyE::EnemyE() : EnemyC(3, 3)
 	this->moveDelayMax = 10;
 	this->health = 10;
 	this->frozing = 300;
+	this->m_range = 20;
+	this->m_attackRange = 10;
 	m_maxAttackDelay = 10;
 }
 
@@ -395,7 +401,8 @@ EnemyE::EnemyE(int posX, int posY) : EnemyC(posX, posY)
 	this->moveDelayMax = 10;
 	this->health = 10;
 	this->frozing = 300;
-	this->m_range = 10;
+	this->m_range = 20;
+	this->m_attackRange = 10;
 	m_maxAttackDelay = 10;
 }
 void EnemyE::AI()
@@ -403,11 +410,11 @@ void EnemyE::AI()
 	Sequence *root = new Sequence;
 	AI::CheckStatus *checkStatus = new AI::CheckStatus(moveDelay);
 	AI::Detect *detect = new AI::Detect(this);
-	AI::SearchingWay *searchingWay = new AI::SearchingWay(this, m_range * 2);
+	AI::SearchingWay *searchingWay = new AI::SearchingWay(this, m_range);
 	Sequence *sequence1 = new Sequence;
 	Selector *selector1 = new Selector;
 	AI::Move *move = new AI::Move(this);
-	AI::Attack_Dynamic *attackDynamic = new AI::Attack_Dynamic(this, m_range);
+	AI::Attack_Dynamic *attackDynamic = new AI::Attack_Dynamic(this, m_attackRange);
 
 	root->AddChild(sequence1);
 	sequence1->AddChild(checkStatus); sequence1->AddChild(detect);
@@ -438,6 +445,124 @@ void EnemyE::Interact(Object& target)
 	GameManager::GetInstance()->SetMessage(message);
 }
 EnemyE::~EnemyE()
+{
+
+}
+//
+//	Boss의 구현
+//
+Boss::Boss() : Enemy(3, 3)
+{
+	this->sizeX = 1;
+	this->sizeY = 1;
+	this->moveDelayMax = 10;
+	this->health = 10;
+	this->frozing = 300;
+	this->m_range = 5;
+	this->m_attackRange = 5;
+	this->m_isAttacked = false;
+	m_maxAttackDelay = 10;
+}
+
+Boss::Boss(int posX, int posY) : Enemy(posX, posY)
+{
+	this->sizeX = 1;
+	this->sizeY = 1;
+	this->moveDelayMax = 10;
+	this->health = 10;
+	this->frozing = 300;
+	this->m_range = 20;
+	this->m_attackRange = 5;
+	this->m_isAttacked = false;
+	m_maxAttackDelay = 10;
+}
+void Boss::Attack()
+{
+
+}
+void Boss::Attack(DIRECTION_TYPE dir)
+{
+	if (m_attackDelay > 0)
+		return;
+	if (IsWall(dir))
+		return;
+
+	Object * target;
+
+	target = CheckCollision(dir);
+	if (target == NULL)
+	{
+		GameManager::GetInstance()->nowObjectList->push_back(new EnemyBullet(positionX, positionY, dir));
+		GameManager::GetInstance()->nowObjectList->back()->SetCollision(NONE);
+	}
+	else
+	{
+		target->Damage(1);
+	}
+
+	if (frozing)		//딜레이 리셋
+		m_attackDelay = m_maxAttackDelay * 3; //frozing 상태일땐 2배 느려짐
+	else
+		m_attackDelay = m_maxAttackDelay;
+}
+void Boss::Damage(int p_damage)
+{
+	this->health -= p_damage;
+	m_isAttacked = true;
+	if (this->health <= 0)
+		this->Die();
+}
+void Boss::AI()
+{
+	Sequence *root = new Sequence;
+	AI::CheckStatus *checkStatus = new AI::CheckStatus(moveDelay);
+	AI::Detect *detect = new AI::Detect(this);
+	AI::SearchingWay *searchingWay = new AI::SearchingWay(this, m_range);
+	Sequence *sequence1 = new Sequence;
+	Selector *selector1 = new Selector;
+	AI::Move *move = new AI::Move(this);
+	AI::Attack *attack = new AI::Attack(this, m_attackRange);
+
+	root->AddChild(sequence1);
+	sequence1->AddChild(checkStatus); sequence1->AddChild(detect);
+	sequence1->AddChild(searchingWay); sequence1->AddChild(selector1);
+	selector1->AddChild(attack); selector1->AddChild(move);
+
+	root->Run();
+}
+void Boss::Update()
+{
+
+	if (moveDelay)
+		moveDelay--;
+	if (frozing)
+		frozing--;
+	if (m_attackDelay)
+		m_attackDelay--;
+	AI();
+}
+void Boss::Draw()
+{
+	RemoveAfterimage();
+
+	if (frozing)
+		SetColor(11, 16);
+
+	gotoxy(2 + positionX * 2, positionY + 1); // 2+X 와 Y + 1 의 의미가 무엇인가??
+	puts("씨");
+
+	SetColor(7, 16);
+}
+void Boss::Interact(Object& target)
+{
+	list<string> message;
+	message.push_back("쿠왕ㅇ아앙");
+	message.push_back("뀨");
+	message.push_back("죽어라 필멸자여");
+	message.push_back("나에게 4번 말을 걸다니 여유롭구나!!!");
+	GameManager::GetInstance()->SetMessage(message);
+}
+Boss::~Boss()
 {
 
 }

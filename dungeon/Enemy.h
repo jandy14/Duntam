@@ -49,9 +49,10 @@ class EnemyC : public Enemy
 protected:
 	int m_maxAttackDelay;
 	int m_range;
+	int m_attackRange;
 	bool m_isAttacked;
-public:
 	int m_attackDelay;
+public:
 	explicit EnemyC();
 	explicit EnemyC(int posX, int posY);
 	virtual void Damage(int p_damage) override;
@@ -72,10 +73,7 @@ public:
 
 class EnemyD : public EnemyC
 {
-protected:
-	int m_maxAttackDelay;
 public:
-	int m_attackDelay;
 	explicit EnemyD();
 	explicit EnemyD(int posX, int posY);
 	virtual void AI();
@@ -86,14 +84,28 @@ public:
 
 class EnemyE : public EnemyC
 {
-protected:
-	int m_maxAttackDelay;
 public:
-	int m_attackDelay;
 	explicit EnemyE();
 	explicit EnemyE(int posX, int posY);
 	virtual void AI();
 	virtual void Draw();
 	virtual void Interact(Object& target);
 	virtual ~EnemyE();
+};
+
+class Boss : public EnemyC
+{
+protected:
+	int m_fury;
+public:
+	explicit Boss();
+	explicit Boss(int posX, int posY);
+	virtual void Damage(int p_damage) override;
+	virtual void Attack();
+	virtual void Attack(DIRECTION_TYPE dir);
+	virtual void AI();
+	virtual void Update();
+	virtual void Draw();
+	virtual void Interact(Object& target);
+	virtual ~Boss();
 };
