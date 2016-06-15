@@ -451,30 +451,30 @@ EnemyE::~EnemyE()
 //
 //	Boss의 구현
 //
-Boss::Boss() : Enemy(3, 3)
+Boss::Boss() : EnemyC(3, 3)
 {
-	this->sizeX = 1;
-	this->sizeY = 1;
+	this->sizeX = 37;
+	this->sizeY = 12;
 	this->moveDelayMax = 10;
-	this->health = 10;
-	this->frozing = 300;
+	this->health = 500;
+	this->frozing = 0;
 	this->m_range = 5;
 	this->m_attackRange = 5;
 	this->m_isAttacked = false;
-	m_maxAttackDelay = 10;
+	this->m_maxAttackDelay = 10;
 }
 
-Boss::Boss(int posX, int posY) : Enemy(posX, posY)
+Boss::Boss(int posX, int posY) : EnemyC(posX, posY)
 {
 	this->sizeX = 1;
-	this->sizeY = 1;
+	this->sizeY = 2;
 	this->moveDelayMax = 10;
-	this->health = 10;
-	this->frozing = 300;
-	this->m_range = 20;
+	this->health = 500;
+	this->frozing = 0;
+	this->m_range = 5;
 	this->m_attackRange = 5;
 	this->m_isAttacked = false;
-	m_maxAttackDelay = 10;
+	this->m_maxAttackDelay = 10;
 }
 void Boss::Attack()
 {
@@ -545,14 +545,43 @@ void Boss::Draw()
 {
 	RemoveAfterimage();
 
-	if (frozing)
-		SetColor(11, 16);
-
 	gotoxy(2 + positionX * 2, positionY + 1); // 2+X 와 Y + 1 의 의미가 무엇인가??
-	puts("씨");
+	puts("\"");
+	//gotoxy(2 + positionX * 2 + 11, positionY + 2);
+	//puts("J88;");
+	//gotoxy(2 + positionX * 2 + 3, positionY + 3);
+	//puts("♨     JIiii;      ♨");
+	//gotoxy(2 + positionX * 2 + 3, positionY + 4);
+	//puts("■■    Ji;;;ii;    ■■");
+	//gotoxy(2 + positionX * 2 + 4, positionY + 5);
+	//puts("■   JIiiiii$$;   ■");
+	//gotoxy(2 + positionX * 2 + 4, positionY + 6);
+	//puts("■■■J$$$$$$$$$$;■■■");
+	//gotoxy(2 + positionX * 2 + 6, positionY + 7);
+	//puts("J$F'_...._':$;");
+	//gotoxy(2 + positionX * 2 + 5, positionY + 8);
+	//puts("J8'.｀JL  :;｀$;");
+	//gotoxy(2 + positionX * 2 + 4, positionY + 9);
+	//puts("JI8b.｀.....'d$$$;");
+	//gotoxy(2 + positionX * 2 + 3, positionY + 10);
+	//puts("Jiii8$$88888$$iii $;");
+	//gotoxy(2 + positionX * 2 + 2, positionY + 11);
+	//puts("Jiiiiiiiiiiiiiiiiiii$;");
+	//gotoxy(2 + positionX * 2 + 1, positionY + 12);
+	//puts("\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"");
+
 
 	SetColor(7, 16);
 }
+void Boss::DrawEye(DIRECTION_TYPE dir, int color)
+{
+
+}
+void Boss::DrawArms(float p_delay)
+{
+
+}
+
 void Boss::Interact(Object& target)
 {
 	list<string> message;

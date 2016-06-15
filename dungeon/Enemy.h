@@ -106,6 +106,25 @@ public:
 	virtual void AI();
 	virtual void Update();
 	virtual void Draw();
+	virtual void DrawEye(DIRECTION_TYPE dir, int p_color);
+	virtual void DrawArms(float p_delay);
 	virtual void Interact(Object& target);
 	virtual ~Boss();
 };
+
+/*
+				   J:
+				  J88;
+				 JIiii;
+		¢Õ		Ji;;;ii;      ¢Õ
+		°·°·	   JIiiiii$$;     °·°·
+		 °·	  J$$$$$$$$$$;    °·
+	  	 °·°·°·°·J$F'_...._':$;°·°·°·°·
+			J8'.£‡JL  :;£‡$;
+		   JI8b.£‡.....'d$$$;
+		  Jiii8$$88888$$iii $;
+		 Jiiiiiiiiiiiiiiiiiii$;
+		""""""""""""""""""""""""
+
+
+*/
