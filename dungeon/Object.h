@@ -37,6 +37,10 @@ public:
 	virtual void Heal(int p);	//치료 받음
 	virtual int GetPositionX();	//오브젝트 X좌표
 	virtual int GetPositionY();	//오브젝트 Y좌표
+	virtual int GetSizeX();
+	virtual void SetSizeX(int p_size);
+	virtual int GetSizeY();
+	virtual void SetSizeY(int p_size);
 	virtual void SetDrawCountZero();	//drawcount  = 0;
 	virtual void SetPosition(int posX, int posY);	//오브젝트 좌표 설정
 	virtual void SetLookingDir(DIRECTION_TYPE dir);	//보는 방향 설정

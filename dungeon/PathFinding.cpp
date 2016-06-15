@@ -16,6 +16,8 @@ void ClearCells(Array2D<Cell>& p_map, int p_gx, int p_gy, int p_x, int p_y)
 {
 	int x;
 	int y;
+	//int sizeX = 1;
+	//int sizeY = 1;
 	for (y = 0; y < 30; y++)
 	{
 		for (x = 0; x < 50; x++)
@@ -25,19 +27,24 @@ void ClearCells(Array2D<Cell>& p_map, int p_gx, int p_gy, int p_x, int p_y)
 			p_map.Get(x, y).m_lastX = -1;
 			p_map.Get(x, y).m_lastY = -1;
 		
-			//그 좌표가 자신이거나 플레이어일 경우 여기서는 통과가능 하다고 한다.
-			if ((x == p_gx && y == p_gy) || (x == p_x && y == p_y))
+			// 벽이 아닌 경우
+			if (GameManager::GetInstance()->collisionTable[y][x] == NULL)
 			{
 				p_map.Get(x, y).m_passable = true;
 				p_map.Get(x, y).m_x = x;
 				p_map.Get(x, y).m_y = y;
 			}
-			// 벽이 아닌경우
-			else if (GameManager::GetInstance()->collisionTable[y][x] == NULL)
+			//그 좌표가 자신이거나 플레이어일 경우 여기서는 통과가능 하다고 한다.
+			else if ((x == p_gx && y == p_gy) || (x == p_x && y == p_y))
 			{
 				p_map.Get(x, y).m_passable = true;
 				p_map.Get(x, y).m_x = x;
 				p_map.Get(x, y).m_y = y;
+				/*if (x == p_x && y == p_y)
+				{
+					sizeX = GameManager::GetInstance()->collisionTable[y][x]->GetSizeX();
+					sizeY = GameManager::GetInstance()->collisionTable[y][x]->GetSizeY();
+				}*/
 			}
 			// 텔레포터인 경우
 			else if (GameManager::GetInstance()->collisionTable[y][x]->TypeName == 52)
@@ -56,6 +63,11 @@ void ClearCells(Array2D<Cell>& p_map, int p_gx, int p_gy, int p_x, int p_y)
 				p_map.Get(x, y).m_passable = false;
 				p_map.Get(x, y).m_x = x;
 				p_map.Get(x, y).m_y = y;
+
+				//if ((p_x <= x) && (x <= p_x + sizeX - 1) && (p_y <= y) && (y <= p_x + sizeY - 1))
+				//{
+				//	p_map.Get(x,y).m_passable = true;
+				//}
 			}
 		}
 	}
