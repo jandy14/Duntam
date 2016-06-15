@@ -149,9 +149,9 @@ void GameManager::CreateDebugMap()		//아직 미완성
 	//포탈
 	map[1][6]->isDoor[LEFT] = true;
 	map[1][6]->isDoor[RIGHT] = true;
-	mapInfo.SetRoom(map[1][6], "MapInfo/Debug/01.csv");
-	map[1][6]->objectList.push_back(new Teleporter_sounghoo(3, 15, 46, 15));
-	map[1][6]->objectList.push_back(new Teleporter_sounghoo(46, 15, 3, 15));
+	mapInfo.SetRoom(map[1][6], "MapInfo/Debug/10.csv");
+	map[1][6]->objectList.push_back(new Teleporter_sounghoo(7, 15, 42, 15));
+	map[1][6]->objectList.push_back(new Teleporter_sounghoo(42, 15, 7, 15));
 	//포탈이용하는 a*
 	map[1][7]->isDoor[LEFT] = true;
 	map[1][7]->isDoor[RIGHT] = true;
@@ -187,7 +187,7 @@ void GameManager::CreateDebugMap()		//아직 미완성
 	mapInfo.SetRoom(map[4][8], "MapInfo/Debug/06.csv");
 	map[4][8]->objectList.push_back(new ClearObject(24, 14));
 
-	map[4][4]->objectList.push_back(new ClearObject(24, 14));
+	map[4][4]->objectList.push_back(new ClearObject(24, 15));
 
 }
 void GameManager::CreateMap()
@@ -276,6 +276,9 @@ void GameManager::CreateMap()
 		if (map[goal / 9][goal % 9]->IsUse() && goal != 40)
 		{
 			map[goal / 9][goal % 9]->objectList.push_back(new ClearObject(24, 14));
+			gotoxy(0, 0);
+			cout << (goal % 9) << (goal / 9);
+			Sleep(100);
 			break;
 		}
 	}
@@ -329,7 +332,7 @@ void GameManager::KeyEvent()
 	}
 	if (GetAsyncKeyState(0x51) == (short)0x8001)	//(Q)슈퍼파워
 	{
-		player->SetSuperPower();
+		player->SetSuperPower(100);
 	}
 	if (GetAsyncKeyState(0x49) == (short)0x8001)	//(I)얼음화살 토글
 	{
@@ -510,9 +513,50 @@ void GameManager::DrawChangeMap()
 }
 void GameManager::PrintPlayerState()
 {
-
-	gotoxy(2, 35);
+	gotoxy(4, 33);
+	if (player->superPower > 50000)
+	{
+		SetColor((player->superPower % 7) + 9, 16);
+		printf("SuperPower : 큰수 ");
+		SetColor(7, 16);
+	}
+	else if (player->superPower > 1)
+	{
+		SetColor((player->superPower % 7) + 9, 16);
+		printf("SuperPower : %5d", player->superPower);
+		SetColor(7, 16);
+	}
+	else if (player->superPower == 1)
+	{
+		puts("                    ");
+	}
+	gotoxy(24, 33);
+	if (player->frozing > 50000)
+	{
+		SetColor(11, 16);
+		printf("Frozing : 큰수 ");
+		SetColor(7, 16);
+	}
+	else if (player->frozing > 1)
+	{
+		SetColor(11, 16);
+		printf("Frozing : %5d", player->frozing);
+		SetColor(7, 16);
+	}
+	else if (player->frozing == 1)
+	{
+		puts("                ");
+	}
+	gotoxy(4, 35);
 	cout << "HP : " << to_string(player->health) << "  ";
+	if (player->iceArrow)
+	{
+		SetColor(11, 16);
+		puts("IceArrow");
+		SetColor(7, 16);
+	}
+	else
+		puts("        ");
 }
 void GameManager::GameSetting(int mode)
 {

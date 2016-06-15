@@ -319,10 +319,14 @@ void Object::Damage(int p)
 void Object::Heal(int p)
 {
 	this->health += p;
+	if (health > 100000000)
+		health = 100000000;
 }
 void Object::Frozing(int p)
 {
 	this->frozing += p;
+	if (frozing > 100000000)
+		frozing = 100000000;
 }
 void Object::SetLookingDir(DIRECTION_TYPE dir)
 {

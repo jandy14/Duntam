@@ -119,9 +119,11 @@ void Player::Interact(Object& target)
 {
 
 }
-void Player::SetSuperPower()
+void Player::SetSuperPower(int p)
 {
-	this->superPower += 100;
+	this->superPower += p;
+	if (superPower > 100000000)
+		superPower = 100000000;
 }
 void Player::ToggleIceArrow()
 {

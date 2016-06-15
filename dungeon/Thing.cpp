@@ -92,9 +92,14 @@ void AltarOfHeal::Interact(Object& target)
 		message.push_back("그대에게 생명을...");
 		interactionCount++;
 	}
-	else
+	else if(interactionCount == 1)
 	{
 		target.Heal(10);
+		message.push_back("회복!");
+		interactionCount++;
+	}
+	else
+	{
 		message.push_back("기회는 한번만...");
 	}
 	GameManager::GetInstance()->SetMessage(message);
