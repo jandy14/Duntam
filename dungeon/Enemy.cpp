@@ -456,7 +456,7 @@ Boss::Boss() : EnemyC(3, 3)
 	this->sizeX = 1;
 	this->sizeY = 1;
 	this->moveDelayMax = 10;
-	this->health = 500;
+	this->health = 10;
 	this->frozing = 0;
 	this->m_range = 5;
 	this->m_attackRange = 5;
@@ -469,9 +469,9 @@ Boss::Boss(int posX, int posY) : EnemyC(posX, posY)
 	this->sizeX = 1;
 	this->sizeY = 1;
 	this->moveDelayMax = 10;
-	this->health = 500;
+	this->health = 10;
 	this->frozing = 0;
-	this->m_range = 100;
+	this->m_range = 5;
 	this->m_attackRange = 5;
 	this->m_isAttacked = false;
 	this->m_maxAttackDelay = 10;

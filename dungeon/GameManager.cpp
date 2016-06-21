@@ -123,7 +123,7 @@ void GameManager::CreateDebugMap()		//아직 미완성
 	map[3][4]->isDoor[DOWN] = true;
 	map[3][4]->isDoor[UP] = true;
 	mapInfo.SetRoom(map[3][4], "MapInfo/Debug/04.csv");
-	map[3][4]->objectList.push_back(new Boss(1, 1));
+	map[3][4]->objectList.push_back(new EnemyA(1, 1));
 	map[3][4]->objectList.push_back(new EnemyA(4, 5));
 	map[3][4]->objectList.push_back(new EnemyB(45, 5));
 	map[3][4]->objectList.push_back(new EnemyB(47, 5));
@@ -181,6 +181,7 @@ void GameManager::CreateDebugMap()		//아직 미완성
 	map[3][8]->isDoor[UP] = true;
 	map[3][8]->isDoor[DOWN] = true;
 	mapInfo.SetRoom(map[3][8], "MapInfo/Debug/09.csv");
+	map[3][8]->objectList.push_back(new Boss(48, 28));
 	map[3][8]->objectList.push_back(new EnemyE(48, 28));
 	//도착
 	map[4][8]->isDoor[UP] = true;
